@@ -15,16 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import Risk.Game.Team.View.Launcher;
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
-//import java.awt.GridBagLayout;
-//import java.awt.GridBagConstraints;
-//import java.awt.Insets;
+
 
 /* This class represent Menu to start and Exit game */
 
 public class Launcher extends JFrame implements ActionListener {
-	//private static Logger LOGGER = LogManager.getLogger();
+	
 	private JButton StartGameButton;
 	private JButton EndGameButton;
 	private JButton CreateMapButton;
@@ -34,19 +30,22 @@ public class Launcher extends JFrame implements ActionListener {
 	private TitledBorder border;
 	private JPanel GamePanel;
 	private JLabel TitleLabel;
+	
 	public Launcher () {
 		try {
 		Strt();
 		}
 	catch(Exception ex)
 	{
-		//LOGGER.error("Error" + ex.getMessage());
 		System.out.println ("error loading");	
 	}
 	}
 	
+	/* This scope is used for the Editing Buttons */ 
+	
+	
 	public void Strt() {
-		JFrame.setDefaultLookAndFeelDecorated(true);
+		
 		GameFrame = new JFrame("Risk Game");
 		GameFrame.setVisible(true);
 
@@ -108,6 +107,7 @@ public class Launcher extends JFrame implements ActionListener {
 
 	}
 
+	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
