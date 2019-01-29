@@ -20,7 +20,7 @@ import Risk.Game.Team.View.Launcher;
 /* This class represent Menu to start and Exit game */
 
 public class Launcher extends JFrame implements ActionListener {
-	
+
 	private JButton StartGameButton;
 	private JButton EndGameButton;
 	private JButton CreateMapButton;
@@ -30,22 +30,22 @@ public class Launcher extends JFrame implements ActionListener {
 	private TitledBorder border;
 	private JPanel GamePanel;
 	private JLabel TitleLabel;
-	
+
 	public Launcher () {
 		try {
-		Strt();
+			Strt();
 		}
-	catch(Exception ex)
-	{
-		System.out.println ("error loading");	
+		catch(Exception ex)
+		{
+			System.out.println ("error loading");	
+		}
 	}
-	}
-	
+
 	/* This scope is used for the Editing Buttons */ 
-	
-	
+
+
 	public void Strt() {
-		
+
 		GameFrame = new JFrame("Risk Game");
 		GameFrame.setVisible(true);
 
@@ -107,12 +107,12 @@ public class Launcher extends JFrame implements ActionListener {
 
 	}
 
-	
+
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
-	}
+
+}
 
