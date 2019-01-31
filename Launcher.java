@@ -22,6 +22,7 @@ public class Launcher extends JFrame implements ActionListener {
 	private JButton StartBtn;
 	private JButton EndBtn;
 	private JButton CreateBtn;
+	private JButton LoadBtn;
 	private JButton EditBtn;
 	private JButton SeriesBtn;
 	private JFrame WindowFrame;
@@ -66,36 +67,43 @@ public class Launcher extends JFrame implements ActionListener {
 		WindowFrame.getContentPane().add(TitleLabel);
 		WindowFrame.getContentPane().add(WindowPanel);
 		WindowPanel.setLayout(null);
+		
 		StartBtn = new JButton("Start Game");
 		WindowPanel.add(StartBtn);
 		StartBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
 		StartBtn.setBackground(UIManager.getColor("Button.highlight"));
 		StartBtn.setForeground(new Color(67, 80, 88));
-
 		StartBtn.setBounds(220, 102, 125, 21);
 		StartBtn.addActionListener(this);
+		
 		CreateBtn = new JButton("Create Map");
 		WindowPanel.add(CreateBtn);
 		CreateBtn.setForeground(new Color(67, 80, 88));
 		CreateBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
-
 		CreateBtn.setBounds(220, 178, 125, 21);
 		CreateBtn.addActionListener(this);
+
+		LoadBtn = new JButton("Load map");
+		WindowPanel.add(LoadBtn);
+		LoadBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
+		LoadBtn.setForeground(new Color(67, 80, 88));
+		LoadBtn.setBackground(UIManager.getColor("Button.highlight"));								
+		LoadBtn.setBounds(220, 214, 125, 21);
+		LoadBtn.addActionListener(this);
+
 		EditBtn = new JButton("Edit map");
 		WindowPanel.add(EditBtn);
 		EditBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
 		EditBtn.setForeground(new Color(67, 80, 88));
-		EditBtn.setBackground(UIManager.getColor("Button.highlight"));
-								
-		EditBtn.setBounds(220, 214, 125, 21);
+		EditBtn.setBackground(UIManager.getColor("Button.highlight"));								
+		EditBtn.setBounds(220, 250, 125, 21);
 		EditBtn.addActionListener(this);
 
 		EndBtn = new JButton("Exit");
 		WindowPanel.add(EndBtn);
 		EndBtn.setForeground(new Color(67, 80, 88));
 		EndBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
-
-		EndBtn.setBounds(220, 371, 125, 21);
+		EndBtn.setBounds(220, 407, 125, 21);
 		EndBtn.addActionListener(this);
 
 	}
