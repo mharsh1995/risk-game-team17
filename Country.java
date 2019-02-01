@@ -14,7 +14,7 @@ public class Country {
 	private String name;
 
 	/** Country holder */
-	private String player;
+	private boolean hasPlayer;
 
 	/** Part of continent */
 	private String continent;
@@ -33,6 +33,8 @@ public class Country {
 
 	/** Part of Continent */
 	private Continent partOfContinent;
+	
+	private Player occupant;
 
 	/**
 	 * Country constructor.
@@ -42,6 +44,7 @@ public class Country {
 	 */
 	public Country(String name) {
 		this.name = name;
+		hasPlayer = false;
 		adjacentCountries = new ArrayList<Country>();
 	}
 
@@ -63,14 +66,32 @@ public class Country {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	/**
+     * player conquers a country the player object is set as the occupant of the 
+	 * country
+     **/
+	
+	 public void setOccupant(Player occupant) {
+			hasPlayer = true;
+			this.occupant = occupant;
+	    }
+	 
+	 /**
+	     * Returns the player object who currently occupies the country
+	     **/
+	    public Player getOccupant() {
+			return occupant;
+	    }
+		
 
 	/**
 	 * Get Player name
 	 * 
 	 * @return player The name of player
 	 */
-	public String getPlayer() {
-		return player;
+	public boolean gethasPlayer() {
+		return hasPlayer;
 	}
 
 	/**
@@ -79,8 +100,8 @@ public class Country {
 	 * @param player
 	 *            name of the player.
 	 */
-	public void setPlayer(String player) {
-		this.player = player;
+	public void sethasPlayer(boolean player) {
+		this.hasPlayer = hasPlayer;
 	}
 
 	/**
