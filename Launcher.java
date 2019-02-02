@@ -13,22 +13,28 @@ import java.io.IOException;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+*This file will launch the game with Jframe
+*@author yashgolwala
+*/
 
-/* This class represent Menu to start and Exit game */
+/*This class represent Menu to start and Exit game */
 
 public class Launcher extends JFrame implements ActionListener {
 
+	/* Declaring variables for Buttons */
+	
 	private static final long serialVersionUID = 1L;
-	private JButton StartBtn;
-	private JButton EndBtn;
-	private JButton CreateBtn;
-	private JButton LoadBtn;
-	private JButton EditBtn;
-	private JButton SeriesBtn;
-	private JFrame WindowFrame;
+	private JButton startBtn;
+	private JButton endBtn;
+	private JButton createBtn;
+	private JButton loadBtn;
+	private JButton editBtn;
+	private JButton seriesBtn;
+	private JFrame windowFrame;
 	private TitledBorder border;
-	private JPanel WindowPanel;
-	private JLabel TitleLabel;
+	private JPanel windowPanel;
+	private JLabel titleLabel;
 
 	public Launcher () {
 		try {
@@ -45,66 +51,66 @@ public class Launcher extends JFrame implements ActionListener {
 
 	public void Strt() {
 
-		WindowFrame = new JFrame("Risk-Play!");
-		WindowFrame.setVisible(true);
+		windowFrame = new JFrame("Risk-Play!");
+		windowFrame.setVisible(true);
 
-		WindowFrame.setSize(550, 550);
-		WindowFrame.setLocation(500, 200);
-		WindowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		windowFrame.setSize(550, 550);
+		windowFrame.setLocation(500, 200);
+		windowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		border = new TitledBorder("Risk - Ready for War");
 		border.setTitleJustification(TitledBorder.CENTER);
 		border.setTitlePosition(TitledBorder.TOP);
 
-		WindowPanel = new JPanel();
-		WindowPanel.setBorder(border);
+		windowPanel = new JPanel();
+		windowPanel.setBorder(border);
 
-		TitleLabel = new JLabel("Risk");
+		titleLabel = new JLabel("Risk");
 
-		TitleLabel.setForeground(Color.red);
-		TitleLabel.setFont(new Font("Monospaced", Font.BOLD, 14));
+		titleLabel.setForeground(Color.red);
+		titleLabel.setFont(new Font("Monospaced", Font.BOLD, 14));
 
-		WindowFrame.getContentPane().add(TitleLabel);
-		WindowFrame.getContentPane().add(WindowPanel);
-		WindowPanel.setLayout(null);
+		windowFrame.getContentPane().add(TitleLabel);
+		windowFrame.getContentPane().add(WindowPanel);
+		windowPanel.setLayout(null);
 		
-		StartBtn = new JButton("Start Game");
-		WindowPanel.add(StartBtn);
-		StartBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
-		StartBtn.setBackground(UIManager.getColor("Button.highlight"));
-		StartBtn.setForeground(new Color(67, 80, 88));
-		StartBtn.setBounds(220, 102, 125, 21);
-		StartBtn.addActionListener(this);
+		startBtn = new JButton("Start Game");
+		windowPanel.add(StartBtn);
+		startBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
+		startBtn.setBackground(UIManager.getColor("Button.highlight"));
+		startBtn.setForeground(new Color(67, 80, 88));
+		startBtn.setBounds(220, 102, 125, 21);
+		startBtn.addActionListener(this);
 		
-		CreateBtn = new JButton("Create Map");
-		WindowPanel.add(CreateBtn);
-		CreateBtn.setForeground(new Color(67, 80, 88));
-		CreateBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
-		CreateBtn.setBounds(220, 178, 125, 21);
-		CreateBtn.addActionListener(this);
+		createBtn = new JButton("Create Map");
+		windowPanel.add(CreateBtn);
+		createBtn.setForeground(new Color(67, 80, 88));
+		createBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
+		createBtn.setBounds(220, 178, 125, 21);
+		createBtn.addActionListener(this);
 
-		LoadBtn = new JButton("Load map");
-		WindowPanel.add(LoadBtn);
-		LoadBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
-		LoadBtn.setForeground(new Color(67, 80, 88));
-		LoadBtn.setBackground(UIManager.getColor("Button.highlight"));								
-		LoadBtn.setBounds(220, 214, 125, 21);
-		LoadBtn.addActionListener(this);
+		loadBtn = new JButton("Load map");
+		windowPanel.add(LoadBtn);
+		loadBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
+		loadBtn.setForeground(new Color(67, 80, 88));
+		loadBtn.setBackground(UIManager.getColor("Button.highlight"));								
+		loadBtn.setBounds(220, 214, 125, 21);
+		loadBtn.addActionListener(this);
 
-		EditBtn = new JButton("Edit map");
-		WindowPanel.add(EditBtn);
-		EditBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
-		EditBtn.setForeground(new Color(67, 80, 88));
-		EditBtn.setBackground(UIManager.getColor("Button.highlight"));								
-		EditBtn.setBounds(220, 250, 125, 21);
-		EditBtn.addActionListener(this);
+		editBtn = new JButton("Edit map");
+		windowPanel.add(EditBtn);
+		editBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
+		editBtn.setForeground(new Color(67, 80, 88));
+		editBtn.setBackground(UIManager.getColor("Button.highlight"));								
+		editBtn.setBounds(220, 250, 125, 21);
+		editBtn.addActionListener(this);
 
-		EndBtn = new JButton("Exit");
-		WindowPanel.add(EndBtn);
-		EndBtn.setForeground(new Color(67, 80, 88));
-		EndBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
-		EndBtn.setBounds(220, 407, 125, 21);
-		EndBtn.addActionListener(this);
+		endBtn = new JButton("Exit");
+		windowPanel.add(EndBtn);
+		endBtn.setForeground(new Color(67, 80, 88));
+		endBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
+		endBtn.setBounds(220, 407, 125, 21);
+		endBtn.addActionListener(this);
 
 	}
 	public static void main(String[] args) {
