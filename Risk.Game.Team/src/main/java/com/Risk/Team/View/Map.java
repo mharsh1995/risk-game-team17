@@ -41,9 +41,11 @@ public class Map extends JFrame implements ActionListener
 	private JComboBox Player5;
 	private JComboBox Player6;
 	private String player;
+	private int noOfPlayers;
 	protected static MapParseProcessor mapParseObject;
 	private static JFileChooser filechooser;
 	private static String filePath;
+	private JButton EndBtn;
 	
 	
 	public Map() {
@@ -97,100 +99,16 @@ public void ply(){
 	//frame.add(btn);
 	//frame.getContentPane().add(btn);
 
-    //btn = new JButton("OK");
-   // btn.setBounds(20,20,70, 70);  
-    //btn.setVisible(true);
-   frame.getContentPane().add(btn);
+    btn = new JButton("OK");
+    btn.setBounds(20,20,70, 70);  
+    btn.setVisible(true);
+    frame.getContentPane().add(btn);
     frame.setSize(700,700);  
     
     frame.setLayout(null);  
     frame.setVisible(true);
     btn.setLocation(12, 230);
     btn.setPreferredSize(new Dimension(116, 40));
-    combo.addActionListener(new ActionListener() {
-		public void actionPerformed(final ActionEvent e) {
-			player = (String) combo.getSelectedItem();
-
-			if (player.equals("2") || player.equals("3") || player.equals("4")
-					|| player.equals("5") || player.equals("6")) {
-
-				gbc.gridx = 0;
-				gbc.gridy = 4;
-				panel.add(player1, gbc);
-				gbc.gridx = 2;
-				gbc.gridy = 4;
-				panel.add(Player1, gbc);
-
-				gbc.gridx = 0;
-				gbc.gridy = 6;
-				panel.add(player2, gbc);
-				gbc.gridx = 2;
-				gbc.gridy = 6;
-				panel.add(Player2, gbc);
-				panel.remove(Player3);
-				panel.remove(player3);
-				panel.remove(Player4);
-				panel.remove(player4);
-				panel.remove(Player5);
-				panel.remove(player5);
-				panel.remove(Player6);
-				panel.remove(player6);
-
-			}
-			if (player.equals("3") || player.equals("4") || player.equals("5")
-					|| player.equals("6")) {
-
-				gbc.gridx = 0;
-				gbc.gridy = 8;
-				panel.add(player3, gbc);
-				gbc.gridx = 2;
-				gbc.gridy = 8;
-				panel.add(Player3, gbc);
-				panel.remove(Player4);
-				panel.remove(player4);
-				panel.remove(Player5);
-				panel.remove(player5);
-				panel.remove(Player6);
-				panel.remove(player6);
-			}
-			if (player.equals("4") || player.equals("5") || player.equals("6")) {
-				gbc.gridx = 0;
-				gbc.gridy = 10;
-				panel.add(player4, gbc);
-				gbc.gridx = 2;
-				gbc.gridy = 10;
-				panel.add(Player4, gbc);
-				panel.remove(Player5);
-				panel.remove(player5);
-				panel.remove(Player6);
-				panel.remove(player6);
-			}
-			if (player.equals("5") || player.equals("6")) {
-				gbc.gridx = 0;
-				gbc.gridy = 12;
-				panel.add(player5, gbc);
-				gbc.gridx = 2;
-				gbc.gridy = 12;
-				panel.add(Player5, gbc);
-				panel.remove(Player6);
-				panel.remove(player6);
-			}
-			if (player.equals("6")) {
-				gbc.gridx = 0;
-				gbc.gridy = 14;
-				panel.add(player6, gbc);
-				gbc.gridx = 2;
-				gbc.gridy = 14;
-				panel.add(Player6, gbc);
-			}
-			gbc.gridx = 2;
-			gbc.gridy = 18;
-			panel.add(btn, gbc);
-			frame.validate();
-			frame.repaint();
-			frame.repaint();
-		}
-	});
 }
 
 public static void main(String[] args) {
@@ -222,7 +140,7 @@ btn.addActionListener(new ActionListener() {
 						LOGGER.info("Selected file: " + selectedFile.getAbsolutePath().toString());
 						filePath = selectedFile.getAbsolutePath().toString();
 						mapParseObject = new MapParseProcessor();
-						mapParseObject.mapParser(selectedFile.getAbsolutePath().toString(),combo.getSelectedItem().toString(), playerType, "single");
+						//mapParseObject.mapParser(selectedFile.getAbsolutePath().toString(),combo.getSelectedItem().toString(), playerType, "single");
                     }
                 }
             }
@@ -250,15 +168,48 @@ public void setFilePath(String filePath) {
 	this.filePath = filePath;
 }
 
-public void actionPerformed(ActionEvent e) {
+//public void actionPerformed(ActionEvent e) {
+	//String action = e.getActionCommand();
+	//if (e.getSource() == btn) {
+	//	LOGGER.info("####  startGameButton is clicked ####");
+	//	frame.setVisible(false);
+		//Map map = new Map();
+		//map.setVisible(true);
+
+	
+	//} else if (e.getSource() == EndBtn) {
+	//	System.exit(0);
+
+	//}
+	
+//}
+public String[] getPlayerCounter() {
+	return MapArray;
+}
+
+
+public void setPlayerCounter(String[] playerCounter) {
+	this.MapArray = playerCounter;
+}
+ int getNoOfPlayers() {
+	return getNoOfPlayers();
+}
+
+
+public void setNoOfPlayers(int noOfPlayers) {
+	this.noOfPlayers = noOfPlayers;
+}
+
+public void actionPerformed(ActionEvent arg0) {
 	// TODO Auto-generated method stub
 	
 }
 
 
+//public void actionPerformed(ActionEvent e) {
+	// TODO Auto-generated method stub
+	
+//}
+
+
 }
-
-		
-
-
-

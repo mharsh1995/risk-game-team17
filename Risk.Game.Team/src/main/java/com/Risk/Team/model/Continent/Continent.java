@@ -13,7 +13,10 @@ import Risk.Game.Team.model.country.Country;
 
  public class Continent implements Serializable{
 
-    private int numberOfCountries;
+    private int numberOfCountries;     
+    
+    
+    
     private int continentControlValue;
     private String continentName;
     private List<Country> countries1;
