@@ -117,7 +117,7 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 		EndBtn = new JButton("Exit");
 		WindowPanel.add(EndBtn);
 		EndBtn.setForeground(new Color(67, 80, 88));
-		EndBtn.setFont(new Font("Monospaced", Font.BOLD, 15));
+		EndBtn.setFont(new Font("Monospaced", Font.BOLD, 15)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             );
 		EndBtn.setBounds(220, 407, 125, 21);
 		EndBtn.addActionListener(this);
 

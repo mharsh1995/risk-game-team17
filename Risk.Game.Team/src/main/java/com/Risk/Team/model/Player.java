@@ -1,59 +1,57 @@
-package Risk.Game.Team.model.player;
+package com.Risk.Team.model;
+
+
 
 import java.util.ArrayList;
 
-import Risk.Game.Team.model.country.Country;
-
 /**
- * Player class which provides the information regarding the player.
+ * Player class for information regarding the player
  * 
  * @author Kartika Patil
  *
  */
-public class player {
+public class Player {
 	
-	/** Name of the Player */
+	/** Player name */
     private String name;
     
-    /**Initial army count of the Player*/
+    /**Initialization of army count */
     private int armyCount=0;
     
-    /** List of countries held by the Player */
+    /** List of countries possessed by the Player */
     private ArrayList<Country> myCountries;
     
-    /** List of cards the Player holds.*/
-    //private ArrayList<CardType> listOfCards;
+    /** List of cards that Player holds*/
+    private ArrayList<BonusCardType> listOfCards;
     
     /** Player constructor */
-    public player() {
+    public Player() {
         this.myCountries = new ArrayList<Country>();
-        //this.listOfCards = new ArrayList<CardType>();
+        this.listOfCards = new ArrayList<BonusCardType>();
     }
     
     /**
-     * Get the name of the Player.
-     * 
-     * @return name
-     *			Player name
+     * Get method to get the name of the Player
+     *
+     * @return name Player name
      */
     public String getName() {
         return name;
     }
     
     /**
-     * Set the name of the Player
+     * Set method for the name of the Player
      * 
-     * @param name
-     * 			Player name to set
+     * @param name Player name to set
      */
     public void setName(String name) {
         this.name = name;
     }
     
     /**
-     * Method to get the Count of the Army that the Player Holds.
+     * Method to get the Count of the Army that the Player owns
      * 
-     * @return armies count
+     * @return armyCount count of army
      */
     public int getArmyCount() {
         return armyCount;
@@ -70,10 +68,9 @@ public class player {
     }
     
     /**
-     * Get the list of countries the player holds
+     * Get the list of countries the player owns
      * 
-     * @return
-     * 		list of countries
+     * @return myCountries list of countries
      */
     public ArrayList<Country> getMyCountries() {
         return myCountries;
@@ -90,45 +87,42 @@ public class player {
     }
     
     /**
-     *  Method to add a single country to the player's country list
+     *  Method for adding a single country to the player's country list
      *  
-     * @param country
-     * 				Object of the country
+     * @param country Object of the country
      */
     public void addCountry(Country country){
         this.myCountries.add(country);
     }
     
     /**
-     * Method to get the list of cards the player holds
+     * Method for getting the list of cards the player owns
      * 
-     * @return list of cards
+     * @return listOfCards list of cards
      */
-   // public ArrayList<CardType> getListOfCards() {
-       // return listOfCards;
-    //}
+    public ArrayList<BonusCardType> getListOfCards() {
+        return listOfCards;
+    }
     
     /**
-     * Method to set the list of card of the particular type
+     * Method to set the list of card of one particular type
      * 
      * @param listOfCards Types of cards
      */
-   // public void setListOfCards(ArrayList<CardType> listOfCards) {
-     //   this.listOfCards = listOfCards;
-    //}
+    public void setListOfCards(ArrayList<BonusCardType> listOfCards) {
+        this.listOfCards = listOfCards;
+    }
     
     /**
      * Method to add the armies to a country
      * 
-     * @param country
-     * 				name of the country
-     * @param numberOfArmies
-     * 				number of armies to be added
+     * @param country name of the country
+     * @param numberOfArmies number of armies to be added
      */
     public void addArmiesToCountry(Country country, int numberOfArmies) {
     	if(this.getArmyCount()>0 && this.getArmyCount()>=numberOfArmies) {
     		if(!this.getMyCountries().contains(country)) {
-    			System.out.println("This country is not under your territory.");
+    			System.out.println("This country does not falls under your territory.");
     		}
     		else {
     			country.setNoOfArmies(country.getNoOfArmies() + numberOfArmies);
@@ -136,7 +130,7 @@ public class player {
     		}
     	}
     	else {
-    		System.out.println("Sufficient number of armies not available.");
+    		System.out.println("Insufficient number of armies.");
     	}
     }
 }
