@@ -1,6 +1,8 @@
 package com.Risk.Team.model;
 import java.util.ArrayList;
 
+import com.Risk.Team.model.Country;
+
 /**
  * Continent class provides data regarding the Continents
  * 
@@ -13,6 +15,9 @@ public class Continent {
 
 	/** List of countries in the continent */
 	private ArrayList<Country> listOfCountries;
+	
+	/** Control Value of continent. */
+	private int controlValue;
 
 	/**
 	 * Continent constructor
@@ -22,6 +27,7 @@ public class Continent {
 	 */
 	public Continent(String name, int controlValue) {
 		this.name = name;
+		this.controlValue = controlValue;
 		listOfCountries = new ArrayList<Country>();
 	}
 
@@ -43,6 +49,26 @@ public class Continent {
 		this.name = name;
 	}
 
+	/**
+	 * Get the control value of the continent.
+	 * 
+	 * @return control value of continent
+	 * 
+	 */
+	public int getControlValue() {
+		return controlValue;
+	}
+
+	/**
+	 * Set the control value of the continent.
+	 * 
+	 * @param controlFlag
+	 *            the control value to set
+	 */
+	public void setControlValue(int controlValue) {
+		this.controlValue = controlValue;
+	}
+	
 	/**
 	 * Method to get the list of countries held by the continent
 	 * 
