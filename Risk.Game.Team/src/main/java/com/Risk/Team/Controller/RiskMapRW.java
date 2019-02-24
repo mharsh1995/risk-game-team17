@@ -47,7 +47,7 @@ public class RiskMapRW {
 		this.mapGraph.setAdjacentCountries(map.getAdjacentCountries());
 		this.fileName = map.getFileName();
 		this.mapTagInfo = map.getMapTagInfo();
-		this.mapGraph.setCountrySet(map.getCountrySet());
+		this.mapGraph.setCountrySet(map.getCountryMap());
 
 	}
 
