@@ -1,22 +1,15 @@
 package com.Risk.Team.Controller;
 
-
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import com.Risk.Team.model.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import com.Risk.Team.model.Continent;
-import com.Risk.Team.model.Country;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-/**
-*
-*@author Kartika Patil
-*
-*/
 
 public class RiskMapVerify {
 	
@@ -27,7 +20,7 @@ public class RiskMapVerify {
 	private HashMap<String, Continent> continentsFromTerritories;
 
 
-	private HashMap<String, Country> countrySet;
+	private HashMap<String, Country> countryMap;
 
 	
 	private HashMap<Country, ArrayList<Country>> adjacentCountries;
@@ -47,7 +40,7 @@ public class RiskMapVerify {
 		this.adjacentCountries = new HashMap<>();
 		this.countriesOfContinent = new HashMap<>();
 		this.mapTagInfo = new ArrayList<>();
-		this.countrySet = new HashMap<>();
+		this.countryMap = new HashMap<>();
 	}
 	
 	public HashMap<String, Continent> getContinentsFromTerritories() {
@@ -90,15 +83,22 @@ public class RiskMapVerify {
 
 	
 	
-    public HashMap<String, Country> getCountrySet() {
-			return countrySet;
+    public HashMap<String, Country> getCountryMap() {
+			return countryMap;
 		}
 
 	
 
 	public boolean verifyMapFile(String inputMapFile) {
 		
-		// file processing content
+//file processing logic
+
+		
+	   RiskGraphConnected connected = new RiskGraphConnected(new HashSet<Country>(countryMap.values()));
+
+		if (!connected.isGraphConnected()) {
+			return false;
+		}
 
 		return true;
 	}
@@ -126,4 +126,16 @@ public class RiskMapVerify {
 		return true;
 	}
 	
-	
+	public int countOccurrences(String input, String search) {
+		int count = 0, startIndex = 0;
+		Pattern pattern = Pattern.compile(search, Pattern.LITERAL);
+		Matcher match = pattern.matcher(input);
+
+		while (match.find(startIndex)) {
+			count++;
+			startIndex = match.start() + 1;
+		}
+		return count;
+	}
+
+}
