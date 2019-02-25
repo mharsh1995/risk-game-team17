@@ -41,8 +41,10 @@ public class RiskGraphConnected {
 		Iterator<Country> citerator = this.countrySet.iterator();
 		while (citerator.hasNext()) {
 			
-		}
+		
 			visitedcountries.put(citerator.next(), false);
+			
+		}
 	}
 
 	
