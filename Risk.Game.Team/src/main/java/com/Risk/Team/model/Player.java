@@ -3,6 +3,7 @@ package com.Risk.Team.model;
 
 
 import java.util.ArrayList;
+import com.Risk.Team.model.BonusCardType;
 
 /**
  * Player class for information regarding the player
