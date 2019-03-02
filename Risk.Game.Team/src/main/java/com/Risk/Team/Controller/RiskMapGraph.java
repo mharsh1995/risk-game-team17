@@ -22,7 +22,7 @@ public class RiskMapGraph {
 	/** HashMap to store the list of adjacent countries */
 	private HashMap<Country, ArrayList<Country>> adjacentCountries;
 
-	/** HashMap for set of all countries */
+	/** HashMap for set of all countries with key as a name and Country object as a value*/
 	private HashMap<String, Country> allCountries;
 
 	/** Count of the total countries in the game */
@@ -69,7 +69,7 @@ public class RiskMapGraph {
 	 * Method to set the adjacent countries
 	 * 
 	 * @param adjacentCountries
-	 *            countries which are adjacent to eachother
+	 *            countries which are adjacent to each other
 	 */
 	public void setAdjacentCountries(HashMap<Country, ArrayList<Country>> adjacentCountries) {
 		this.adjacentCountries = adjacentCountries;
