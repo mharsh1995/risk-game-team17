@@ -15,11 +15,6 @@ import com.Risk.Team.Controller.*;
  * @author yashgolwala
  * 
  */
-
-/** Default Constructor */
-public RiskLaunchPhase() {
-}
-
 public class RiskLaunchPhase {
 
 	/** List containing name of players */
@@ -38,7 +33,11 @@ public class RiskLaunchPhase {
 
 	/** Maximum number of players */
 	private static final int MAX_PLAYER = 6;
-
+	
+	/** Default Constructor */
+	public RiskLaunchPhase() {
+	}
+	
 	/**
 	 * Constructor for the LaunchPhase class. This constructors 
      	 * gets the number of players and initializes them
