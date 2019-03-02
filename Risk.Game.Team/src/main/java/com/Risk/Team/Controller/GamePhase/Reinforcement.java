@@ -1,7 +1,5 @@
 package com.Risk.Team.Controller.GamePhase;
 
-
-
 import java.util.ArrayList;
 
 import com.Risk.Team.model.Continent;
@@ -11,30 +9,26 @@ import com.Risk.Team.model.Player;
 /**
  * 
  * Reinforcement class contains the methods used in the reinforcement phase
- * gameplay.
  * 
  * @author Jenny
  *
  */
 public class Reinforcement {
 	
-	Player player;
-	Continent continent;
-	Country country;
 	
-	/**
-	 * @param hasPlayerAllContinents flag to check if player has all continents
-	 * @param playerOwnedContries list of countries owned by player
-	 * @param continentCountryList list of countries in that continent
-	 */
-
+	/** hasPlayerAllContinents flag to check if player has all continents */
 	boolean hasPlayerAllContinents = true;
+	
+	 /** playerOwnedContries list of countries owned by player */
 	ArrayList<Country> playerOwnedCountries;
+	
+	 /** continentCountryList list of countries in that continent */
 	ArrayList<Country> continentCountryList;
 
 	/**
 	 * Method to find the number of countries owned by the player and to assign
 	 * the armies based on the countries list.
+	 * 
 	 * @param player Current Player
 	 * @param continent  Continent
 	 * @return noOfArmies reinforcement armies
@@ -59,9 +53,8 @@ public class Reinforcement {
 			}
 		}
 		
-		// If a player owns all the countries in a continent, then armies count
-	   // will be equal to the control value of the continent.
-	  if (hasPlayerAllContinents) {
+		// If a player owns all the countries in a continent, then armies count will be equal to the control value of the continent.
+		if (hasPlayerAllContinents) {
 		  noOfArmies = continent.getControlValue();
 	  }
 
