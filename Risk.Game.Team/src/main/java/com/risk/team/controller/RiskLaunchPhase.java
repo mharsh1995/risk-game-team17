@@ -33,10 +33,14 @@ public class RiskLaunchPhase {
 
 	/** Maximum number of players */
 	private static final int MAX_PLAYER = 6;
-
+	
+	/** Default Constructor */
+	public RiskLaunchPhase() {
+	}
+	
 	/**
 	 * Constructor for the LaunchPhase class. This constructors 
-     * gets the number of players and initializes them
+     	 * gets the number of players and initializes them
 	 * 
 	 * @param mapObj Object of RiskMapRW with map data
 	 */
@@ -193,6 +197,18 @@ public class RiskLaunchPhase {
 		for (Player player : this.playerList) {
 			player.setArmyCount(player.getArmyCount() - player.getMyCountries().size());
 		}
+		for (Player player : this.playerList) {
+			if(player.getArmyCount() < 0)
+			{
+				player.setArmyCount(0);
+				
+				for(Country c : player.getMyCountries())
+				{
+					c.setNoOfArmies(1);
+				}
+			} 
+		}
+
 	}
 
 	/**
