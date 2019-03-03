@@ -1,4 +1,4 @@
-package com.Risk.Team.model;
+package com.risk.team.model;
 import java.util.ArrayList;
 
 /**
