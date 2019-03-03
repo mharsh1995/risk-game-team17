@@ -1,4 +1,4 @@
-package com.risk.team.controller.GamePhase;
+package com.risk.team.controller.gamephase;
 
 import java.util.Collection;
 import java.util.HashSet;
