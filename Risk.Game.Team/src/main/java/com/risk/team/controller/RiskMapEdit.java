@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import com.risk.team.model.Continent;
 import com.risk.team.model.Country;
+import com.risk.team.view.RiskGameDriver;
 
 /**
  * Class provides the user with the option to edit a Risk Game Map
@@ -16,63 +17,71 @@ import com.risk.team.model.Country;
  *
  * @author Dhaval Desai
  */
+/**
+ * This class provides the user with the option to edit a Risk Game Map
+ * as per the rules prescribed in the game.
+ *
+ * @author Dhaval Desai
+ */
 public class RiskMapEdit {
 
     /**
-     * riskMapRW object of type RiskMapRW
+     * Creating a mapObj object of type RiskMapRW
      */
-    private RiskMapRW riskMapRW;
+    private RiskMapRW mapObj;
 
     /**
-     * Constructor of the class initializing riskMapRW object.
+     * Constructor of the class which initializes mapObj object.
      */
     public RiskMapEdit() {
-        this.riskMapRW = new RiskMapRW();
+        this.mapObj = new RiskMapRW();
     }
 
     /**
-     * Paramaterized Constructor of the class initializing riskMapRW object.
+     * Paramaterized Constructor of the class which initializes mapObj object.
      *
-     * @param riskMapRW object of type RiskMapRW.
+     * @param mapObj object of type RiskMapRW.
      */
-    public RiskMapEdit(RiskMapRW riskMapRW) {
-        this.riskMapRW = riskMapRW;
+    public RiskMapEdit(RiskMapRW mapObj) {
+        this.mapObj = mapObj;
     }
 
     /**
      * Getter for fetching the RiskMapRW Object
      *
-     * @return riskMapRW Object of type RiskMapRW
+     * @return mapObj Object of type RiskMapRW
      */
-    public RiskMapRW getRiskMapRW() {
-        return riskMapRW;
+    public RiskMapRW getMapObj() {
+        return mapObj;
     }
 
     /**
-     * 
-     * This method allows creation of new map or editing an existing map. 
-     * 
-     * The user can choose from 9 options:
      * <ul>
-     * <li>1) Enter Map Tag
-     * <li>2) Add a Continent
-     * <li>3) Remove a Continent
-     * <li>4) Add a Country
-     * <li>5) Remove a Country
-     * <li>6) Add an Edge between Countries
-     * <li>7) Remove an Edge between Countries
-     * <li>8) Show Map Details
-     * <li>9) Save Map and Exit
+     * This method allows creation of new map. The user can choose from 9 options:
+     *<li>1) Enter Map Tag
+     *<li>2) Add a Continent
+     *<li>3) Remove a Continent
+     *<li>4) Add a Country
+     *<li>5) Remove a Country
+     *<li>6) Add an Edge between Countries
+     *<li>7) Remove an Edge between Countries
+     *<li>8) Show Map Details
+     *<li>9) Save Map and Exit
      * </ul>
+     * @param flag when set true creates a new map and when set false allows editing existing map.
      * 
-     * @param flag represents 
-     * 
-     * @return true if the map is created else returns false
+     * @return true if the map is created or editing successfully else returns false
      */
     public boolean createEditMap(boolean flag) {
+    	System.out.println("<***********************WELCOME TO****************************************> ");
+    	if(flag) {
+    		System.out.println("<********************CREATE NEW MAP ~~~~MENU*********************************> \n");
+    	}else {
+    		System.out.println("<********************EDIT EXISTING MAP ~~~~MENU*********************************> \n");
+    	}
         System.out.println("Please Select one of the following Options : "
-                + "\n==================\n1. Enter Map Info \n2. Add a Continent\n3. Remove a Continent\n4. Add a Country\n5. "
-                + "Remove a Country\n6. Add an Edge between Countries\n7. Delete an Edge between Countries\n8. Show Map Details \n9. Exit");
+                + "\n====================================\n1. Enter Map Info \n2. Add a Continent\n3. Remove a Continent\n4. Add a Country\n5. "
+                + "Remove a Country\n6. Add an Edge between Countries\n7. Delete an Edge between Countries\n8. Show Map Details \n9. Save and Exit"+"\n====================================\n");
 
         Scanner sc = new Scanner(System.in);
         int select = 0;
@@ -85,6 +94,8 @@ public class RiskMapEdit {
 
         switch (select) {
             case 1:
+                addEditMapInfo(sc);
+                removeBlankLines(sc);
                 createEditMap(flag);
                 break;
             case 2:
@@ -96,7 +107,7 @@ public class RiskMapEdit {
                     System.out.println("\\nInvalid Input! Expecting a Number value for Continents\n");
                     createEditMap(flag);
                 }
-                System.out.println("Add continent in the format: \n Continent name=Control value (Eg: Asia=6)");
+                System.out.println("Add continent in the format: \n Continent name=Control value (Example: Africa=6)");
                 Pattern p = Pattern.compile("[a-z, A-Z]+=[0-9]+");
                 for (int i = 0; i < count; ++i) {
                     String continentInput = sc.nextLine();
@@ -106,24 +117,26 @@ public class RiskMapEdit {
                         --i;
                         continue;
                     }
-                    if (riskMapRW.getMapGraph().getContinents().containsKey(continentInput.split("=")[0])) {
+                    if (mapObj.getMapGraph().getContinents().containsKey(continentInput.split("=")[0])) {
                         System.out.println(continentInput.split("=")[0] + "  Continent already exists!! Enter a different Configuration!!!");
                         --i;
                         continue;
                     }
                     Continent continent = new Continent(continentInput.split("=")[0], Integer.parseInt(continentInput.split("=")[1]));
-                    riskMapRW.getMapGraph().addContinent(continent);
+                    mapObj.getMapGraph().addContinent(continent);
                 }
+                removeBlankLines(sc);
                 createEditMap(flag);
                 break;
             case 3:
                 System.out.println("Which continent would you like to delete?");
                 String continentName = sc.nextLine();
-                if (!riskMapRW.getMapGraph().getContinents().containsKey(continentName.trim())) {
+                if (!mapObj.getMapGraph().getContinents().containsKey(continentName.trim())) {
                     System.out.println("Invalid Input! No such Continent Exists!!!");
                     createEditMap(flag);
                 }
-                riskMapRW.getMapGraph().removeContinent(riskMapRW.getMapGraph().getContinents().get(continentName.trim()));
+                mapObj.getMapGraph().removeContinent(mapObj.getMapGraph().getContinents().get(continentName.trim()));
+                removeBlankLines(sc);
                 createEditMap(flag);
                 break;
             case 4:
@@ -141,33 +154,33 @@ public class RiskMapEdit {
                     String line = sc.nextLine();
                     if (!line.trim().isEmpty()) {
                         String input[] = line.split(",");
-                        if (riskMapRW.getMapGraph().getContinents().get(input[3].trim()) == null) {
+                        if (mapObj.getMapGraph().getContinents().get(input[3].trim()) == null) {
                         	System.out.println("Invalid Input! No such Continent found!!!");
                         	--i;
                             continue;
                         }
                         Country country = null;
-                        if (!riskMapRW.getMapGraph().getAllCountries().containsKey(input[0].trim())) {
+                        if (!mapObj.getMapGraph().getAllCountries().containsKey(input[0].trim())) {
                             country = new Country(input[0].trim());
-                            country.setContinent(riskMapRW.getMapGraph().getContinents().get(input[3]).getName());
-                            country.setPartOfContinent(riskMapRW.getMapGraph().getContinents().get(input[3].trim()));
+                            country.setContinent(mapObj.getMapGraph().getContinents().get(input[3]).getName());
+                            country.setPartOfContinent(mapObj.getMapGraph().getContinents().get(input[3].trim()));
                             country.setxValue(input[1]);
                             country.setyValue(input[2]);
                         } else {
-                            country = riskMapRW.getMapGraph().getAllCountries().get(input[0].trim());
-                            country.setContinent(riskMapRW.getMapGraph().getContinents().get(input[3].trim()).getName());
-                            country.setPartOfContinent(riskMapRW.getMapGraph().getContinents().get(input[3].trim()));
+                            country = mapObj.getMapGraph().getAllCountries().get(input[0].trim());
+                            country.setContinent(mapObj.getMapGraph().getContinents().get(input[3].trim()).getName());
+                            country.setPartOfContinent(mapObj.getMapGraph().getContinents().get(input[3].trim()));
                             country.setxValue(input[1]);
                             country.setyValue(input[2]);
                         }
                         ArrayList<Country> countryList = new ArrayList<>();
                         for (int j = 4; j < input.length; ++j) {
                             Country adjacentCountry;
-                            if (!riskMapRW.getMapGraph().getAllCountries().containsKey(input[j].trim())) {
+                            if (!mapObj.getMapGraph().getAllCountries().containsKey(input[j].trim())) {
                                 adjacentCountry = new Country(input[j].trim());
-                                riskMapRW.getMapGraph().getAllCountries().put(input[j].trim(), adjacentCountry);
+                                mapObj.getMapGraph().getAllCountries().put(input[j].trim(), adjacentCountry);
                             } else {
-                                adjacentCountry = riskMapRW.getMapGraph().getAllCountries().get(input[j].trim());
+                                adjacentCountry = mapObj.getMapGraph().getAllCountries().get(input[j].trim());
                             }
                             if (!adjacentCountry.getAdjacentCountries().contains(country)) {
                                 adjacentCountry.getAdjacentCountries().add(country);
@@ -175,40 +188,87 @@ public class RiskMapEdit {
                             countryList.add(adjacentCountry);
                         }
                         country.setAdjacentCountries(countryList);
-                        riskMapRW.getMapGraph().addCountry(country);
+                        mapObj.getMapGraph().addCountry(country);
                     }
                 }
+                removeBlankLines(sc);
                 createEditMap(flag);
                 break;
             case 5:
                 System.out.println("Which country would you like to be deleted?");
                 String countryName = sc.nextLine();
-                if (!riskMapRW.getMapGraph().getAllCountries().containsKey(countryName.trim())) {
+                if (!mapObj.getMapGraph().getAllCountries().containsKey(countryName.trim())) {
                     System.out.println("Invalid Input! No such Country Found!!!");
                     createEditMap(flag);
                 }
-                riskMapRW.getMapGraph().removeCountry(riskMapRW.getMapGraph().getAllCountries().get(countryName.trim()));
+                mapObj.getMapGraph().removeCountry(mapObj.getMapGraph().getAllCountries().get(countryName.trim()));
+                removeBlankLines(sc);
                 createEditMap(flag);
                 break;
             case 6:
                 System.out.println("Please specify the name of Country1 and Country2 each on a New Line");
                 String firstCountry = sc.nextLine();
                 String secondCountry = sc.nextLine();
-                if (!riskMapRW.getMapGraph().getAllCountries().containsKey(firstCountry)) {
+                if (!mapObj.getMapGraph().getAllCountries().containsKey(firstCountry)) {
                     System.out.println("Invalid Country Name:" + firstCountry);
                     createEditMap(flag);
-                } else if (!riskMapRW.getMapGraph().getAllCountries().containsKey(secondCountry)) {
+                } else if (!mapObj.getMapGraph().getAllCountries().containsKey(secondCountry)) {
                     System.out.println("Invalid Country Name:" + secondCountry);
                     createEditMap(flag);
-                } else if (riskMapRW.getMapGraph().checkAdjacencyOfCountries(riskMapRW.getMapGraph().getAllCountries().get(firstCountry),
-                		riskMapRW.getMapGraph().getAllCountries().get(secondCountry))) {
+                } else if (mapObj.getMapGraph().checkAdjacencyOfCountries(mapObj.getMapGraph().getAllCountries().get(firstCountry),
+                		mapObj.getMapGraph().getAllCountries().get(secondCountry))) {
                     System.out.println("Given Countries are already Adjacent to each other!!!");
                     createEditMap(flag);
                 }
-                riskMapRW.getMapGraph().addLinkBetweenCountries(riskMapRW.getMapGraph().getAllCountries().get(firstCountry),
-                		riskMapRW.getMapGraph().getAllCountries().get(secondCountry));
+                mapObj.getMapGraph().addLinkBetweenCountries(mapObj.getMapGraph().getAllCountries().get(firstCountry),
+                		mapObj.getMapGraph().getAllCountries().get(secondCountry));
+                removeBlankLines(sc);
                 createEditMap(flag);
                 break;
+            case 7:
+                System.out.println("Please specify the name of Country1 and Country2 each on a New Line");
+                String thirdCountry = sc.nextLine();
+                String fourthCountry = sc.nextLine();
+                if (!mapObj.getMapGraph().getAllCountries().containsKey(thirdCountry)) {
+                    System.out.println("Invalid Country Name:" + thirdCountry);
+                    createEditMap(flag);
+                } else if (!mapObj.getMapGraph().getAllCountries().containsKey(fourthCountry)) {
+                    System.out.println("Invalid Country Name:" + fourthCountry);
+                    createEditMap(flag);
+                } else if (!mapObj.getMapGraph().checkAdjacencyOfCountries(mapObj.getMapGraph().getAllCountries().get(thirdCountry),
+                		mapObj.getMapGraph().getAllCountries().get(fourthCountry))) {
+                    System.out.println("Countries already disjoint!!!");
+                    createEditMap(flag);
+                }
+                mapObj.getMapGraph().deleteLinkBetweenCountries(mapObj.getMapGraph().getAllCountries().get(thirdCountry),
+                		mapObj.getMapGraph().getAllCountries().get(fourthCountry));
+                removeBlankLines(sc);
+                createEditMap(flag);
+                break;
+            case 8:
+                printMyMap();
+                createEditMap(flag);
+                break;
+            case 9:
+                if (!checkAdjacency()) {
+                    return false;
+                }
+                if (!countCountriesInContinent()) {
+                    return false;
+                }
+                RiskGraphConnected connected = new RiskGraphConnected(new HashSet<Country>(mapObj.getMapGraph().getAllCountries().values()));
+
+                if (!connected.isGraphConnected()) {
+                    return false;
+                }
+                System.out.println("\nPlease enter Map name you wish to save?");
+                String fileName = sc.nextLine().trim();
+                mapObj.setFileName(fileName);
+                mapObj.setNewFileName(fileName);
+                mapObj.writeMapFile(flag);
+                RiskGameDriver.status = true;
+                return true;
+               
             default:
                 System.out.println("Please enter valid input.");
                 createEditMap(flag);
@@ -216,7 +276,8 @@ public class RiskMapEdit {
         }
         return true;
     }
-
+    
+    
     /**
      * 
      * This method verifies whether the countries are adjacent
@@ -225,11 +286,11 @@ public class RiskMapEdit {
      * @return true if the countries are adjacent to each other else returns false if they are not adjacent.
      */
     public boolean checkAdjacency() {
-        for (Map.Entry<Country, ArrayList<Country>> countries : riskMapRW.getMapGraph().getAdjacentCountries().entrySet()) {
+        for (Map.Entry<Country, ArrayList<Country>> countries : mapObj.getMapGraph().getAdjacentCountries().entrySet()) {
             Country country = countries.getKey();
             ArrayList<Country> connected = countries.getValue();
             for (Country adjacent : connected) {
-                if (!riskMapRW.getMapGraph().getAdjacentCountries().get(adjacent).contains(country)) {
+                if (!mapObj.getMapGraph().getAdjacentCountries().get(adjacent).contains(country)) {
                     System.out.println("Given countries are not adjacent to each other!!!");
                     return false;
                 }
@@ -246,13 +307,61 @@ public class RiskMapEdit {
      * @return true if the continent has more than 2 countries inside it else returns false
      */
     public boolean countCountriesInContinent() {
-        for (Continent continent : riskMapRW.getMapGraph().getContinents().values()) {
+        for (Continent continent : mapObj.getMapGraph().getContinents().values()) {
             if (continent.getListOfCountries().size() < 2) {
                 System.out.println("The continent " + continent.getName() + " has less then 2 countries!!!");
                 return false;
             }
         }
         return true;
+    }
+
+    /**
+     * 
+     * This method allows to add or edit a Map Tag Information.
+     *
+     *@param sc Scanner Object which allows scanning input from the user.
+     *
+     *
+     */
+    public void addEditMapInfo(Scanner sc) {
+    	mapObj.getMapTagInfo().clear();
+        System.out.println("Please enter the following information as requested:");
+    	System.out.println("Enter Author Name:");
+        String auth = "Author = " + sc.nextLine().trim();
+
+        System.out.println("Warning = Yes or No?");
+        String warn = "Warning = " + sc.nextLine().trim();
+
+        System.out.println("Please enter name of the Map Image file(.bmp):");
+        String img = "Image = " + sc.nextLine().trim();
+
+        System.out.println("Wrap = Yes or No?");
+        String wrap = "Wrap = " + sc.nextLine().trim();
+
+        System.out.println("Scrolling = Horizontal or Vertical?");
+        String scroll = "Scroll = " + sc.nextLine().trim();
+
+        mapObj.getMapTagInfo().add(auth);
+        mapObj.getMapTagInfo().add(warn);
+        mapObj.getMapTagInfo().add(img);
+        mapObj.getMapTagInfo().add(wrap);
+        mapObj.getMapTagInfo().add(scroll);
+
+        System.out.println("Map Tag Info added Sucessfully!!");
+    }
+
+    /**
+     *
+     * This method is used for pre-processing the 
+     * blank lines in the Map file.
+     *
+     *@param sc Scanner Object which allows scanning input from the user.
+     *
+     */
+    private void removeBlankLines(Scanner sc) {
+        do {
+        } while (sc.nextLine().equals("\n"));
     }
 
     /**
@@ -263,12 +372,12 @@ public class RiskMapEdit {
         System.out.println("================");
         System.out.println("Map Tag Info:");
         
-        
-        riskMapRW.getMapTagInfo().forEach(System.out::println);
+        mapObj.getMapTagInfo().forEach(System.out::println);
 
-        for (Map.Entry<String,Continent> list : riskMapRW.getMapGraph().getContinents().entrySet()) {
-            System.out.println("\nContinent Name=" + " " + list.getValue().getName() + ", Associated Value = "+ list.getValue().getControlValue());
-                list.getValue().getListOfCountries().forEach(c -> {
+        for (Map.Entry<String,Continent> entry : mapObj.getMapGraph().getContinents().entrySet()) {
+            System.out.println("\nContinent Name=" + " " + entry.getValue().getName() + ", Associated Value = "+ entry.getValue().getControlValue());
+      
+            entry.getValue().getListOfCountries().forEach(c -> {
                 System.out.print(c.getName() + " has the following countries adjacent to it: ");
                 c.getAdjacentCountries().forEach(c1 -> System.out.print(" " + c1.getName() + ", "));
                 System.out.println();
@@ -276,3 +385,4 @@ public class RiskMapEdit {
         }
     }
 }
+
