@@ -196,7 +196,7 @@ public class Country {
 	public void setPartOfContinent(Continent partOfContinent) {
 		this.partOfContinent = partOfContinent;
 	}
-	
+
 	/**
 	 * {@inheritDoc} Used to check if names of two countries are same.
 	 */

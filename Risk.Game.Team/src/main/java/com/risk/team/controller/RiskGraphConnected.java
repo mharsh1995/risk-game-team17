@@ -21,36 +21,36 @@ import com.risk.team.model.*;
 
 
 public class RiskGraphConnected {
-	
+
 	/** HashMap of countries to check country is visited or not */
-	
+
 	private HashMap<Country, Boolean> visitedcountries;
-	
+
 	/** Set of allCountries of a MapGraph*/
 
 	private Set<Country> countrySet;
-	
+
 	/**Flag to validate if path exists or not in fortification phase*/	
-	
+
 	boolean flag = false;
-	
+
 	/**
 	 * Constructor initializing visited countries member values to false
 	 * 
 	 * @param countrySet
 	 * Set containing all countries for Game Map
 	 */
-	
+
 	ArrayList<Country> countryPathList;
-	 
+
 	public RiskGraphConnected(Set<Country> countrySet)
 	{
 		this.countrySet = countrySet;
 		this.visitedcountries = new HashMap<>();
 		Iterator<Country> citerator = this.countrySet.iterator();
 		while (citerator.hasNext()) {
-			
-			
+
+
 			visitedcountries.put(citerator.next(), false);}
 	}
 
@@ -60,24 +60,24 @@ public class RiskGraphConnected {
 	 * @param start_country
 	 * Intial country for start DFS traversal
 	 */
-		
+
 	private void dfsTraversal(Country start_country){
 
 		visitedcountries.put(start_country,true);
-		
-	    Iterator<Country> adjiterator = start_country.getAdjacentCountries().iterator();
 
-	    while (adjiterator.hasNext())
-	    {
+		Iterator<Country> adjiterator = start_country.getAdjacentCountries().iterator();
+
+		while (adjiterator.hasNext())
+		{
 			Country adjacentCountry = adjiterator.next();
 			if (!visitedcountries.get(adjacentCountry))
 			{
 				dfsTraversal(adjacentCountry);
 			}
-	    }
+		}
 
 	}
-	
+
 	/**
 	 * Depth Search First traversal for Map graph for fortification.
 	 * 
@@ -90,40 +90,40 @@ public class RiskGraphConnected {
 	 * @return nothing
 	 * 						
 	 */
-	
+
 	private void dfsTraversal2(Country s_country,Country d_country,Set playerowncountries){
 
 		visitedcountries.put(s_country ,true);
-		
-		
+
+
 		if(s_country.toString().equals(d_country.toString()))
 		{
 			flag = true;
 		}
-			
-	    Iterator<Country> adjiterator = s_country.getAdjacentCountries().iterator();
 
-	    while (adjiterator.hasNext())
-	    {
-	    	Country adjacentCountry = adjiterator.next();
-	    	
+		Iterator<Country> adjiterator = s_country.getAdjacentCountries().iterator();
+
+		while (adjiterator.hasNext())
+		{
+			Country adjacentCountry = adjiterator.next();
+
 			if (!visitedcountries.get(adjacentCountry) && playerowncountries.contains(adjacentCountry) )
 			{
 				dfsTraversal2(adjacentCountry,d_country,playerowncountries);
 			}	   
 		}
-	     
+
 	}
-	
+
 	/**
 	 * Main method checking weather Risk Game Map graph is connected or not
 	 * 
 	 * @return
 	 * 			true if map is connected else it returns false;
 	 */
-	
+
 	public boolean isGraphConnected() {
-		
+
 		dfsTraversal(countrySet.iterator().next());
 		Iterator<Country> iterator = countrySet.iterator();
 		while (iterator.hasNext()) {
@@ -135,11 +135,11 @@ public class RiskGraphConnected {
 			}
 
 		}
-		
+
 		return true;
-		
+
 	}
-	
+
 	/**
 	 * Method checking weather Risk Game Map graph is connected or not through adjacent countries in fortification Phase.
 	 * 
@@ -152,22 +152,21 @@ public class RiskGraphConnected {
 	 * @return
 	 * 			true if map is connected else it returns false;
 	 */
-	
-	
-	 public boolean ifPathExists(Country fromCountry, Country toCountry,Set playerowncountries) { 
-		
-		 if (countrySet.contains(fromCountry)) {
-			 dfsTraversal2(fromCountry,toCountry,playerowncountries);		 
-		  }
-		 
-		 if(flag){
-			 return true;
-		 }
-		 else {	 
-			 return false;
-		 }
+
+
+	public boolean ifPathExists(Country fromCountry, Country toCountry,Set playerowncountries) { 
+
+		if (countrySet.contains(fromCountry)) {
+			dfsTraversal2(fromCountry,toCountry,playerowncountries);		 
+		}
+
+		if(flag){
+			return true;
+		}
+		else {	 
+			return false;
+		}
 	} 
-	 
+
 }
 
-	

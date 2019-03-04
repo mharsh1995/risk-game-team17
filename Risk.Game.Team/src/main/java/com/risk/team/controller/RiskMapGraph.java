@@ -15,7 +15,7 @@ import com.risk.team.model.*;
  */
 
 public class RiskMapGraph {
-	
+
 	/** HashMap to store names of all the continent */
 	private HashMap<String, Continent> continents;
 
@@ -27,7 +27,7 @@ public class RiskMapGraph {
 
 	/** Count of the total countries in the game */
 	private int totalCountries = 0;
-	
+
 	/**
 	 * RiskMapGraph constructor
 	 */
@@ -36,7 +36,7 @@ public class RiskMapGraph {
 		this.adjacentCountries = new HashMap<>();
 		this.allCountries = new HashMap<>();
 	}
-	
+
 	/**
 	 * Method to get the continents
 	 * 
@@ -74,7 +74,7 @@ public class RiskMapGraph {
 	public void setAdjacentCountries(HashMap<Country, ArrayList<Country>> adjacentCountries) {
 		this.adjacentCountries = adjacentCountries;
 	}
-	
+
 	/**
 	 * Method to get the count of total number of countries.
 	 * 
@@ -93,7 +93,7 @@ public class RiskMapGraph {
 	public void setTotalCountries(int totalCountries) {
 		this.totalCountries = totalCountries;
 	}
-	
+
 	/**
 	 * Method to get all the countries from a set
 	 * 
@@ -133,7 +133,7 @@ public class RiskMapGraph {
 			adjacentCountries.get(destination).add(source);
 		}
 	}
-	
+
 	/**
 	 * Method to delete an edge/Link between countries considering map as undirected graph.
 	 * 
@@ -166,7 +166,7 @@ public class RiskMapGraph {
 		adjacentCountries.put(country, country.getAdjacentCountries());
 		allCountries.put(country.getName(), country);
 	}
-	
+
 	/**
 	 * Method to remove a country
 	 * 
@@ -188,7 +188,7 @@ public class RiskMapGraph {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Method to add a continent
 	 * 
@@ -199,7 +199,7 @@ public class RiskMapGraph {
 	public void addContinent(Continent continent) {
 		continents.put(continent.getName(), continent);
 	}
-	
+
 	/**
 	 * Method to remove a continent
 	 * 
@@ -225,7 +225,7 @@ public class RiskMapGraph {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Method to check if two countries are adjacent to each other.
 	 * 

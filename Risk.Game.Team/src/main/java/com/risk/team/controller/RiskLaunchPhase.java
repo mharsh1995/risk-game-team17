@@ -26,27 +26,34 @@ public class RiskLaunchPhase {
 	/** Number of players */
 	private int numOfPlayer = 0;
 
-	//private int playerCount;
-
 	/** Minimum number of players */
 	private static final int MIN_PLAYER = 2;
 
 	/** Maximum number of players */
 	private static final int MAX_PLAYER = 6;
-	
+
 	/** Default Constructor */
 	public RiskLaunchPhase() {
 	}
-	
+
 	/**
 	 * Constructor for the LaunchPhase class. This constructors 
-     	 * gets the number of players and initializes them
+	 * gets the number of players and initializes them
 	 * 
 	 * @param mapObj Object of RiskMapRW with map data
 	 */
 	public RiskLaunchPhase(RiskMapRW mapObj) {
 		this.mapObj = mapObj;
-		this.playerList = new ArrayList<Player>();
+		this.playerList = new ArrayList<Player>();		
+	}
+
+	/**
+	 * Method to get players details
+	 * 
+	 * 
+	 */
+	public void getPlayerDetails() {
+
 		Scanner scan = new Scanner(System.in);
 		try {
 			do {
@@ -56,19 +63,23 @@ public class RiskLaunchPhase {
 					System.out.println("Number of players must be between 2 and 6.");
 				}
 			} while (this.numOfPlayer < 2 || this.numOfPlayer > 6);
+
+
+			System.out.println("Please enter the name of player(s).");
+			for (int i = 0; i < this.numOfPlayer; ++i) {
+				Player player = new Player();
+				String name = null;
+				if ((name = scan.nextLine()) != null) {
+					player.setName(name);
+				}
+				this.playerList.add(player);
+			}
+
 		} catch (NumberFormatException e) {
-			System.out.println("Invalid number format");
+			System.out.println("Invalid number format!! Please re-enter details");
+			getPlayerDetails();
 		}
 
-		System.out.println("Please enter the name of player(s).");
-		for (int i = 0; i < this.numOfPlayer; ++i) {
-			Player player = new Player();
-			String name = null;
-			if ((name = scan.nextLine()) != null) {
-				player.setName(name);
-			}
-			this.playerList.add(player);
-		}
 	}
 
 	/**
@@ -201,7 +212,7 @@ public class RiskLaunchPhase {
 			if(player.getArmyCount() < 0)
 			{
 				player.setArmyCount(0);
-				
+
 				for(Country c : player.getMyCountries())
 				{
 					c.setNoOfArmies(1);
@@ -215,21 +226,29 @@ public class RiskLaunchPhase {
 	 * Method to allocate armies to the countries in balanced state
 	 */
 	public void balanceArmyToCountries() {
+
 		Scanner scan = new Scanner(System.in);
 		for (Player player : this.playerList) {
 			System.out.println("***** Player: " + player.getName() + " *****");
 			for (Country country : player.getMyCountries()) {
 				if (player.getArmyCount() > 0) {
+					System.out.println("Balancing Armies among countries for player "+player.getName()+" before Reinforcement \n");
 					System.out.println("Number of armies currently assigned to country " + country.getName() + " is: "
 							+ country.getNoOfArmies());
 					System.out.println("Your available number of armies: " + player.getArmyCount());
 					System.out.println("Enter number of armies you want to assign to country " + country.getName() + " :");
-					int count = 0;
-					try {
-						count = Integer.parseInt(scan.nextLine());
-						player.addArmiesToCountry(country, count);
-					} catch (NumberFormatException e) {
-						System.out.println("Please enter a valid number.");
+					int count = 0; 
+					boolean flag = true;
+					while(flag) {
+						try {
+							count = Integer.parseInt(scan.nextLine());
+							player.addArmiesToCountry(country, count);
+							flag=false;
+
+						} catch (NumberFormatException e) {
+							System.out.println("Invalid Number!! Please re-enter a valid number.");
+							flag=true;
+						}
 					}
 				} else {
 					break;

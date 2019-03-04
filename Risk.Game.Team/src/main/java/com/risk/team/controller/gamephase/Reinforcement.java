@@ -14,15 +14,15 @@ import com.risk.team.model.Player;
  *
  */
 public class Reinforcement {
-	
-	
+
+
 	/** hasPlayerAllContinents flag to check if player has all continents */
 	boolean hasPlayerAllContinents = true;
-	
-	 /** playerOwnedContries list of countries owned by player */
+
+	/** playerOwnedContries list of countries owned by player */
 	ArrayList<Country> playerOwnedCountries;
-	
-	 /** continentCountryList list of countries in that continent */
+
+	/** continentCountryList list of countries in that continent */
 	ArrayList<Country> continentCountryList;
 
 	/**
@@ -33,7 +33,7 @@ public class Reinforcement {
 	 * @param continent  Continent
 	 * @return noOfArmies reinforcement armies
 	 */
-	 
+
 	public int assignArmies(Player player, Continent continent) {
 		int playerOwnedArmy = player.getMyCountries().size()/ 3;
 		int noOfArmies = (int) playerOwnedArmy;
@@ -52,11 +52,11 @@ public class Reinforcement {
 				break;
 			}
 		}
-		
+
 		// If a player owns all the countries in a continent, then armies count will be equal to the control value of the continent.
 		if (hasPlayerAllContinents) {
-		  noOfArmies = continent.getControlValue();
-	  }
+			noOfArmies = continent.getControlValue();
+		}
 
 		return noOfArmies;
 	}

@@ -47,7 +47,7 @@ public class RiskMapRW {
 	 *            Object of RiskMapVerify
 	 */
 	public RiskMapRW(RiskMapVerify map) {
-	    this.mapGraph = new RiskMapGraph();
+		this.mapGraph = new RiskMapGraph();
 		this.mapGraph.setContinents(map.getContinentsFromTerritories());
 		this.mapGraph.setAdjacentCountries(map.getAdjacentCountries());
 		this.fileName = map.getFileName();
@@ -70,18 +70,18 @@ public class RiskMapRW {
 	 * 
 	 * @return filename name of map;
 	 */
-	
+
 	public String getFileName() {
 		return fileName;
 	}
-	
+
 	/**
 	 * Method to set filename of new map.
 	 * 
 	 * @param  filename name of file of type string;
 	 * @return nothing
 	 */
-	
+
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
@@ -94,7 +94,7 @@ public class RiskMapRW {
 	public ArrayList<String> getMapTagInfo() {
 		return mapTagInfo;
 	}
-	
+
 	/**
 	 * Method to set map Tag Data into magTagInfo;
 	 * 
@@ -110,7 +110,7 @@ public class RiskMapRW {
 	 * Method to get newFileName.
 	 * @return newFileName name of new file to be created;
 	 */
-	
+
 	public String getNewFileName() {
 		return newFileName;
 	}
@@ -120,7 +120,7 @@ public class RiskMapRW {
 	 * @param newFileName name of new file to be created;
 	 * @return nothing;
 	 */
-	
+
 	public void setNewFileName(String newFileName) {
 		this.newFileName = newFileName;
 	}
@@ -129,11 +129,11 @@ public class RiskMapRW {
 	 * Method to get RiskMapGraph Object.
 	 * @return RiskMapGraph Object of type RiskMapGraph;
 	 */
-	
+
 	public RiskMapGraph getMapGraph() {
 		return mapGraph;
 	}
-	
+
 	/**
 	 * Method to set RiskMapGraph Object.
 	 * @param RiskMapGraph Object of type RiskMapGraph;
@@ -143,7 +143,7 @@ public class RiskMapRW {
 	public void setMapGraph(RiskMapGraph mapGraph) {
 		this.mapGraph = mapGraph;
 	}
-	
+
 	/**
 	 * Method to write content to new or existing .map file
 	 * It initially creates file object with new filename.It then retrieves mapGraph object details and appends into
@@ -152,81 +152,81 @@ public class RiskMapRW {
 	 * @param flag boolean value for file new is existing;
 	 * @return true if file is written successfully or false;
 	 */
-	
+
 	public boolean writeMapFile(boolean flag)
-	
+
 	{   File file;
-		StringBuilder sb = new StringBuilder();
-		
-		if (flag)
-			
-		{
-			file = new File(new File("").getAbsolutePath() + "\\src\\main\\gameMap\\" + this.fileName + ".map");
-		}
-		else
-			
-		{
-			
-			file = new File(new File("").getAbsolutePath() + "\\src\\main\\gameMap\\" + this.newFileName + ".map");
+	StringBuilder sb = new StringBuilder();
 
-		}
-		
-		try(BufferedWriter mapwriter = new BufferedWriter(new FileWriter(file.getAbsolutePath())))
-		{
-			
-			sb.append("[Map]\n");
-			for (String line : mapTagInfo) {
-				sb.append(line);
-				sb.append("\n");
-			}
-			sb.append("\n");
-			sb.append("[Continents]\n");
-			for (Map.Entry<String, Continent> continentEntry : mapGraph.getContinents().entrySet()) {
-				sb.append(continentEntry.getValue().getName() + "=" + continentEntry.getValue().getControlValue());
-				sb.append("\n");
-			}
-			sb.append("\n");
-			
-			sb.append("[Territories]\n");
-			
-			for (Map.Entry<Country, ArrayList<Country>> adjacentCountriesEntry : mapGraph.getAdjacentCountries().entrySet())
-				{
-				
-					Country country = adjacentCountriesEntry.getKey();
-					ArrayList<Country> neighbours = adjacentCountriesEntry.getValue();
-					
-					String line = country.getName() + COMMA_DELIMITER + country.getxValue() + COMMA_DELIMITER
-							+ country.getyValue() + COMMA_DELIMITER + country.getContinent();
-					
-					for (Country adjacentCountry : neighbours) {
-						line += COMMA_DELIMITER + adjacentCountry.getName();
-					}
-					
-					sb.append(line);
+	if (flag)
 
-					sb.append("\n");
-				}
-
-			
-					mapwriter.write(sb.toString());
-					
-				
-			}
-
-
-		 catch (IOException e) {
-			 
-			 System.out.println("IO Exception - Error occucred while writing to a file");
-			
-			 return false;
-
-		}
-		
-		System.out.println("File Written Successfully into "+this.fileName+".map");
-						
-		return true;
-	
+	{
+		file = new File(new File("").getAbsolutePath() + "\\src\\main\\gameMap\\" + this.fileName + ".map");
 	}
-	
-	
+	else
+
+	{
+
+		file = new File(new File("").getAbsolutePath() + "\\src\\main\\gameMap\\" + this.newFileName + ".map");
+
+	}
+
+	try(BufferedWriter mapwriter = new BufferedWriter(new FileWriter(file.getAbsolutePath())))
+	{
+
+		sb.append("[Map]\n");
+		for (String line : mapTagInfo) {
+			sb.append(line);
+			sb.append("\n");
+		}
+		sb.append("\n");
+		sb.append("[Continents]\n");
+		for (Map.Entry<String, Continent> continentEntry : mapGraph.getContinents().entrySet()) {
+			sb.append(continentEntry.getValue().getName() + "=" + continentEntry.getValue().getControlValue());
+			sb.append("\n");
+		}
+		sb.append("\n");
+
+		sb.append("[Territories]\n");
+
+		for (Map.Entry<Country, ArrayList<Country>> adjacentCountriesEntry : mapGraph.getAdjacentCountries().entrySet())
+		{
+
+			Country country = adjacentCountriesEntry.getKey();
+			ArrayList<Country> neighbours = adjacentCountriesEntry.getValue();
+
+			String line = country.getName() + COMMA_DELIMITER + country.getxValue() + COMMA_DELIMITER
+					+ country.getyValue() + COMMA_DELIMITER + country.getContinent();
+
+			for (Country adjacentCountry : neighbours) {
+				line += COMMA_DELIMITER + adjacentCountry.getName();
+			}
+
+			sb.append(line);
+
+			sb.append("\n");
+		}
+
+
+		mapwriter.write(sb.toString());
+
+
+	}
+
+
+	catch (IOException e) {
+
+		System.out.println("IO Exception - Error occucred while writing to a file");
+
+		return false;
+
+	}
+
+	System.out.println("File Written Successfully into "+this.fileName+".map"+" at Risk.Game.Team\\src\\main\\gameMap");
+
+	return true;
+
+	}
+
+
 }

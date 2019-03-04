@@ -38,18 +38,18 @@ import com.risk.team.model.Player;
  */
 
 public class RiskGameDriver extends JFrame implements ActionListener {
-  
+
 	public static boolean status;
 	private JButton CreateBtn;
 	private JButton LoadBtn;
-	private JButton editBtn;
+	private JButton editBtn,teamBtn;
 	private JFrame WindowFrame;
 	private TitledBorder border;
 	private JPanel WindowPanel;
 	private JLabel TitleLabel,ImageLabel;
 	RiskMapRW read;
 
-     /**
+	/**
 	 * This method launches the game and displays the start menu
 	 */
 	public RiskGameDriver() {
@@ -59,7 +59,7 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 			System.out.println("error loading");
 		}
 	}
-     /**
+	/**
 	 * this method initialize the UI of the game
 	 */
 
@@ -74,10 +74,10 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 		WindowFrame.setBackground(Color.CYAN);
 		WindowFrame.setLocation(400, 150);
 		WindowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
+
+
 		WindowFrame.setVisible(true);
-		
+
 		border = new TitledBorder("Risk - Ready for War");
 		border.setTitleColor(Color.red);
 		border.setTitleJustification(TitledBorder.CENTER);
@@ -86,7 +86,7 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 		WindowPanel = new JPanel();
 		WindowPanel.setBorder(border);
 		WindowPanel.setBackground(Color.BLUE);
-		
+
 		TitleLabel = new JLabel("Risk");
 
 		TitleLabel.setForeground(Color.red);
@@ -96,6 +96,13 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 		WindowFrame.getContentPane().add(WindowPanel);
 		WindowPanel.setLayout(null);
 
+		teamBtn = new JButton("APP -- Team 17");
+		WindowPanel.add(teamBtn);
+		teamBtn.setForeground(new Color(67, 80, 88));
+		teamBtn.setFont(new Font("SansSerif", Font.BOLD, 15));
+		teamBtn.setBounds(5, 50 , 525, 50);
+		teamBtn.setBackground(Color.white);
+
 		CreateBtn = new JButton("Create Map");
 		WindowPanel.add(CreateBtn);
 		CreateBtn.setForeground(new Color(67, 80, 88));
@@ -103,7 +110,7 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 		CreateBtn.setBounds(220, 178, 125, 21);
 		CreateBtn.addActionListener(this);
 		CreateBtn.setBackground(Color.red);
-		
+
 		editBtn = new JButton("Edit Map");
 		WindowPanel.add(editBtn);
 		editBtn.setForeground(new Color(67, 80, 88));
@@ -122,7 +129,7 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 		LoadBtn.setBackground(Color.red);
 
 	}
-     /**
+	/**
 	 * main method
 	 * 
 	 * @param args String array.
@@ -131,24 +138,24 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 		RiskGameDriver exp = new RiskGameDriver();
 
 	}
-     /**
+	/**
 	 * This method takes an event as an input and performs task depending on the
 	 * event
 	 * @param e Action event object.
 	 */
-    @Override
+	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		String action = e.getActionCommand();
-		
+
 		RiskMapRW readMap = null;
 		if (e.getSource() == editBtn) {
 			JFileChooser filechooser = new JFileChooser();
 			FileNameExtensionFilter mapFilter = new FileNameExtensionFilter("map files (*.map)", "map");
 			filechooser.addChoosableFileFilter(mapFilter);
 			filechooser.setFileFilter(mapFilter);
-		    filechooser.setDialogTitle("Select a Map File ");
-		    filechooser.setBackground(Color.green);
+			filechooser.setDialogTitle("Select a Map File ");
+			filechooser.setBackground(Color.green);
 			int selectedFile = filechooser.showOpenDialog(this);
 			if (selectedFile == JFileChooser.APPROVE_OPTION) {
 				File selectedFile2 =  filechooser.getSelectedFile();
@@ -162,13 +169,13 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 			}
 		} 
 		else if (e.getSource() == LoadBtn){
-			
+
 			JFileChooser filechooser = new JFileChooser();
 			FileNameExtensionFilter mapFilter = new FileNameExtensionFilter("map files (*.map)", "map");
 			filechooser.addChoosableFileFilter(mapFilter);
 			filechooser.setFileFilter(mapFilter);
-		    filechooser.setDialogTitle("Select a Map File");
-		    filechooser.setBackground(Color.green);
+			filechooser.setDialogTitle("Select a Map File");
+			filechooser.setBackground(Color.green);
 			int selectedFile = filechooser.showOpenDialog(this);
 			if (selectedFile == JFileChooser.APPROVE_OPTION) {
 				File selectedFile2 =  filechooser.getSelectedFile();
@@ -180,20 +187,19 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 					status = true;
 				}
 			}
-			
-			
+
+
 		}
-		
+
 		else {
-			
+
 			RiskMapEdit mapEditor = new RiskMapEdit();
 			mapEditor.createEditMap(true);
-//			readMap = mapEditor.getMapObj();
 			read=readMap;
 		}
-		
+
 		if(status) {
-			System.out.println("Do you want to play the game?(true or false)");
+			System.out.println("Do you want to play the game?(Select : true or false)");
 			Scanner scan = new Scanner(System.in);
 			if(Boolean.parseBoolean(scan.nextLine())) {
 				gamePlay(read);
@@ -208,11 +214,12 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 	 * @param RiskMapRW Object
 	 * 
 	 */
-    private void gamePlay(RiskMapRW mapObj) {
+	private void gamePlay(RiskMapRW mapObj) {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("\n**************GAME IS ON*****************\n");
 		System.out.println("\nBeginning Startup Phase.\n");
 		RiskLaunchPhase RiskLaunchPhase = new RiskLaunchPhase(mapObj);
+		RiskLaunchPhase.getPlayerDetails();
 		RiskLaunchPhase.allocateCountries();
 		RiskLaunchPhase.armyAllocateToPlayer();
 		RiskLaunchPhase.initialArmyToCountries();
@@ -223,8 +230,8 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 
 		while(turn <= (RiskLaunchPhase).getPlayerList().size()) {
 			Player player = roundRobin.nextPlayer();
-			System.out.println("Beginning Reinforcement phase for player : " + player.getName() + "\n\n");
-			System.out.println("Do you want to continue with Reinforcement phase? (Yes or No)");
+			System.out.println("\nBeginning Reinforcement phase for player : " + player.getName() + "\n\n");
+			System.out.println("Do you want to continue with Reinforcement phase? (Select : Yes or No)");
 			if(scan.nextLine().trim().equalsIgnoreCase("Yes")) {
 				Continent continent = player.getMyCountries().get(player.getMyCountries().size()-1).getPartOfContinent();
 				int balanceArmyCount = (new Reinforcement()).assignArmies(player, continent);
@@ -243,14 +250,14 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 						}
 					}
 					else {
-						System.out.println("You do not have sufficient number of armies available.");
+						System.out.println("Now !! You do not have sufficient number of armies available.");
 						break;
 					}
 				}
 			}
 
 			System.out.println("Beginning Fortification phase for player : " + player.getName() + "\n\n");
-			System.out.println("Do you want to continue with Fortification phase? (Yes or No)");
+			System.out.println("Do you want to continue with Fortification phase? (Select : Yes or No)");
 			if(scan.nextLine().trim().equalsIgnoreCase("Yes")) {
 				if(player.getMyCountries().size()>=2) {
 					boolean flag = true;
@@ -273,30 +280,30 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 						}
 						Country givingCountry = (mapObj.getMapGraph().getAllCountries().get(giverCountry.trim()));
 						Country receviningCountry = (mapObj.getMapGraph().getAllCountries().get(receiverCountry.trim()));
-	
-						
+
+
 						if(player.getMyCountries().contains(givingCountry) && player.getMyCountries().contains(receviningCountry)){
-							
-				
+
+
 							if(givingCountry.equals(receviningCountry)){
-								
+
 								System.out.println("Source and Destination Country can not be same");
 								flag = false;
-								
+
 							}else {
-								
-										if((mapObj.getMapGraph().getAllCountries().get(giverCountry).getNoOfArmies()) <= 1)
-											
-										{
-											System.out.println("Please select a giver country having armies more than one");
-											flag=false;
-										}
-										else
-										{
-											flag = true;
-										}
+
+								if((mapObj.getMapGraph().getAllCountries().get(giverCountry).getNoOfArmies()) <= 1)
+
+								{
+									System.out.println("Please select a giver country having armies more than one");
+									flag=false;
+								}
+								else
+								{
+									flag = true;
+								}
 							}
-							
+
 						}
 						else {
 							System.out.println("Player does not own these country, please enter country names again");
@@ -312,11 +319,11 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 						System.out.println("Enter the number of armies to move from " + giverCountry + " to " + receiverCountry);
 						try {
 							countOfArmies = Integer.parseInt(scan.nextLine());
-							if(countOfArmies > mapObj.getMapGraph().getAllCountries().get(giverCountry).getNoOfArmies()) {
+							if(countOfArmies >= mapObj.getMapGraph().getAllCountries().get(giverCountry).getNoOfArmies()) {
 								System.out.println("Sufficient number of armies is not available.");
 								flag=false;
 							}
-							
+
 
 						}catch(NumberFormatException e) {
 							System.out.println("Invalid number of armies.");
@@ -332,7 +339,7 @@ public class RiskGameDriver extends JFrame implements ActionListener {
 			}
 			turn++;
 		}
-		
+
 		System.out.println("\n****************GAME-OVER*****************\n");
 	}
 }

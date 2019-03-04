@@ -38,9 +38,9 @@ public class RiskRoundRobin {
 		if (!this.iterator.hasNext()) {
 			this.iterator = this.playerList.iterator();
 		}
-		
+
 		return this.iterator.next();
-		
+
 	}
 }
 

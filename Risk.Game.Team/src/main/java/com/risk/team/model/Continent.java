@@ -15,7 +15,7 @@ public class Continent {
 
 	/** List of countries in the continent */
 	private ArrayList<Country> listOfCountries;
-	
+
 	/** Control Value of continent. */
 	private int controlValue;
 
@@ -68,7 +68,7 @@ public class Continent {
 	public void setControlValue(int controlValue) {
 		this.controlValue = controlValue;
 	}
-	
+
 	/**
 	 * Method to get the list of countries held by the continent
 	 * 
