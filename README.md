@@ -16,3 +16,14 @@ There are 3 phases in the game:
 After every successful attack by a player he/she gets Bonus Card which he/she can trade-in for getting more armies.
 
 The main goal for the game is to conquer all the territories present on that map and in doing so, eliminate the other players.
+
+Features delivered in release 1 / Version 1.0 (build 1) :
+ - Map Creation
+ - Map Edit
+ - Map Loading 
+ - Map Validation
+ - Map Saving
+ - Reinforcement Phase 
+ - Fortification Phase
+ - Startup Phase 
+ - Driver Interface
