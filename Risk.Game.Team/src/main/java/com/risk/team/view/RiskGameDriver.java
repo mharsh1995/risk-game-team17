@@ -30,7 +30,7 @@ import com.risk.team.model.Player;
 
 
 /**
- * Launches the Game and provides the main window and the view for the user,
+ * Launch the Game and provides the main window and the view for the user,
  * to load, Create and Edit a map.
  *
  * @author Harsh Mehta
