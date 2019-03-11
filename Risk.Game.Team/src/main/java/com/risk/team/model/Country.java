@@ -14,7 +14,7 @@ public class Country {
 	private String name;
 
 	/** Country holder */
-	private String player;
+	private Player player;
 
 	/** Part of continent */
 	private String continent;
@@ -79,7 +79,7 @@ public class Country {
 	 * @param player
 	 *            name of the player.
 	 */
-	public void setPlayer(String player) {
+	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
