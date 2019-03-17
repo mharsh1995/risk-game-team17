@@ -1,12 +1,10 @@
 package com.risk.team.model;
 
-//import com.risk.services.controller.CardController;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
+import java.util.Scanner;
 
+import com.risk.team.controller.RiskCardController;
 import com.risk.team.model.BonusCardType;
 
 
@@ -19,7 +17,7 @@ import com.risk.team.model.BonusCardType;
  *
  */
  
-public class Card extends Observable {
+public class Card {
 	
 	/**
 	 * Kind of card 
@@ -35,7 +33,7 @@ public class Card extends Observable {
 	 * Card possessed by Player 
 	 * Object of Player Class
 	 */
-	private Player presentPlayer;
+	private Player currentPlayer;
 	
 	/**
 	 *List of card that can be traded
@@ -109,7 +107,44 @@ public class Card extends Observable {
         this.cardsToTrade = cardsToTrade;
     }
       
-   
+    /**
+     * Method is used to display
+     * the cards owned by the player.
+     *
+     * @param player Player having the turn
+     * @param card   card to display for the player
+     */
+
+    public void showCardsOfPlayer(Player player, Card card) {
+        this.currentPlayer = player;
+        RiskCardController cardController = new RiskCardController(this.currentPlayer, card);
+       
+    }
+
+    
+    /**
+     * Method returns a list of cards which
+     * are seleted by the current player
+     *
+     * @param list list of cards
+     * @return List of cards selected by the player
+     */
+    
+    public List<Card> chooseCards(List<Card> list) {
+        List<Card> selectedCards = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+        String answer = new String();
+        System.out.println("enter yes to select");
+        for (int i = 0; i < list.size(); ++i) {
+        System.out.println(" "+list.get(i));
+        answer= sc.nextLine();
+        if(answer=="yes" || answer=="Yes" || answer=="Y" || answer=="y") {
+        	selectedCards.add(list.get(i));
+        }
+        }
+        return selectedCards;
+    }
+    
     
     /**
      * Method for verifying if cards can be traded for army or not
@@ -146,7 +181,5 @@ public class Card extends Observable {
 
     public void cardsToTrade(List<Card> selectedCards) {
         setCardsToTrade(selectedCards);
-        setChanged();
-        notifyObservers("cardsTraded");
     }
 }
