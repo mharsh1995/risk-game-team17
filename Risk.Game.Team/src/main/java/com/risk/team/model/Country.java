@@ -6,6 +6,7 @@ import java.util.ArrayList;
  *
  * @author Dhaval Desai
  * @author Jenny Pujara
+ * @version 2.0.0
  */
 
 public class Country {
@@ -69,7 +70,7 @@ public class Country {
 	 * 
 	 * @return player The name of player
 	 */
-	public String getPlayer() {
+	public Player getPlayer() {
 		return player;
 	}
 
@@ -225,4 +226,7 @@ public class Country {
 	public String toString() {
 		return this.getName();
 	}
+
+	
+	
 }
