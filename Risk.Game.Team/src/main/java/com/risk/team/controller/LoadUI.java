@@ -20,6 +20,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import com.risk.team.controller.RiskMapEdit;
 import com.risk.team.controller.RiskMapRW;
 import com.risk.team.controller.RiskMapVerify;
+/**
+ * This class loads the User Interface which allows the user 
+ * to choose from the options and play the game.
+ * 
+ * @author Dhaval Desai
+ */
 
 public class LoadUI implements ActionListener {
 		boolean status;
