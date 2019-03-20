@@ -8,7 +8,16 @@ import com.risk.team.controller.gamephase.RiskRoundRobin;
 import com.risk.team.model.Continent;
 import com.risk.team.model.Country;
 import com.risk.team.model.Player;
-
+/**
+ * This class implements the actual game play functions
+ * such as Reinforcement, Fortification, Attack, etc.
+ * 
+ * @author Jenny Pujara
+ * @author Yash Golwala
+ * @author Kartika Patil
+ * @author Dhaval Desai
+ * 
+ */
 public class GamePlayController {
 
 /*	public void init() {
