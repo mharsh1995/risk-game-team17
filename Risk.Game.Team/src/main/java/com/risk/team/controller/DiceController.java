@@ -1,6 +1,7 @@
 package com.risk.team.controller;
 
 
+
 import com.risk.team.model.*;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.Scanner;
 
 
 
-public class DiceController {
+public class RiskDiceController {
 
 	
 	private Player attackingPlayer;
@@ -51,27 +52,30 @@ public class DiceController {
 	private ArrayList<Boolean> attackerdicenumberlist ;
 	
 	private ArrayList<Boolean> defenderdicenumberlist ;
-	static boolean flag = true;
+	
+	boolean flag = true;
 	
 	public Dice dice;
+	public boolean diceValidateCount;
 	
-	public DiceController(Dice dice) {
+	public RiskDiceController(Dice dice) {
 		this.dice = dice;
 		this.attackerdicenumberlist = new ArrayList<Boolean>();
 		this.defenderdicenumberlist = new ArrayList<Boolean>();
-		start();
+		this.attackingPlayer = dice.getAttackingCountry().getPlayer();
+		this.defendingPlayer =  dice.getDefendingCountry().getPlayer();
 		
 	}
 	
 	
-	public void start()
+	public boolean start()
 	{
 		Scanner scan = new Scanner(System.in);
 		
 		loadAttackScreen();
 		if(attacker_won)
 		{
-				System.out.println("Do you want to move armies to won country??(Yes/No)");
+				System.out.println("Do you want to move more than one army to won country??(Yes/No)");
 				if(scan.nextLine().trim().equalsIgnoreCase("Yes"))
 				{
 					System.out.println("Do you want to move all to won country??(Yes/No)");
@@ -94,9 +98,11 @@ public class DiceController {
 					
 					dice.skipMoveArmy();
 				}
-		}	
+		}
+		
+		return attacker_won;
 	}
-	public void  loadAttackScreen() {
+	public void loadAttackScreen() {
 	
 	
 		Scanner scan = new Scanner(System.in);
@@ -110,31 +116,96 @@ public class DiceController {
 		System.out.println(countryDefending.getName());
 		System.out.println("Defending Armies: " + countryDefending.getNoOfArmies());
 		
-		diceSelection();
+		if (dice.checkDiceThrowPossible())
+		{		
+			this.dice1_Attacker = false;
+			this.dice2_Attacker = false;
+			this.dice3_Attacker = false;
+			
+			this.dice1_Defender = false;
+			this.dice2_Defender = false;
+			
+			
+			
+			
+			if(!attackingPlayer.allOutMode)
+			{
+				diceSelection();
+				boolean flagVar = true;
+				
+				while(flagVar)
+				{
+					System.out.println("Do You wanna Start Roll");
+					if(scan.nextLine().trim().equalsIgnoreCase("Yes")) {		
+						startRoll();
+						flagVar = false;
+						
+					}
+					else
+					{
+						dice.cancelDiceThrow();
+						flagVar = false;
+						return;
+						
+					}
+				}
+				
+				while(flag)
+				{
+				
+				System.out.println("Attacker Armies: " + String.valueOf(countryAttacking.getNoOfArmies()));
+				System.out.println("Defender Armies: " + String.valueOf(countryDefending.getNoOfArmies()));
+				
+				
+				System.out.println(winner_result);
+				flag = false;
+			    }
+				
+			}
 		
-		
-		System.out.println("Do You wanna Start Roll");
-		if(scan.nextLine().trim().equalsIgnoreCase("Yes")) {		
-			startRoll();
+				else
+				{
+					diceSelectionAllOutMode();
+					startRoll();
+					
+					System.out.println("Attacker Armies: " + String.valueOf(countryAttacking.getNoOfArmies()));
+					System.out.println("Defender Armies: " + String.valueOf(countryDefending.getNoOfArmies()));
+					
+					
+					System.out.println(winner_result);
+					
+				}
+		}
+		else
+		{
+			
+			System.out.println("Dice throw is not possible");
 			
 		}
-		
-		while(flag)
-		{
-		
-		System.out.println("Attacker Armies: " + String.valueOf(countryAttacking.getNoOfArmies()));
-		System.out.println("Defender Armies: " + String.valueOf(countryDefending.getNoOfArmies()));
-		
-		
-		System.out.println(winner_result);
-		flag = false;
-	    }
-		
 	}
 	
+	private void diceSelectionAllOutMode() {
+		
+		this.dice1_Attacker = true;
+		this.dice2_Attacker = true;
+		this.dice3_Attacker = true;
+		
+
+		this.dice1_Defender = true;
+		this.dice2_Defender = true;
+		
+		attackerdicenumberlist.add(dice1_Attacker);
+		attackerdicenumberlist.add(dice2_Attacker);
+		attackerdicenumberlist.add(dice3_Attacker);
+		
+		defenderdicenumberlist.add(dice1_Defender);
+		defenderdicenumberlist.add(dice2_Defender);
+	}
+
+
 	private void diceSelection() {
 		
-				Scanner scan1 = new Scanner(System.in);
+				Scanner scan = new Scanner(System.in);
 				
 				boolean flag1 = true;
 				boolean flag2 = true;
@@ -142,28 +213,38 @@ public class DiceController {
 				{
 					flag1 = false;
 					System.out.println("Please mention the no of dice to be rolled for attacker");
-					int number = Integer.parseInt(scan1.nextLine());
+										
+					int number = Integer.parseInt(scan.nextLine());
 					
-					if (number == 1)
+					if(number < dice.getAttackingCountry().getNoOfArmies() && number > 0)
 					{
-						this.dice1_Attacker = true;
-					}
-					else if (number == 2)
-					{
-						this.dice1_Attacker = true;
-						this.dice2_Attacker = true;
-					}
-					else if ( number == 3)
-						
-					{
-						this.dice1_Attacker = true;
-						this.dice2_Attacker = true;
-						this.dice3_Attacker = true;
-						
+			
+								if (number == 1)
+								{
+									this.dice1_Attacker = true;
+								}
+								else if (number == 2)
+								{
+									this.dice1_Attacker = true;
+									this.dice2_Attacker = true;
+								}
+								else if ( number == 3)
+									
+								{
+									this.dice1_Attacker = true;
+									this.dice2_Attacker = true;
+									this.dice3_Attacker = true;
+									
+								}
+								else
+								{
+									System.out.println("Please re-select the no of dice between 1-3");
+									flag1 = true;
+								}
 					}
 					else
 					{
-						System.out.println("Please re-select the no of dice between 1-3");
+						System.out.println("Your army count is less than number of dice selected , Please re-select dice count");
 						flag1 = true;
 					}
 					
@@ -177,25 +258,34 @@ public class DiceController {
 				while (flag2)
 				{
 					flag2 = false;
-					System.out.println("Please mention the no of dice to be rolled for defender");
-					int number = Integer.parseInt(scan1.nextLine());
+					System.out.println("Please mention the no of dice to be rolled for defender either 1 or 2");
+					int number = Integer.parseInt(scan.nextLine());
 					
-					if (number == 1)
+					if(dice.getDefendingCountry().getNoOfArmies() >= 2)
 					{
-						this.dice1_Defender = true;
+							if (number == 1)
+							{
+								this.dice1_Defender = true;
+							}
+							else if (number == 2)
+							{
+								
+								this.dice1_Defender = true;
+								this.dice2_Defender = true;												
+								
+							}
+							
+							else
+							{
+								System.out.println("Please re-select the no of dice between 1-2");
+								flag2 = true;
+							}
 					}
-					else if (number == 2)
-					{
-						this.dice1_Defender = true;
-						this.dice2_Defender = true;
-					}
-					
 					else
 					{
-						System.out.println("Please re-select the no of dice between 1-3");
-						flag2 = true;
+						System.out.println("Available armies are less then no of dice selected,So only one dice is selected");
+						this.dice1_Defender = true;
 					}
-					
 					
 				}
 		
@@ -228,6 +318,8 @@ public class DiceController {
 	
 	
     public void continueDiceRoll() {
+    	attackerdicenumberlist.clear();
+    	defenderdicenumberlist.clear();
     	dice.setAttackerDiceList(new ArrayList<>());
 		dice.setDefenderDiceList(new ArrayList<>());
 		loadAttackScreen();
@@ -242,17 +334,22 @@ public class DiceController {
 	 * 
 	 * @param event
 	 *  	ActionEvent
+	 * @return 
 	 *  
 	 */
 	
 	public void startRoll() {
+		diceValidateCount = false;
+		
 		if (!dice1_Attacker && !dice2_Attacker && !dice3_Attacker ) {
 			System.out.println ("Atleast one attacking dice should be selected");
-			return;
+			return ;
 		} else if (!dice1_Defender && !dice2_Defender ) {
 			System.out.println ("Atleast one defender dice should be selected");
-			return;
+			return ;
 		}
+		
+		diceValidateCount = true;
 		
 		attackDiceValue();
 		defenceDiceValue();
@@ -277,6 +374,7 @@ public class DiceController {
 			continueDiceRoll();
 			
 		}
+		
 		
 	}
 
