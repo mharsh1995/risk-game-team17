@@ -35,10 +35,13 @@ public class Reinforcement {
 	 */
 
 	public int assignArmies(Player player, Continent continent) {
+		boolean hasPlayerAllContinents = true;
+			
 		int playerOwnedArmy = player.getMyCountries().size()/ 3;
 		int noOfArmies = (int) playerOwnedArmy;
-		playerOwnedCountries = player.getMyCountries();
-		continentCountryList = continent.getListOfCountries();
+		
+		ArrayList<Country> playerOwnedCountries = player.getMyCountries();
+		ArrayList<Country> continentCountryList = continent.getListOfCountries();
 
 		// Minimum number of armies for a player in case armies count is less
 		// than 3.

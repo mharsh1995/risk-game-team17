@@ -2,6 +2,7 @@ package com.risk.team.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import com.risk.team.controller.RiskCardController;
@@ -41,9 +42,13 @@ public class Card {
 	private List<Card> cardsToTrade;
 	
 	/**
+	 * List of Selected Cards
+	 */
+	public List<Card> selectedCards;
+	
+	/**
      * Card default constructor
      */
-
     public Card() { 
     	
     }
@@ -106,6 +111,10 @@ public class Card {
     public void setCardsToTrade(List<Card> cardsToTrade) {
         this.cardsToTrade = cardsToTrade;
     }
+    
+    public List<Card> getSelectedCards() {
+    	return selectedCards;
+    }
       
     /**
      * Method is used to display
@@ -131,30 +140,29 @@ public class Card {
      */
     
     public List<Card> chooseCards(List<Card> list) {
-        List<Card> selectedCards = new ArrayList<>();
+    	selectedCards = new ArrayList<Card>();
         Scanner sc = new Scanner(System.in);
-        String answer = new String();
-        System.out.println("enter yes to select");
+        
+        System.out.println("Enter yes to select displayed card");
         for (int i = 0; i < list.size(); ++i) {
-        System.out.println(" "+list.get(i));
-        answer= sc.nextLine();
-        if(answer=="yes" || answer=="Yes" || answer=="Y" || answer=="y") {
-        	selectedCards.add(list.get(i));
+        System.out.println(" "+list.get(i).kindOfCard);
+
+        if(sc.nextLine().trim().equalsIgnoreCase("Yes")) {
+        	selectedCards.add(list.get(i));   
+        	}
         }
-        }
+       
         return selectedCards;
     }
-    
     
     /**
      * Method for verifying if cards can be traded for army or not
      *
      * @param selectedCards selected cards
-     * @return true if the exchange is possible; otherwise false
+     * @return true if the trade is possible; otherwise false
      */
     public boolean isTradePossible(List<Card> selectedCards) {
         boolean isPossible = false;
-        if (selectedCards.size() == 3) {
             int infantry = 0, cavalry = 0, artillery = 0;
             for (Card card : selectedCards) {
                 if (card.getKindOfCard().equals(BonusCardType.infantry)) {
@@ -168,7 +176,6 @@ public class Card {
             if ((infantry == 1 && cavalry == 1 && artillery == 1) || infantry == 3 || cavalry == 3 || artillery == 3) {
                 isPossible = true;
             }
-        }
         return isPossible;
     }
     
@@ -182,4 +189,22 @@ public class Card {
     public void cardsToTrade(List<Card> selectedCards) {
         setCardsToTrade(selectedCards);
     }
+
+    public Card getRandomCard() {
+
+		int e = new Random().nextInt(3) + 1;
+
+		Card cardAllocated;
+		if(e==1) { 
+			cardAllocated = new Card("infantry");
+
+		} else if(e==2) {
+			cardAllocated = new Card("cavalry");
+		}
+		else {
+			cardAllocated = new Card("artillery");
+		}
+		return cardAllocated;
+
+	}
 }

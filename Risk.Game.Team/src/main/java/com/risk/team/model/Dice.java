@@ -15,7 +15,7 @@ import com.risk.team.model.*;
  *
  *
  */
-public class Dice extends Observable {
+public class Dice  {
 
     /**
      * Country which is attacking the defending country,
@@ -29,7 +29,7 @@ public class Dice extends Observable {
     private ArrayList<Integer> attackerDiceList;
 
     /**
-     * Country is is under attcked
+     * Country is is under attacked
      */
     private Country defendingCountry;
 
@@ -47,7 +47,7 @@ public class Dice extends Observable {
      * Constructor for the dice class. It initializes the
      * value of the attacking and defending countries.
      *
-     * @param attackingCountry Country which is attcking currently
+     * @param attackingCountry Country which is attacking currently
      * @param defendingCountry Country under attack
      */
     public Dice(Country attackingCountry, Country defendingCountry) {
@@ -85,7 +85,7 @@ public class Dice extends Observable {
     }
 
     /**
-     * Setter for attcking dice values.
+     * Setter for attacking dice values.
      *
      * @param attackerDiceList list of values of the attacking dice.
      */
@@ -157,22 +157,43 @@ public class Dice extends Observable {
      */
     public ArrayList<String> getDicePlayResult(){
         ArrayList<String> diceThrowResult = new ArrayList<>();
-        Collections.sort(attackerDiceList,Collections.reverseOrder());
-        Collections.sort(defenderDiceList,Collections.reverseOrder());
-
     
-     for(Integer defenderValue : defenderDiceList ){
-            for(Integer attackerValue : attackerDiceList){
-                updateArmiesAfterAttack(defenderValue, attackerValue, diceThrowResult);
-                break;
-            }}
-     
-     
+        System.out.println("Attacker Dice Roll results : " + attackerDiceList.size() + " dice has been rolled");
+        for (Integer result : attackerDiceList) {
+			System.out.println(result + " ");
+		}
+        System.out.println("Defender Dice Roll results" + defenderDiceList.size() + " dice has been rolled");
+		for (Integer result : defenderDiceList) {
+			System.out.println(result + " ");
+		}
+			
+		
+		Collections.sort(attackerDiceList);
+		Collections.reverse(attackerDiceList);
+		Collections.sort(defenderDiceList);
+		Collections.reverse(defenderDiceList);
+		
+		int maximumAttackerDice = attackerDiceList.size();
+		int maximumDefenderDice = defenderDiceList.size();
+		
+		int minimumDiceNumber = maximumAttackerDice < maximumDefenderDice ? maximumAttackerDice
+				: maximumDefenderDice;
+		
+		for (int i = 0; i < minimumDiceNumber; i++) {
+			if (attackerDiceList.get(i) != null && defenderDiceList.get(i) != null) {
+				System.out.println("Result number " + (i + 1));
+				int attackerValue = attackerDiceList.get(i);
+				int defenderValue = defenderDiceList.get(i);
+				System.out.println("Attacker Dice value " + attackerDiceList.get(i));
+				System.out.println("Defender Dice value " + defenderDiceList.get(i));
+				
+				updateArmiesAfterAttack(defenderValue, attackerValue, diceThrowResult);
+				
+			} else {
+				break;
+			}
+		}
         
-        int defenderValue = Collections.max(attackerDiceList);
-        int attackerValue = Collections.max(defenderDiceList);
-        
-        updateArmiesAfterAttack(defenderValue, attackerValue, diceThrowResult);
         
         
         return diceThrowResult;
@@ -212,8 +233,7 @@ public class Dice extends Observable {
      * or cancelled
      */
     public void cancelDiceThrow(){
-        setChanged();
-        notifyObservers("rollDiceComplete");
+      
     }
 
     /**
@@ -226,8 +246,7 @@ public class Dice extends Observable {
         getAttackingCountry().setNoOfArmies(1);
         getDefendingCountry().setNoOfArmies(attackingArmyCount - 1);
         updateCountryList();
-        setChanged();
-        notifyObservers("rollDiceComplete");
+       
     }
 
     /**
@@ -239,8 +258,7 @@ public class Dice extends Observable {
         getAttackingCountry().setNoOfArmies(attackingArmyCount - 1);
         getDefendingCountry().setNoOfArmies(1);
         updateCountryList();
-        setChanged();
-        notifyObservers("rollDiceComplete");
+       
     }
 
     /**
@@ -265,18 +283,17 @@ public class Dice extends Observable {
      * @param message text fir the label which displays how many armies were moved
      * @param moveArmies Button to execute the method.
      */
-    public void moveArmies(int armiesToMove) {
+    public boolean moveArmies(int armiesToMove) {
         int currentArmies = getAttackingCountry().getNoOfArmies();
         if (currentArmies <= armiesToMove) {
             
             System.out.println("You can move a maximum of " + (currentArmies - 1) + " armies");
-            return;
+            return false;
         } else {
             getAttackingCountry().setNoOfArmies(currentArmies - armiesToMove);
             getDefendingCountry().setNoOfArmies(armiesToMove);
-            updateCountryList();
-            setChanged();
-            notifyObservers("rollDiceComplete");
+            updateCountryList();        
+            return true;
         }
     }
 

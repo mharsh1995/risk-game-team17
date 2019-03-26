@@ -1,15 +1,32 @@
 package com.risk.team.model;
 
 import java.util.ArrayList;
-import com.risk.team.model.BonusCardType;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+
+import com.risk.team.controller.RiskDiceController;
+import com.risk.team.controller.RiskGraphConnected;
+import com.risk.team.controller.RiskMapRW;
+import com.risk.team.controller.gamephase.Fortification;
+import com.risk.team.controller.gamephase.Reinforcement;
+import com.risk.team.observer.Subject;
 
 /**
  * Player class for information regarding the player
  * 
  * @author Kartika Patil
+ * @author yashgolwala
  *
  */
 public class Player {
+
+	/**
+	 * Player currently playing.
+	 */
+	public Player currentPlayer;
 
 	/** Player name */
 	private String name;
@@ -21,12 +38,19 @@ public class Player {
 	private ArrayList<Country> myCountries;
 
 	/** List of cards that Player holds*/
-	private ArrayList<BonusCardType> listOfCards;
+	private ArrayList<Card> listOfCards;
+	
+	private int cardSetCount = 0;
+
+	public boolean allOutMode = false;
+	
+	
 
 	/** Player constructor */
 	public Player() {
 		this.myCountries = new ArrayList<Country>();
-		this.listOfCards = new ArrayList<BonusCardType>();
+		this.listOfCards = new ArrayList<Card>();
+		currentPlayer = this;
 	}
 
 	/**
@@ -46,7 +70,16 @@ public class Player {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public int getCardSetCount() {
+		cardSetCount = cardSetCount+1;
+		return cardSetCount;
+	}
 
+	public void setCardSetCount(int cardSetCount) {
+		this.cardSetCount = cardSetCount;
+	}
+	
 	/**
 	 * Method to get the Count of the Army that the Player owns
 	 * 
@@ -99,7 +132,7 @@ public class Player {
 	 * 
 	 * @return listOfCards list of cards
 	 */
-	public ArrayList<BonusCardType> getListOfCards() {
+	public ArrayList<Card> getListOfCards() {
 		return listOfCards;
 	}
 
@@ -108,7 +141,7 @@ public class Player {
 	 * 
 	 * @param listOfCards Types of cards
 	 */
-	public void setListOfCards(ArrayList<BonusCardType> listOfCards) {
+	public void setListOfCards(ArrayList<Card> listOfCards) {
 		this.listOfCards = listOfCards;
 	}
 
@@ -132,4 +165,384 @@ public class Player {
 			System.out.println("Insufficient number of armies.");
 		}
 	}
+
+	/**
+	 * Methods for trading cards of the player for armies
+	 *
+	 * @param selectedCards List of selected cards by the player
+	 * @param numberOfCardSetExchanged Number of card sets to be exchanged
+	 * @return Player object exchanging the cards
+	 */
+
+	public void exchangeCards(List<Card> selectedCards, int numberOfCardSetExchanged) {
+		this.setArmyCount(this.getArmyCount() + (5 * numberOfCardSetExchanged));
+		System.out.println(this.getName() + " successfully exchanged 3 cards for "+ (5 * numberOfCardSetExchanged) +" armies! \n");
+
+		for (Card card : selectedCards) {
+			if (this.getMyCountries().contains(card.getCountry())) {
+				card.getCountry().setNoOfArmies(card.getCountry().getNoOfArmies() + 2);
+				System.out.println(this.getName() + "\" got extra 2 armies on \"" + card.getCountry().getName() + "\n");
+				break;
+			}
+		}
+
+		for (Card card : selectedCards) {
+			this.listOfCards.remove((Card) card);
+		}
+	}
+	
+	
+	
+
+	public void attackPhase(Country attackingCountry, Country defendingCountry) {
+		boolean result;
+
+		if (attackingCountry != null && defendingCountry != null) {
+
+
+			boolean playerCanAttack = isAttackMoveValid(attackingCountry, defendingCountry);
+
+
+
+			if (playerCanAttack) {
+
+				Dice dice = new Dice(attackingCountry, defendingCountry);
+
+
+				RiskDiceController diceController = new RiskDiceController(dice);
+				result = diceController.start();
+				
+				if(result)
+				{
+					Card randomCard = new Card();
+					
+					currentPlayer.listOfCards.add(randomCard.getRandomCard());
+					//xtreme condition				
+					
+				}
+
+			}
+		}
+
+	}
+
+	/**
+
+	 * Method to check if the attack move is valid or not
+
+	 *
+
+	 * @param attacking Country attacking
+
+	 * @param defending Country under attack
+
+	 * @return true if the attack move is valid; other wise false
+
+	 */
+
+
+
+	public boolean isAttackMoveValid(Country attacking, Country defending) {
+
+		// adjecent country logic 
+		boolean isValidAttackMove = false;
+
+		if (defending.getPlayer() != attacking.getPlayer()) {
+
+			if (attacking.getNoOfArmies() > 1 && attacking.getAdjacentCountries().contains(defending)) {
+
+				isValidAttackMove = true;
+
+			} else {
+
+				System.out.println("Select only adjacent contries as a defending contry or Invalid game move or There should be more than one army on the country which is attacking.");
+
+			}
+
+		} else {
+			
+			
+				System.out.println("You have selected your own country or Invalid game move or Select another player's country to attack");
+			
+		}
+
+		return isValidAttackMove;
+
+	}
+
+
+
+	/**
+
+	 * Method to check if the player can attack or not.
+
+	 *
+
+	 * @param countries      List view of all the countries of the player
+
+	 * @param terminalWindow TextArea to which current game information will be displayed
+
+	 * @return true if the player can attack; other wise false
+
+	 */
+
+
+
+	public boolean playerCanAttack(List<Country> countries) {
+
+
+		boolean canAttack = false;
+
+		for (Country Country : countries) {
+
+			if (Country.getNoOfArmies() > 1) {
+
+				canAttack = true;
+
+			}
+
+		}
+
+		if (!canAttack) {
+
+			System.out.println("Player cannot continue with attack phase, move to fortification phase.\n");
+
+			System.out.println("Attack phase ended\n");
+
+			//setChanged();
+
+			//notifyObservers("checkIfFortificationPhaseValid");
+
+			return canAttack;
+
+		}
+
+		return canAttack;
+
+	}
+
+
+
+	/**
+
+	 * Method to check if any player lost the game after every attack move
+
+	 *
+
+	 * @param playersPlaying List containing all the players playing the game
+
+	 * @return Player object of the lost player
+
+	 */
+
+
+
+	public Player checkPlayerLost(List<Player> playersPlaying) {
+
+		Player playerLost = null;
+
+		for (Player player : playersPlaying) {
+
+			if (player.getMyCountries().isEmpty()) {
+
+				playerLost = player;
+
+				currentPlayer.getListOfCards().addAll(playerLost.getListOfCards());
+
+			}
+
+		}
+
+
+		return playerLost;
+
+	}
+
+	public void reinforcement(Subject observerSubject) {
+		
+		currentPlayer = this;
+		
+		Continent continent = currentPlayer.getMyCountries().get(currentPlayer.getMyCountries().size()-1).getPartOfContinent();
+		int balanceArmyCount = assignArmies(currentPlayer, continent);	
+		System.out.println("Armies received for reinforcement for player: " + balanceArmyCount);
+		currentPlayer.setArmyCount(currentPlayer.getArmyCount() + balanceArmyCount);
+		
+		for(Country country: currentPlayer.getMyCountries()) {
+			if(currentPlayer.getArmyCount()>0) {
+				observerSubject.setActionDetails(currentPlayer,country);
+			//	System.out.println("Number of armies currently assigned to country " + country.getName() + " :" + country.getNoOfArmies());
+			//	System.out.println("Total number of armies available:" + currentPlayer.getArmyCount());
+				System.out.println("Enter number of armies to assign to country " + country.getName() + " :");
+				try {
+					Scanner scan = new Scanner(System.in);
+					int assignArmies = Integer.parseInt(scan.nextLine());
+					currentPlayer.addArmiesToCountry(country, assignArmies);
+					
+				}catch(NumberFormatException e) {
+					System.out.println("Invalid number of armies.");
+				}
+			}
+			else {
+				System.out.println("Now !! You do not have sufficient number of armies available.");
+				break;
+			}
+		} 
+		
+	}
+	
+	public int assignArmies(Player player, Continent continent) {
+		boolean hasPlayerAllContinents = true;
+			
+		int playerOwnedArmy = player.getMyCountries().size()/ 3;
+		int noOfArmies = (int) playerOwnedArmy;
+		
+		ArrayList<Country> playerOwnedCountries = player.getMyCountries();
+		ArrayList<Country> continentCountryList = continent.getListOfCountries();
+
+		// Minimum number of armies for a player in case armies count is less
+		// than 3.
+		if (noOfArmies < 3) {
+			noOfArmies = 3;
+		}
+
+		for (Country country : continentCountryList) {
+			if (!playerOwnedCountries.contains(country)) {
+				hasPlayerAllContinents = false;
+				break;
+			}
+		}
+
+		// If a player owns all the countries in a continent, then armies count will be equal to the control value of the continent.
+		if (hasPlayerAllContinents) {
+			noOfArmies = continent.getControlValue();
+		}
+
+		return noOfArmies;
+	}
+
+	public ArrayList<Country> fortification(RiskMapRW mapObj) {
+		ArrayList<Country> countryList = new ArrayList<Country>() ;
+		currentPlayer = this;
+		Scanner scan = new Scanner(System.in);
+		
+		if(currentPlayer.getMyCountries().size()>=2) {
+				
+			boolean flag = true;
+			String giverCountry = "";
+			String receiverCountry = "";
+
+			System.out.println("List of countries owned by you and current army assigned are: ");
+			for(Country ownedCountry: currentPlayer.getMyCountries()) {
+				System.out.println(ownedCountry.getName() + ":" + ownedCountry.getNoOfArmies());
+			}
+			do {
+				flag=true;
+				System.out.println("Enter the name of country from which you want to move some armies :");
+				giverCountry = scan.nextLine();
+				System.out.println("Enter the name of country to which you want to move some armies, from country " + giverCountry);
+				receiverCountry = scan.nextLine();
+				if(!(mapObj.getMapGraph().getAllCountries().containsKey(giverCountry.trim())) || !(mapObj.getMapGraph().getAllCountries().containsKey(receiverCountry.trim()))) {
+					flag=false;
+					System.out.println("Please enter correct country name.");
+				}
+				Country givingCountry = (mapObj.getMapGraph().getAllCountries().get(giverCountry.trim()));
+				Country receviningCountry = (mapObj.getMapGraph().getAllCountries().get(receiverCountry.trim()));
+
+
+				if(currentPlayer.getMyCountries().contains(givingCountry) && currentPlayer.getMyCountries().contains(receviningCountry)){
+
+
+					if(givingCountry.equals(receviningCountry)){
+
+						System.out.println("Source and Destination Country can not be same");
+						flag = false;
+
+					}else {
+
+						if((mapObj.getMapGraph().getAllCountries().get(giverCountry).getNoOfArmies()) <= 1)
+
+						{
+							System.out.println("Please select a giver country having armies more than one");
+							flag=false;
+						}
+						else
+						{
+							flag = true;
+						}
+					}
+
+				}
+				else {
+					System.out.println("Player does not own these country, please enter country names again");
+					flag = false;
+				}
+
+			}while(flag==false);
+
+
+			int countOfArmies = 0;
+			do {
+				flag=true;
+				System.out.println("Enter the number of armies to move from " + giverCountry + " to " + receiverCountry);
+				try {
+					countOfArmies = Integer.parseInt(scan.nextLine());
+					if(countOfArmies >= mapObj.getMapGraph().getAllCountries().get(giverCountry).getNoOfArmies()) {
+						System.out.println("Sufficient number of armies is not available.");
+						flag=false;
+					}
+
+
+				}catch(NumberFormatException e) {
+					System.out.println("Invalid number of armies.");
+					flag=false;
+				}
+			}while(flag==false);	
+
+			
+			moveArmies(mapObj.getMapGraph().getAllCountries().get(giverCountry), (mapObj.getMapGraph().getAllCountries().get(receiverCountry)), countOfArmies,currentPlayer,mapObj.getMapGraph().getAllCountries().values());
+			countryList.add(mapObj.getMapGraph().getAllCountries().get(giverCountry));
+			countryList.add(mapObj.getMapGraph().getAllCountries().get(receiverCountry));
+		}
+		else {
+			System.out.println("You don't have sufficient number of countries to choose from.");
+		}
+		
+		return countryList;
+		
+	}
+	
+	
+	public boolean moveArmies(Country fromCountry, Country toCountry, int noOfArmies,Player player,Collection<Country> allCountriescollection) {
+
+		boolean pathFlag = false;
+		
+		Set<Country> allCountries = new HashSet<Country>(allCountriescollection);
+
+		Set<Country> playerOwnedCountries = new HashSet<Country>(player.getMyCountries());
+
+		RiskGraphConnected rc = new RiskGraphConnected(allCountries);
+
+		pathFlag = rc.ifPathExists(fromCountry,toCountry,playerOwnedCountries);		
+
+		//if the flag is true then move armies from fromCountry to toCountry
+		if(pathFlag) {
+			fromCountry.setNoOfArmies(fromCountry.getNoOfArmies() - noOfArmies);
+			toCountry.setNoOfArmies(toCountry.getNoOfArmies() + noOfArmies);
+			for(Country country : playerOwnedCountries)
+			{
+				System.out.println("Number of armies assigned to country after fortification " + country.getName() + " :" + country.getNoOfArmies());
+			}
+			
+		}
+		else
+		{				
+			System.out.println("Source and Destination Country does not have adjacent path through countries owned by Player");
+			
+		}
+		
+		return pathFlag;
+
+	}
+
+
 }

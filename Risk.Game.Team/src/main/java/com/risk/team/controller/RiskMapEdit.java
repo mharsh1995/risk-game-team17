@@ -9,7 +9,8 @@ import java.util.regex.Pattern;
 
 import com.risk.team.model.Continent;
 import com.risk.team.model.Country;
-import com.risk.team.view.RiskGameDriver;
+import com.risk.team.view.LoadUI;
+import com.risk.team.view.GamePhaseView;
 
 /**
  * Class provides the user with the option to edit a Risk Game Map
@@ -270,7 +271,7 @@ public class RiskMapEdit {
 			mapObj.setFileName(fileName);
 			mapObj.setNewFileName(fileName);
 			mapObj.writeMapFile(flag);
-			RiskGameDriver.status = true;
+			LoadUI.status = true;
 			return true;
 
 		default:
