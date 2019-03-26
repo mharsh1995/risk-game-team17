@@ -2,7 +2,7 @@ package com.risk.team.controller;
 
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
+//import static org.mockito.Mockito.mock;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class RiskCardControllerTest {
 	@Test
 	public void getCardsToTradeTest() {
 		
-		RiskCardController rcc=mock(RiskCardController.class);
+		//RiskCardController rcc=mock(RiskCardController.class);
 		r.loadCards();
 		
 	}

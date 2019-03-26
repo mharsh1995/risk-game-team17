@@ -19,6 +19,7 @@ import com.risk.team.observer.Subject;
  * 
  * @author Kartika Patil
  * @author yashgolwala
+ * @version 2.0
  *
  */
 public class Player {
@@ -40,12 +41,12 @@ public class Player {
 	/** List of cards that Player holds*/
 	private ArrayList<Card> listOfCards;
 	
+	/** No of cards */
 	private int cardSetCount = 0;
-
+	
+	/** Flag to set all out mode */
 	public boolean allOutMode = false;
 	
-	
-
 	/** Player constructor */
 	public Player() {
 		this.myCountries = new ArrayList<Country>();
@@ -71,11 +72,22 @@ public class Player {
 		this.name = name;
 	}
 	
+	/**
+	 * Get method to get card count
+	 *
+	 * @return cardSetCount
+	 */
+	
 	public int getCardSetCount() {
 		cardSetCount = cardSetCount+1;
 		return cardSetCount;
 	}
 
+	/**
+	 * Set method for card count
+	 * 
+	 * @param cardSetCount card count
+	 */
 	public void setCardSetCount(int cardSetCount) {
 		this.cardSetCount = cardSetCount;
 	}
@@ -167,11 +179,10 @@ public class Player {
 	}
 
 	/**
-	 * Methods for trading cards of the player for armies
+	 * Method for exchanging cards of the player for armies
 	 *
 	 * @param selectedCards List of selected cards by the player
 	 * @param numberOfCardSetExchanged Number of card sets to be exchanged
-	 * @return Player object exchanging the cards
 	 */
 
 	public void exchangeCards(List<Card> selectedCards, int numberOfCardSetExchanged) {
@@ -191,18 +202,18 @@ public class Player {
 		}
 	}
 	
-	
-	
-
+	/**
+	 * Method for performing attack
+	 *
+	 * @param attackingCountry Country which is attacking
+	 * @param defendingCountry Country under attack
+	 */
 	public void attackPhase(Country attackingCountry, Country defendingCountry) {
 		boolean result;
 
 		if (attackingCountry != null && defendingCountry != null) {
 
-
 			boolean playerCanAttack = isAttackMoveValid(attackingCountry, defendingCountry);
-
-
 
 			if (playerCanAttack) {
 
@@ -229,22 +240,15 @@ public class Player {
 	/**
 
 	 * Method to check if the attack move is valid or not
-
-	 *
-
+	 * 
 	 * @param attacking Country attacking
-
 	 * @param defending Country under attack
-
 	 * @return true if the attack move is valid; other wise false
-
 	 */
-
-
 
 	public boolean isAttackMoveValid(Country attacking, Country defending) {
 
-		// adjecent country logic 
+		// adjacent country logic 
 		boolean isValidAttackMove = false;
 
 		if (defending.getPlayer() != attacking.getPlayer()) {
@@ -252,15 +256,14 @@ public class Player {
 			if (attacking.getNoOfArmies() > 1 && attacking.getAdjacentCountries().contains(defending)) {
 
 				isValidAttackMove = true;
-
-			} else {
+			} 
+			else {
 
 				System.out.println("Select only adjacent contries as a defending contry or Invalid game move or There should be more than one army on the country which is attacking.");
-
 			}
 
-		} else {
-			
+		}
+			else {
 			
 				System.out.println("You have selected your own country or Invalid game move or Select another player's country to attack");
 			
@@ -275,18 +278,9 @@ public class Player {
 	/**
 
 	 * Method to check if the player can attack or not.
-
-	 *
-
-	 * @param countries      List view of all the countries of the player
-
-	 * @param terminalWindow TextArea to which current game information will be displayed
-
+	 * @param countries List view of all the countries of the player	
 	 * @return true if the player can attack; other wise false
-
 	 */
-
-
 
 	public boolean playerCanAttack(List<Country> countries) {
 
@@ -306,12 +300,7 @@ public class Player {
 		if (!canAttack) {
 
 			System.out.println("Player cannot continue with attack phase, move to fortification phase.\n");
-
 			System.out.println("Attack phase ended\n");
-
-			//setChanged();
-
-			//notifyObservers("checkIfFortificationPhaseValid");
 
 			return canAttack;
 
@@ -324,40 +313,29 @@ public class Player {
 
 
 	/**
-
 	 * Method to check if any player lost the game after every attack move
-
-	 *
-
 	 * @param playersPlaying List containing all the players playing the game
-
 	 * @return Player object of the lost player
-
 	 */
-
-
 
 	public Player checkPlayerLost(List<Player> playersPlaying) {
 
 		Player playerLost = null;
 
 		for (Player player : playersPlaying) {
-
 			if (player.getMyCountries().isEmpty()) {
-
 				playerLost = player;
-
 				currentPlayer.getListOfCards().addAll(playerLost.getListOfCards());
-
 			}
-
 		}
-
 
 		return playerLost;
 
 	}
-
+	
+	/** Method to perform reinforcement
+	 * @param observerSubject object for Subject class
+	 */
 	public void reinforcement(Subject observerSubject) {
 		
 		currentPlayer = this;
@@ -390,6 +368,11 @@ public class Player {
 		
 	}
 	
+	/** Method for assigning armies during reinforcement phase
+	 * @param player Player object
+	 * @param continent Continent object
+	 * @return noOfArmies Number of armies assigned
+	 */
 	public int assignArmies(Player player, Continent continent) {
 		boolean hasPlayerAllContinents = true;
 			
@@ -420,6 +403,10 @@ public class Player {
 		return noOfArmies;
 	}
 
+	/** Method to perform fortification
+	 * @param mapObj object for RiskMapRW class
+	 * @return countryList list containing source country and destination country
+	 */
 	public ArrayList<Country> fortification(RiskMapRW mapObj) {
 		ArrayList<Country> countryList = new ArrayList<Country>() ;
 		currentPlayer = this;
@@ -511,7 +498,14 @@ public class Player {
 		
 	}
 	
-	
+	/** Method to move armies during fortification phase
+	 *@param fromCountry source country from which armies are to be moved
+	 *@param toCountry destination country to which armies are moved
+	 *@param noOfArmies No of armies to be moved
+	 *@param player Player who does fortification.
+	 *@param allCountriescollection collection of all countries in the Map Graph
+	 *@return pathFlag Flag to indicate if path exists between both source and destination country
+	 */
 	public boolean moveArmies(Country fromCountry, Country toCountry, int noOfArmies,Player player,Collection<Country> allCountriescollection) {
 
 		boolean pathFlag = false;
