@@ -86,7 +86,7 @@ public class RiskCardController {
      * combination and number of cards selected by the player
      *
      * @param event Action Event
-     * @return true if trade possible or not
+     * @return 
      */
     
     public boolean checkTrade() {

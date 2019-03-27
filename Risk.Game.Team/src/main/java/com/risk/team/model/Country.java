@@ -49,8 +49,7 @@ public class Country {
 	/**
 	 * Get country name
 	 *
-	 * @return name
-	 * 			   The country name
+	 * @return The country name
 	 */
 	public String getName() {
 		return name;
@@ -88,8 +87,7 @@ public class Country {
 	/**
 	 * Get the continent name.
 	 * 
-	 * @return continent
-	 * 				 name of the continent
+	 * @return name of the continent
 	 */
 	public String getContinent() {
 		return continent;
@@ -118,7 +116,7 @@ public class Country {
 	 * Set the value of X coordinate
 	 * 
 	 * @param xValue
-	 *            X coordinate value
+	 *            X cooridnate value
 	 */
 	public void setxValue(String xValue) {
 		this.xValue = xValue;
@@ -137,7 +135,7 @@ public class Country {
 	 * Set the value of Y coordinate
 	 * 
 	 * @param yValue
-	 *            Y coordinate value
+	 *            Y cooridnate value
 	 */
 	public void setyValue(String yValue) {
 		this.yValue = yValue;
@@ -165,7 +163,7 @@ public class Country {
 	/**
 	 * Method to get the list of Adjacent countries.
 	 * 
-	 * @return adjacentCountries list of adjacent countries
+	 * @return list of adjacent countries
 	 */
 	public ArrayList<Country> getAdjacentCountries() {
 		return adjacentCountries;
@@ -184,7 +182,7 @@ public class Country {
 	/**
 	 * Method to check whether the country is part of the continent
 	 * 
-	 * @return partOfContinent continent name
+	 * @return continent name
 	 */
 	public Continent getPartOfContinent() {
 		return partOfContinent;
