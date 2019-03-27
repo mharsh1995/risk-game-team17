@@ -1,90 +1,82 @@
 package com.risk.team.controller;
 
+
+
 import com.risk.team.model.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/** DiceController class contains methods for dice roll
- * @author Kartika Patil
- */
+
 
 public class RiskDiceController {
 
-	/** attackingPlayer object for Attacker */
+	
 	private Player attackingPlayer;
 
-	/** attackingCountry object for Attacker Country*/
+	
 	private Country attackingCountry;
 	
-	/** attackingArmies armies owned by attacking country*/
+	
 	private int attackingArmies;
 	
-	/** defendingPlayer object for Defender */
+	
 	private Player defendingPlayer;
 	
-	/** defendingCountry object for Attacker Country*/
+
 	private Country defendingCountry;
 	
-	/** defendingArmies armies owned by Defending country*/
+	
 	private int  defendingArmies;
 	
-	/** winnerResult Result displayed on winning the dice roll*/
-	private String winnerResult;
 	
-	/** dice1Attacker Flag value for Dice1 of Attacker*/
-	private boolean dice1Attacker = false;
+	private String winner_result;
 	
-	/** dice2Attacker Flag value for Dice2 of Attacker*/
-	private boolean dice2Attacker = false;
 	
-	/** dice3Attacker Flag value for Dice3 of Attacker*/
-	private boolean dice3Attacker = false;
+	private boolean dice1_Attacker = false;
 	
-	/** dice1Defender Flag value for Dice1 of Defender*/
-	private boolean dice1Defender = false;
+
+	private boolean dice2_Attacker = false;
 	
-	/** dice2Defender Flag value for Dice2 of Defender*/
-	private boolean dice2Defender = false;	
 	
-	/** attackerWon Flag to check if attacker has won or not */
-	private boolean attackerWon = false;	
+	private boolean dice3_Attacker = false;
 	
-	/** attackerDiceNumberList ArrayList of Attacker's dice values */
-	private ArrayList<Boolean> attackerDiceNumberList ;
 	
-	/** defenderDiceNumberList ArrayList of Defender's dice values */
-	private ArrayList<Boolean> defenderDiceNumberList ;
+	private boolean dice1_Defender = false;
 	
-	/** Flag variable */
-	static boolean flag = true;
 	
-	/** dice Object for Dice Class*/
+	private boolean dice2_Defender = false;	
+	
+	private boolean attacker_won = false;	
+	
+	private ArrayList<Boolean> attackerdicenumberlist ;
+	
+	private ArrayList<Boolean> defenderdicenumberlist ;
+	
+	boolean flag = true;
+	
 	public Dice dice;
-	
 	public boolean diceValidateCount;
+
+
+	private boolean flag5 = true;
 	
-	/** DiceController with parameter
-	 * @param dice Dice
-	 * */
 	public RiskDiceController(Dice dice) {
 		this.dice = dice;
-		this.attackerDiceNumberList = new ArrayList<Boolean>();
-		this.defenderDiceNumberList = new ArrayList<Boolean>();
+		this.attackerdicenumberlist = new ArrayList<Boolean>();
+		this.defenderdicenumberlist = new ArrayList<Boolean>();
 		this.attackingPlayer = dice.getAttackingCountry().getPlayer();
 		this.defendingPlayer =  dice.getDefendingCountry().getPlayer();
 		
 	}
 	
-	/** method to start dice roll
-	 * @return attackerWon
-	 * */
+	
 	public boolean start()
 	{
 		Scanner scan = new Scanner(System.in);
 		
 		loadAttackScreen();
-		if(attackerWon)
+		if(attacker_won)
 		{
 				System.out.println("Do you want to move more than one army to won country??(Yes/No)");
 				if(scan.nextLine().trim().equalsIgnoreCase("Yes"))
@@ -111,11 +103,8 @@ public class RiskDiceController {
 				}
 		}
 		
-		return attackerWon;
+		return attacker_won;
 	}
-	
-	/** method to load attack screen
-	 * */
 	public void loadAttackScreen() {
 	
 	
@@ -132,14 +121,16 @@ public class RiskDiceController {
 		
 		if (dice.checkDiceThrowPossible())
 		{		
-			this.dice1Attacker = false;
-			this.dice2Attacker = false;
-			this.dice3Attacker = false;
+			this.dice1_Attacker = false;
+			this.dice2_Attacker = false;
+			this.dice3_Attacker = false;
 			
-			this.dice1Defender = false;
-			this.dice2Defender = false;
+			this.dice1_Defender = false;
+			this.dice2_Defender = false;
 			
-					
+			
+			
+			
 			if(!attackingPlayer.allOutMode)
 			{
 				diceSelection();
@@ -169,7 +160,7 @@ public class RiskDiceController {
 				System.out.println("Defender Armies: " + String.valueOf(countryDefending.getNoOfArmies()));
 				
 				
-				System.out.println(winnerResult);
+				System.out.println(winner_result);
 				flag = false;
 			    }
 				
@@ -180,12 +171,16 @@ public class RiskDiceController {
 					diceSelectionAllOutMode();
 					startRoll();
 					
+					while(flag5 )
+					{
+					
 					System.out.println("Attacker Armies: " + String.valueOf(countryAttacking.getNoOfArmies()));
 					System.out.println("Defender Armies: " + String.valueOf(countryDefending.getNoOfArmies()));
 					
 					
-					System.out.println(winnerResult);
-					
+					System.out.println(winner_result);
+					flag5 = false;
+				    }
 				}
 		}
 		else
@@ -195,28 +190,50 @@ public class RiskDiceController {
 			
 		}
 	}
-	/** method for dice selection in all out mode
-	 * */
+	
 	private void diceSelectionAllOutMode() {
+		int attckingArmies = dice.getAttackingCountry().getNoOfArmies();
+		int defendingArmies = dice.getDefendingCountry().getNoOfArmies();
 		
-		this.dice1Attacker = true;
-		this.dice2Attacker = true;
-		this.dice3Attacker = true;
+		if (attckingArmies == 2)
+		{
+			this.dice1_Attacker = true;
+		}
+		else if (attckingArmies == 3)
+		{
+			this.dice1_Attacker = true;
+			this.dice2_Attacker = true;
+		}
+		else 
+			
+		{
+			this.dice1_Attacker = true;
+			this.dice2_Attacker = true;
+			this.dice3_Attacker = true;
+			
+		}
+		
+		if (defendingArmies == 1)
+		{
+			dice1_Defender =  true;
+		}
+		else{
 		
 
-		this.dice1Defender = true;
-		this.dice2Defender = true;
+		this.dice1_Defender = true;
+		this.dice2_Defender = true;
 		
-		attackerDiceNumberList.add(dice1Attacker);
-		attackerDiceNumberList.add(dice2Attacker);
-		attackerDiceNumberList.add(dice3Attacker);
+		}
 		
-		defenderDiceNumberList.add(dice1Defender);
-		defenderDiceNumberList.add(dice2Defender);
+		attackerdicenumberlist.add(dice1_Attacker);
+		attackerdicenumberlist.add(dice2_Attacker);
+		attackerdicenumberlist.add(dice3_Attacker);
+		
+		defenderdicenumberlist.add(dice1_Defender);
+		defenderdicenumberlist.add(dice2_Defender);
 	}
 
-	/** method to select dice
-	 * */
+
 	private void diceSelection() {
 		
 				Scanner scan = new Scanner(System.in);
@@ -235,19 +252,19 @@ public class RiskDiceController {
 			
 								if (number == 1)
 								{
-									this.dice1Attacker = true;
+									this.dice1_Attacker = true;
 								}
 								else if (number == 2)
 								{
-									this.dice1Attacker = true;
-									this.dice2Attacker = true;
+									this.dice1_Attacker = true;
+									this.dice2_Attacker = true;
 								}
 								else if ( number == 3)
 									
 								{
-									this.dice1Attacker = true;
-									this.dice2Attacker = true;
-									this.dice3Attacker = true;
+									this.dice1_Attacker = true;
+									this.dice2_Attacker = true;
+									this.dice3_Attacker = true;
 									
 								}
 								else
@@ -265,9 +282,9 @@ public class RiskDiceController {
 					
 				}
 				
-				attackerDiceNumberList.add(dice1Attacker);
-				attackerDiceNumberList.add(dice2Attacker);
-				attackerDiceNumberList.add(dice3Attacker);
+				attackerdicenumberlist.add(dice1_Attacker);
+				attackerdicenumberlist.add(dice2_Attacker);
+				attackerdicenumberlist.add(dice3_Attacker);
 				
 				while (flag2)
 				{
@@ -279,13 +296,13 @@ public class RiskDiceController {
 					{
 							if (number == 1)
 							{
-								this.dice1Defender = true;
+								this.dice1_Defender = true;
 							}
 							else if (number == 2)
 							{
 								
-								this.dice1Defender = true;
-								this.dice2Defender = true;												
+								this.dice1_Defender = true;
+								this.dice2_Defender = true;												
 								
 							}
 							
@@ -298,20 +315,22 @@ public class RiskDiceController {
 					else
 					{
 						System.out.println("Available armies are less then no of dice selected,So only one dice is selected");
-						this.dice1Defender = true;
+						this.dice1_Defender = true;
 					}
 					
 				}
 		
-				defenderDiceNumberList.add(dice1Defender);
-				defenderDiceNumberList.add(dice2Defender);
+				defenderdicenumberlist.add(dice1_Defender);
+				defenderdicenumberlist.add(dice2_Defender);
 				
 	}
 
-	/** method to calculate dice value for attacker
-	 * */	
+
+	
+	
+	
 	public void attackDiceValue() {
-		for (Boolean dicenum : attackerDiceNumberList) {
+		for (Boolean dicenum : attackerdicenumberlist) {
 			if (dicenum) {
 				int diceValue = dice.generateRandomNumber();
 				dice.getAttackerDiceList().add(diceValue);
@@ -319,10 +338,8 @@ public class RiskDiceController {
 		}
 	}
 	
-	/** method to calculate dice value for defender
-	 * */
 	public void defenceDiceValue() {
-		for (Boolean dicenum : defenderDiceNumberList) {
+		for (Boolean dicenum : defenderdicenumberlist) {
 			if (dicenum) {
 				int diceValue = dice.generateRandomNumber();
 				dice.getDefenderDiceList().add(diceValue);
@@ -330,11 +347,10 @@ public class RiskDiceController {
 		}
 	}
 	
-	/** method if the dice roll is continued
-	 * */
+	
     public void continueDiceRoll() {
-    	attackerDiceNumberList.clear();
-    	defenderDiceNumberList.clear();
+    	attackerdicenumberlist.clear();
+    	defenderdicenumberlist.clear();
     	dice.setAttackerDiceList(new ArrayList<>());
 		dice.setDefenderDiceList(new ArrayList<>());
 		loadAttackScreen();
@@ -342,17 +358,24 @@ public class RiskDiceController {
 	}
 	
 	
+	
+	
 	/**
 	 * Method to start roll
+	 * 
+	 * @param event
+	 *  	ActionEvent
+	 * @return 
+	 *  
 	 */
 	
 	public void startRoll() {
 		diceValidateCount = false;
 		
-		if (!dice1Attacker && !dice2Attacker && !dice3Attacker ) {
+		if (!dice1_Attacker && !dice2_Attacker && !dice3_Attacker ) {
 			System.out.println ("Atleast one attacking dice should be selected");
 			return ;
-		} else if (!dice1Defender && !dice2Defender ) {
+		} else if (!dice1_Defender && !dice2_Defender ) {
 			System.out.println ("Atleast one defender dice should be selected");
 			return ;
 		}
@@ -370,12 +393,12 @@ public class RiskDiceController {
 		if (defendingCountry.getNoOfArmies() <= 0) {
 			diceResult.add(countryAttacking.getPlayer().getName() + " won " + defendingCountry.getName() + " Country");
 			dice.setCountriesWonCount(dice.getCountriesWonCount() + 1);
-			winnerResult = countryAttacking.getPlayer().getName() + " won " + defendingCountry.getName() + " Country";
-			attackerWon = true;
+			winner_result = countryAttacking.getPlayer().getName() + " won " + defendingCountry.getName() + " Country";
+			attacker_won = true;
 			
 		} else if (countryAttacking.getNoOfArmies() < 2) {
 			diceResult.add(countryAttacking.getPlayer().getName() + " lost the match");
-			winnerResult = countryAttacking.getPlayer().getName() + " lost the match";
+			winner_result = countryAttacking.getPlayer().getName() + " lost the match";
 			
 		} else {
 			
