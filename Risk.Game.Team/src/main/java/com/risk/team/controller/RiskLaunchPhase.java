@@ -13,7 +13,6 @@ import com.risk.team.controller.*;
  * getting player info, and allocating countries and armies
  * 
  * @author yashgolwala
- * @version 2.0
  * 
  */
 public class RiskLaunchPhase {
