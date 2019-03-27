@@ -27,3 +27,12 @@ Features delivered in release 1 / Version 1.0 (build 1) :
  - Fortification Phase
  - Startup Phase 
  - Driver Interface
+
+Features delivered in release 2 / Version 2.0 (build 2) :
+ - Phase View using Observer pattern for displaying 
+   (i) Details of player's name, (ii) Current phase being played and (iii) Actions performed by the player. 
+ - Implementation of Player World Domination View for displaying the percentage of the map controlled by every player ,          continents controlled by every player and the total number of armies owned by every player.
+ - Implemenation of Reinforcement, Attack and Fortification methods in player class.
+ - Card Trade and card exchange view in Reinforcement phase. (increment of 5 per every trade taking place)
+ - Attack Phase integrated with Dice roll feature and All out mode. (Max dice allowed at any time: Attacker-3 and Defender-2)
+ - Update in allocating armies count in startup phase. ( using floor value of total countries / 3 ).
