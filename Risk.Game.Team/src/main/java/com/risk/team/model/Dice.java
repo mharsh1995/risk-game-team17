@@ -12,9 +12,8 @@ import com.risk.team.model.*;
  * Class for the dice. Attacking player can have a maximum of 3 dices
  * and the defender can have a maximum of 2 dices. It has methods for
  * simulating the dice rolls for the attack phase
- * 
- *@author Kartika Patil
- *version 2.0.0
+ *
+ * @author Kartika Patil 
  */
 public class Dice  {
 
@@ -30,7 +29,7 @@ public class Dice  {
     private ArrayList<Integer> attackerDiceList;
 
     /**
-     * Country which is attacked
+     * Country is is under attacked
      */
     private Country defendingCountry;
 
@@ -61,7 +60,7 @@ public class Dice  {
     /**
      * Getter for the attacking Country.
      *
-     * @return attackingCountry Attacking country.
+     * @return Attacking country.
      */
     public Country getAttackingCountry() {
         return attackingCountry;
@@ -79,7 +78,7 @@ public class Dice  {
     /**
      * Getter for attacking dice values.
      *
-     * @return attackerDiceList list of values of the attacking dice.
+     * @return list of values of the attacking dice.
      */
     public ArrayList<Integer> getAttackerDiceList() {
         return attackerDiceList;
@@ -97,25 +96,25 @@ public class Dice  {
     /**
      *  Getter for the defending Country.
      *
-     * @return defendingCountry Country under attack
+     * @return Country underattack
      */
     public Country getDefendingCountry() {
         return defendingCountry;
     }
 
     /**
-     * Setter for defending Country.
+     * Setter for defending dice values.
      *
-     * @param defendingCountry Defending Country.
+     * @param defendingCountry list of values of the defending dice.
      */
     public void setDefendingCountry(Country defendingCountry) {
         this.defendingCountry = defendingCountry;
     }
 
     /**
-     * Getter for defending dice values.
+     * Getter  for defending dice values.
      *
-     * @return defenderDiceList list of values of the defending dice.
+     * @return list of values of the defending dice.
      */
 
     public ArrayList<Integer> getDefenderDiceList() {
@@ -135,7 +134,7 @@ public class Dice  {
     /**
      * Getter for count of countries won
      *
-     * @return countriesWonCount Number of countries won by the player
+     * @return Number of countries won by the player
      */
     public int getCountriesWonCount() {
         return countriesWonCount;
@@ -154,7 +153,7 @@ public class Dice  {
      * Method for comparing the dice values of attacker and defender.
      * It compares the value in descending order.
      *
-     * @return diceThrowResult List of the results of the dice throw
+     * @return List of the results of the dice throw
      */
     public ArrayList<String> getDicePlayResult(){
         ArrayList<String> diceThrowResult = new ArrayList<>();
@@ -230,7 +229,7 @@ public class Dice  {
     }
 
     /**
-     * Method indicating that the dice roll is complete
+     * Method of indicate that the dice roll is complete
      * or cancelled
      */
     public void cancelDiceThrow(){
@@ -251,7 +250,7 @@ public class Dice  {
     }
 
     /**
-     * Method for skipping the army move after attacker has won the attack.
+     * Method for skipping the army move after attacke has won the attack.
      * But at least one army will move from attacking to defending country.
      */
     public void skipMoveArmy() {
@@ -263,7 +262,7 @@ public class Dice  {
     }
 
     /**
-     * Method for updating the country list after attacker
+     * Mehtod for updating the country list after attacker
      * has won at least one country.
      */
     public void updateCountryList() {
@@ -277,11 +276,12 @@ public class Dice  {
 
     /**
      * Method for moving armies from attacker's country to the defending country,
-     * if attacks won the country.
+     * if attckes won the country.
      *
      *
-     * @param armiesToMove Number of armies to move
-     * @return true if armies can be moved or false if not
+     * @param armiesToMove Number aries to move
+     * @param message text fir the label which displays how many armies were moved
+     * @param moveArmies Button to execute the method.
      */
     public boolean moveArmies(int armiesToMove) {
         int currentArmies = getAttackingCountry().getNoOfArmies();
