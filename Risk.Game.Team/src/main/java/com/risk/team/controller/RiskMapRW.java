@@ -78,8 +78,7 @@ public class RiskMapRW {
 	/**
 	 * Method to set filename of new map.
 	 * 
-	 * @param  filename name of file of type string;
-	 * @return nothing
+	 * @param fileName name of file of type string;
 	 */
 
 	public void setFileName(String fileName) {
@@ -89,17 +88,16 @@ public class RiskMapRW {
 	/**
 	 * Method to get map Tag details.
 	 * 
-	 * @return mapTagInfo list of map Tag Data;
+	 * @return mapTagInfo list of map Tag Data.
 	 */
 	public ArrayList<String> getMapTagInfo() {
 		return mapTagInfo;
 	}
 
 	/**
-	 * Method to set map Tag Data into magTagInfo;
+	 * Method to set map Tag Data into magTagInfo
 	 * 
-	 * @param  mapTagInfo list of map Tag Data;
-	 * @return nothing;
+	 * @param  mapTagInfo list of map Tag Data
 	 */
 
 	public void setMapTagInfo(ArrayList<String> mapTagInfo) {
@@ -118,7 +116,6 @@ public class RiskMapRW {
 	/**
 	 * Method to set newFileName.
 	 * @param newFileName name of new file to be created;
-	 * @return nothing;
 	 */
 
 	public void setNewFileName(String newFileName) {
@@ -136,8 +133,7 @@ public class RiskMapRW {
 
 	/**
 	 * Method to set RiskMapGraph Object.
-	 * @param RiskMapGraph Object of type RiskMapGraph;
-	 * @return nothing;
+	 * @param mapGraph Object of type RiskMapGraph
 	 */
 
 	public void setMapGraph(RiskMapGraph mapGraph) {
@@ -145,14 +141,13 @@ public class RiskMapRW {
 	}
 
 	/**
-	 * Method to write content to new or existing .map file
+	 * Method to write map file content to new or existing .map file
 	 * It initially creates file object with new filename.It then retrieves mapGraph object details and appends into
-	 * StrinBuilder Object.At last StringBuilder Object is written into file successfully.
+	 * StringBuilder Object.At last StringBuilder Object is written into file successfully.
 	 * 
 	 * @param flag boolean value for file new is existing;
 	 * @return true if file is written successfully or false;
 	 */
-
 	public boolean writeMapFile(boolean flag)
 
 	{   File file;

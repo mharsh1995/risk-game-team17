@@ -62,8 +62,7 @@ public class Continent {
 	/**
 	 * Set the control value of the continent.
 	 * 
-	 * @param controlFlag
-	 *            the control value to set
+	 * @param controlValue control value to set
 	 */
 	public void setControlValue(int controlValue) {
 		this.controlValue = controlValue;

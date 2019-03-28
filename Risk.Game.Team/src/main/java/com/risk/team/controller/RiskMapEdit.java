@@ -57,18 +57,16 @@ public class RiskMapEdit {
 	}
 
 	/**
-	 * <ul>
-	 * This method allows creation of new map. The user can choose from 9 options:
-	 *<li>1) Enter Map Tag
-	 *<li>2) Add a Continent
-	 *<li>3) Remove a Continent
-	 *<li>4) Add a Country
-	 *<li>5) Remove a Country
-	 *<li>6) Add an Edge between Countries
-	 *<li>7) Remove an Edge between Countries
-	 *<li>8) Show Map Details
-	 *<li>9) Save Map and Exit
-	 * </ul>
+	 * This method allows creation of new map. The user can choose from 9 options:  
+	 *1) Enter Map Tag
+	 *2) Add a Continent
+	 *3) Remove a Continent
+	 *4) Add a Country
+	 *5) Remove a Country
+	 *6) Add an Edge between Countries
+	 *7) Remove an Edge between Countries
+	 *8) Show Map Details
+	 *9) Save Map and Exit
 	 * @param flag when set true creates a new map and when set false allows editing existing map.
 	 * 
 	 * @return true if the map is created or editing successfully else returns false

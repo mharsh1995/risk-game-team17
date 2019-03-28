@@ -16,200 +16,208 @@ import com.risk.team.observer.Subject;
 
 /**
  * Class to calculate percentage of territories owned by player across the world
- * @author Jenny 
+ * 
+ * @author Jenny
  */
 
 public class PlayerWorldDomination extends Observer {
-	
+
 	private Subject observerSubject;
-	
+
 	/**
 	 * Constructor
+	 * 
 	 * @param observerSubject ObserverSubject
-	 */	
+	 */
 	public PlayerWorldDomination(Subject observerSubject) {
 		this.observerSubject = observerSubject;
 		this.observerSubject.attach(this);
 	}
-	
-	/** method to calculate the data for world domination
-	 */
-	public void getDominationDetails(RiskMapRW map) {
-		fetchWorldDominationDetails(map);
-	}
-	
-	/** method to retrieve the data for world domination
-	 * @param RiskMapRW map
-	 * @return playerOwnedTerPercent */
 
-	public void fetchWorldDominationDetails(RiskMapRW map) {
+	/**
+	 * method to calculate the data for world domination
+	 * 
+	 * @param map RiskMapRW class
+	 * @param RiskLaunchPhase1 Risk launch phase object
+	 */
+	public void getDominationDetails(RiskMapRW map,RiskLaunchPhase RiskLaunchPhase1) {
+		fetchWorldDominationDetails(map,RiskLaunchPhase1);
+	}
+
+	/**
+	 * method to retrieve the data for world domination
+	 * @param map map
+	 * @param RiskLaunchPhase1 risk launch phase object
+	 */
+
+	public void fetchWorldDominationDetails(RiskMapRW map, RiskLaunchPhase RiskLaunchPhase1) {
 
 		HashMap<String, Double> playerOwnedCountryCount = new HashMap<>();
 		HashMap<String, Integer> playerOwnedArmyCount = new HashMap<>();
 		Double totalCountries = 0.0;
-		
+
 		for (Continent cont : map.getMapGraph().getContinents().values()) {
 			for (Country ter : cont.getListOfCountries()) {
 				totalCountries++;
 				Player player = ter.getPlayer();
-				int armyCount = player.getArmyCount();
-				
-				//Calculates countries owned by player
-				if(!playerOwnedCountryCount.containsKey(player)) {
-					playerOwnedCountryCount.put(player.getName(), Double.valueOf("1"));					
-				} else {
-					playerOwnedCountryCount.put(player.getName(), playerOwnedCountryCount.get(player)+1);					
+				ArrayList<Country> armyCountList = player.getMyCountries();
+				int totalCount = 0;
+				for (Country country: armyCountList) {
+					totalCount += country.getNoOfArmies();
 				}
 				
-				//Calculates armies owned by player
-				if(!playerOwnedArmyCount.containsKey(player)) {
-					playerOwnedArmyCount.put(player.getName(), armyCount);					
+				// Calculates countries owned by player
+				if (!playerOwnedCountryCount.containsKey(player)) {
+					playerOwnedCountryCount.put(player.getName(), Double.valueOf("1"));
 				} else {
-					playerOwnedArmyCount.put(player.getName(), playerOwnedArmyCount.get(player)+armyCount);					
-				}								
+					playerOwnedCountryCount.put(player.getName(), playerOwnedCountryCount.get(player) + 1);
+				}
+
+				// Calculates armies owned by player
+				if (!playerOwnedArmyCount.containsKey(player)) {
+					playerOwnedArmyCount.put(player.getName(), totalCount);
+		} 
 			
+
 			}
 		}
+
+		observerSubject.setPlayerOwnedArmyCount(playerOwnedArmyCount);
+
+		// Calculates continents controlled by player
+		HashMap<String, ArrayList<String>> playerOwnedContinent = new HashMap<>();
 		
-		for (Map.Entry<String, Integer> entry : playerOwnedArmyCount.entrySet()) {  
-            System.out.println("Player = " + entry.getKey() + ", Armies = " + entry.getValue()); 
-    } 
-		//observerSubject.setPlayerOwnedArmyCount(playerOwnedArmyCount);
-		
-		//Calculates continents controlled by player
-		HashMap <String, ArrayList<String>> playerOwnedContinent = new HashMap<>();
-		RiskLaunchPhase RiskLaunchPhase = new RiskLaunchPhase(map);
-				
-		for(Player player: RiskLaunchPhase.getPlayerList())
-		{
-			ArrayList<Country> playerOwnedCountries= player.getMyCountries();
-			ArrayList<String> contList= new ArrayList<>();
-			
+
+		for (Player player : RiskLaunchPhase1.getPlayerList()) {
+			ArrayList<Country> playerOwnedCountries = player.getMyCountries();
+			ArrayList<String> contList = new ArrayList<>();
+
 			for (Continent cont : map.getMapGraph().getContinents().values()) {
 				for (Country country : cont.getListOfCountries()) {
 					if (!playerOwnedCountries.contains(country)) {
 						contList.add("0");
 						break;
+					} else {
+						contList.add(cont.getName());
 					}
-					else {
-						contList.add(cont.getName());						
-					}
-										
-						
-					}
+
 				}
-			playerOwnedContinent.put(player.getName(),contList);	
 			}
-		
-		
-		for (Map.Entry<String, ArrayList<String>> entry : playerOwnedContinent.entrySet()) {  
-            System.out.println("Player = " + entry.getKey() + ", Continents = " + entry.getValue().toString()); 
-		} 
-		//observerSubject.setPlayerOwnedContinents(playerOwnedContinent);
+			playerOwnedContinent.put(player.getName(), contList);
+		}
+
+		observerSubject.setPlayerOwnedContinents(playerOwnedContinent);
 		
 		HashMap<String, Double> playerOwnedTerPercent = new HashMap<>();
-		for(Entry<String, Double> entry : playerOwnedCountryCount.entrySet()) {
-			playerOwnedTerPercent.put(entry.getKey(), (entry.getValue()/totalCountries * 100));
-		}	
-		
-		for (Map.Entry<String, Double> entry : playerOwnedTerPercent.entrySet()) {  
-            System.out.println("Player = " + entry.getKey() + ", % occupied = " + entry.getValue()); 
-		} 
-		//observerSubject.setplayerOwnedTerPercent(playerOwnedTerPercent);
+		for (Entry<String, Double> entry : playerOwnedCountryCount.entrySet()) {
+			playerOwnedTerPercent.put(entry.getKey(), (entry.getValue() / totalCountries * 100));
+		}
+
+		observerSubject.setPlayerOwnedTerPercent(playerOwnedTerPercent);
 	}
 
+	/**
+	 * {@inheritDoc} update method to update changes
+	 */
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		if (observerSubject.getPlayerOwnedArmyCount() != null) {
+			System.out.println("*******Armies owned by each player*********");
+			for (Map.Entry<String, Integer> entry : observerSubject.getPlayerOwnedArmyCount().entrySet()) {
+				System.out.println("Player = " + entry.getKey() + ", Armies = " + entry.getValue().toString());
+			}
+			System.out.println();
+		}
 		
+		if (observerSubject.getPlayerOwnedContinents() != null) {
+			System.out.println("*******Continents owned by each player*********");
+			for (Map.Entry<String, ArrayList<String>> entry : observerSubject.getPlayerOwnedContinents().entrySet()) {
+				System.out.println("Player = " + entry.getKey() + ", Continents = " + entry.getValue().toString());
+			}
+			System.out.println();
+		}
+		if (observerSubject.getPlayerOwnedTerPercent() != null) {
+			System.out.println("*******Percentage of Map owned by each player*********");
+			for (Map.Entry<String, Double> entry : observerSubject.getPlayerOwnedTerPercent().entrySet()) {
+				System.out.println("Player = " + entry.getKey() + ", % occupied = " + entry.getValue());
+			}
+		}
 	}
 
+	/**	
+	 * {@inheritDoc} update method to update fortification message
+	 */
 	@Override
 	public void fortificationUpdate() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
+	/**
+	 * {@inheritDoc} method to update attack message
+	 */
 	@Override
 	public void attackUpdate() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public void tradeInCardUpdate() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void botTradeInCardUpdate() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	/**
+	 * {@inheritDoc} method to update reinforcement message
+	 */
 	@Override
 	public void reinforcementUpdate() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public void playerLogUpdate() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	/**
+	 * {@inheritDoc} method to update current player details
+	 */
 	@Override
 	public void currentPlayerUpdate() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
+	/**
+	 * {@inheritDoc} method to update reinforcement actions
+	 */
 	@Override
 	public void actionsUpdate() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
+	/**
+	 * {@inheritDoc} method to update army count
+	 */
 	@Override
 	public void armyCountUpdate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+	/**
+	 * {@inheritDoc} method to update attack action details
+	 */
 	@Override
 	public void attackActionUpdate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+	/**
+	 * {@inheritDoc} method to update fortification action details
+	 */
 	@Override
 	public void fortificationActionUpdate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+	/**
+	 * {@inheritDoc} method to update trade army count during card exchange
+	 */
 	@Override
 	public void tradeArmyUpdate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public void playerOwnedArmyCountUpdate() {
-		System.out.println("Armies owned each player:" + observerSubject.getPlayerOwnedArmyCount());
-	}
-
-	@Override
-	public void playerOwnedArmyContinentUpdate() {
-		System.out.println("Continents owned each player:" + observerSubject.getPlayerOwnedContinents());
-	}
-
-	@Override
-	public void playerTerPercentUpdate() {
-		System.out.println("Percentage of map owned each player:" + observerSubject.getPlayerTerPercent());
-	}
-
-	
 }

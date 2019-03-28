@@ -78,8 +78,7 @@ public class RiskMapGraph {
 	/**
 	 * Method to get the count of total number of countries.
 	 * 
-	 * @param totalCountries
-	 *            total number of countries
+	 *@return totalCountries number of countries
 	 */
 	public int getTotalCountries() {
 		return totalCountries;

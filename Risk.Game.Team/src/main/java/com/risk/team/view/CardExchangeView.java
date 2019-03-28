@@ -6,38 +6,52 @@ import com.risk.team.controller.RiskCardController;
 import com.risk.team.model.Card;
 import com.risk.team.model.Player;
 
+/** CardExchangeView class methods for exchanging cards
+ * @author Kartika Patil
+ * @author Jenny
+ */
 public class CardExchangeView {
 	
-	private RiskCardController card_controller;
+	/** cardController object for RiskCardController class
+	 */
+	private RiskCardController cardcontroller;
 	
-	private static final String entryText = "*********WELCOME TO THE CARD EXCHANGE VIEW*********";
+	/** entryText Message to be displayed on entry of card exchange phase
+	 */
+	private static final String entryText = "*********WELCOME TO THE CARD EXCHANGE VIEW***********";
 	
-	private static final String exitText = "*********EXIT CARD EXCHANGE VIEW*********";
+	/** exitText Message to be displayed on exit of card exchange phase
+	 */
+	private static final String exitText =  "********EXIT CARD EXCHANGE VIEW**********************";
 	
 	
-	
+	/** Constructor for CardExchangeView with parameter
+	 * @param controller RiskCardController
+	 */
 	public CardExchangeView(RiskCardController controller)
 	{
-		card_controller = controller;
+		System.out.println(entryText);
+		cardcontroller = controller;
 		process();
 		System.out.println(exitText);
 	}
-
+	
+	/** Method to start process for card exchange
+	 */
 	private void process() {
-		if(card_controller.initializeTrade())
+		if(cardcontroller.initializeTrade())
 		{
-		    	System.out.println(entryText);
-		    	
+		    	    	
 				displayCards();
 				
-				if(card_controller.player.getListOfCards().size()>=5)
+				if(cardcontroller.player.getListOfCards().size()>=5)
 				{
 					
 					System.out.println("You must exchange cards");
 					
 					while(true)
 					{
-							boolean flag = card_controller.checkTrade();
+							boolean flag = cardcontroller.checkTrade();
 							
 								
 							if(flag)
@@ -64,7 +78,7 @@ public class CardExchangeView {
 					
 							 if(flag1) {
 									
-								boolean flag = card_controller.checkTrade();
+								boolean flag = cardcontroller.checkTrade();
 								
 									if(flag)
 									{
@@ -94,23 +108,27 @@ public class CardExchangeView {
 		
 		return;
 	}
-
+	
+	/** Method for trading cards for armies
+	 */
 	private void cardTrade() {
 					
-		System.out.println(card_controller.player.getArmyCount()+" : Army Count Before Card Trade");
+		System.out.println(cardcontroller.player.getArmyCount()+" : Army Count Before Card Trade");
 		
 		
-		card_controller.player.exchangeCards(card_controller.card.getCardsToTrade(), card_controller.player.getCardSetCount());
+		cardcontroller.player.exchangeCards(cardcontroller.card.getCardsToTrade(), cardcontroller.player.getCardSetCount());
 		
-		System.out.println(card_controller.player.getArmyCount()+": Army Count After Card Trade");	
+		System.out.println(cardcontroller.player.getArmyCount()+": Army Count After Card Trade");	
 		
 		
 		
 	}
-
+	
+	/** Method to display the cards available
+	 */
 	public void displayCards()
 	{
-		card_controller.loadCards();
+		cardcontroller.loadCards();
 	}
 	
 	

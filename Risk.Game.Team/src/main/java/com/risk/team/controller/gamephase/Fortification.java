@@ -18,7 +18,7 @@ import com.risk.team.controller.RiskGraphConnected;
 public class Fortification {
 
 	/**Flag to validate if path exists or not between two countries*/
-//	public boolean pathFlag;	
+	//	public boolean pathFlag;	
 
 	/**
 	 * Fortification Constructor 
@@ -39,7 +39,7 @@ public class Fortification {
 	public void moveArmies(Country fromCountry, Country toCountry, int noOfArmies,Player player,Collection<Country> allCountriescollection) {
 
 		boolean pathFlag = false;
-		
+
 		Set<Country> allCountries = new HashSet<Country>(allCountriescollection);
 
 		Set<Country> playerOwnedCountries = new HashSet<Country>(player.getMyCountries());

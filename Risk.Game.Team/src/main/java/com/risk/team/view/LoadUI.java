@@ -30,26 +30,23 @@ import com.risk.team.observer.Subject;
  */
 
 public class LoadUI implements ActionListener {
-		public static boolean status;
-		RiskMapRW read;
-		JButton CreateBtn;
-		JButton LoadBtn;
-		JButton editBtn,teamBtn;
-		JFrame WindowFrame;
-		TitledBorder border;
-		JPanel WindowPanel;
-		JLabel TitleLabel,ImageLabel;
-		Subject subject;
-		
+	public static boolean status;
+	RiskMapRW read;
+	JButton CreateBtn;
+	JButton LoadBtn;
+	JButton editBtn,teamBtn;
+	JFrame WindowFrame;
+	TitledBorder border;
+	JPanel WindowPanel;
+	JLabel TitleLabel,ImageLabel;
+	Subject subject;
+
 	/**
 	 * 
 	 * This method is used to initialize the User Interface of the application.
-	 * @return 
-	 * 
 	 */
-		
 	public void generateUI() {
-		
+
 		WindowFrame = new JFrame("Risk-Play!");
 		ImageLabel  = new JLabel("",new ImageIcon("risk.jpg"),JLabel.CENTER);
 		WindowFrame.add(ImageLabel);
@@ -59,8 +56,6 @@ public class LoadUI implements ActionListener {
 		WindowFrame.setBackground(Color.CYAN);
 		WindowFrame.setLocation(400, 150);
 		WindowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
 		WindowFrame.setVisible(true);
 
 		border = new TitledBorder("Risk - Ready for War");
@@ -112,13 +107,12 @@ public class LoadUI implements ActionListener {
 		LoadBtn.setBounds(220, 214, 125, 21);
 		LoadBtn.addActionListener((ActionListener) this);
 		LoadBtn.setBackground(Color.red);
-		
+
 	}
-	/**
-	 * 
+
+	/** 
 	 * This method takes an event as an input and performs its associated action depending on the
 	 * event
-	 * 
 	 * @param e Action event object.
 	 */
 	public void actionPerformed(ActionEvent e) {

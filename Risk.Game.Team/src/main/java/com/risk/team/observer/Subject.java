@@ -18,7 +18,6 @@ public class Subject {
 	private String fortificationMsg;
 	private String reinforcementMsg;
 	private String attackMsg;
-	private String tradeInMsg;
 	private String playerName;
 	private Player player;
 	private Country country;
@@ -56,47 +55,43 @@ public class Subject {
 	}
 	/**
 	 * set current player details
-	 * @param reinforcementMsg reinforcementMsg
+	 * @param playerName player name
 	 */
 	public void setCurrentPlayerDetails(String playerName) {
 		this.playerName = playerName;
 		notifyForCurrentPlayer();
 	}
-	
+
 	/**
 	 * get Country object
-	 * @param country Country
+	 * @return country Country
 	 */
 	public Country getCountryObj() {
 		return country;
 	}
-	
+
 	/**
 	 * get Player object
-	 * @param player Player
+	 * @return player Player
 	 */
 	public Player getPlayerObj() {
 		return player;
 	}
-	
+
 	/**
-	 * set current player details
-	 * @param reinforcementMsg reinforcementMsg
+	 * set action details
+	 * @param player Player Object
+	 * @param country Country Object
 	 */
 	public void setActionDetails(Player player, Country country) {
 		this.player = player;
 		this.country = country;
 		notifyActionDetails();
-	}
-	
-	/**
-	 * get method for messageFlag
-	 * @return messageFlag message flag boolean
-	 */
+	}	
 
 	/**
 	 * get method for attack message
-	 * @return attackmsg attack message
+	 * @return attackMsg attack message
 	 */
 	public String getAttackMsg() {
 		return attackMsg;
@@ -110,7 +105,7 @@ public class Subject {
 		this.attackMsg = attackMsg;
 		notifyForAttack();
 	}
-	
+
 	/**
 	 * set method for attack actions 
 	 * @param AttackCountryObj Country
@@ -129,22 +124,14 @@ public class Subject {
 	public Country getAttackCountryObj(){
 		return AttackCountryObj;
 	}
-	
+
 	/**
 	 *  get method for Defender Country Object
-	 *  @return fortificationMsg
-	 *  */
+	 *  @return defendCountryObj
+	 */
 	public Country getDefendCountryObj(){
 		return defendCountryObj;
-	}
-
-	/**
-	 * set PlayerLog
-	 */
-	public void setPlayerLog() {
-		notifyForLogUpdate();
-	}
-
+	}	
 
 	/**
 	 * observer registration
@@ -162,18 +149,19 @@ public class Subject {
 			observer.update();
 		}
 	}
-	
+
 	/**
 	 *  method to retrieve army count after placing army in reinforcement phase
+	 *  @param country Country
 	 */
 	public void placedArmyCount(Country country) {
 		this.country = country;
 		notifyArmyCountAfterReinforecement();		
 	}
-	
+
 	/**
 	 *  get method for fortification message
-	 * @return fortification msg message 
+	 * @return fortificationMsg fortification message 
 	 */
 	public String getFortificationMsg() {
 		return fortificationMsg;
@@ -187,7 +175,7 @@ public class Subject {
 		this.fortificationMsg = fortificationMsg;
 		notifyForFortification();
 	}
-	
+
 	/**
 	 * get method for fortification source country
 	 * @return sourceCountry Country
@@ -195,7 +183,7 @@ public class Subject {
 	public Country getSourceCountry() {
 		return sourceCountry;		
 	}
-	
+
 	/**
 	 * get method for fortification destination country
 	 * @return destinationCountry Country
@@ -203,7 +191,7 @@ public class Subject {
 	public Country getDestinationCountry() {
 		return destinationCountry;		
 	}
-	
+
 	/**
 	 * set method for fortification actions
 	 * @param sourceCountry Country
@@ -212,17 +200,17 @@ public class Subject {
 	public void setFortificationDetails(Country sourceCountry, Country destinationCountry) {
 		this.sourceCountry = sourceCountry;
 		this.destinationCountry = destinationCountry; 
-		notifyFortificationAction();
-		
+		notifyFortificationAction();		
 	}
+
 	/**
-	 * set method for card trade
-	 * @param calculateTradeArmyCount list of army count
+	 * get method for card trade
+	 * @return calculateTradeArmyCount list of army count
 	 */	
 	public ArrayList<Integer> getTradeArmyCount() {
 		return calculateTradeArmyCount;
 	}
-	
+
 	/**
 	 * set method for card trade
 	 * @param calculateTradeArmyCount list of army count
@@ -233,50 +221,54 @@ public class Subject {
 	}
 	/**
 	 * get method for army count owned by player
+	 * @return playerOwnedArmyCount No of armies owned by every player
+	 * 
 	 */
 	public HashMap<String, Integer> getPlayerOwnedArmyCount() {
 		return playerOwnedArmyCount;
 	}
-	
+
 	/**
-	 * set method for card trade
+	 * set method for army count owned by player
 	 * @param playerOwnedArmyCount hashmap of army count owned by every player
 	 */
 	public void setPlayerOwnedArmyCount(HashMap<String, Integer> playerOwnedArmyCount) {
 		this.playerOwnedArmyCount = playerOwnedArmyCount;
-		notifyPlayerOwnedArmyCount();
+		notifyAllObservers();
 	}
-	
+
 	/**
 	 * get method for continents owned by player
+	 * @return playerOwnedContinent list of continents owned by every player
 	 */
 	public HashMap<String, ArrayList<String>> getPlayerOwnedContinents() {
 		return playerOwnedContinent;
 	}
-	
+
 	/**
-	 * set method for card trade
-	 * @param playerOwnedArmyCount hashmap of army count owned by every player
+	 * set method for continents owned by every player
+	 * @param playerOwnedContinent hashmap of army count owned by every player
 	 */
 	public void setPlayerOwnedContinents(HashMap<String, ArrayList<String>> playerOwnedContinent) {
 		this.playerOwnedContinent = playerOwnedContinent;
-		notifyPlayerOwnedContinent();
+		notifyAllObservers();
 	}	
-	
+
 	/**
-	 * get method for continents owned by player
+	 * get method for percentage of map owned by every player
+	 * @return playerTerPercent hashmap for percentage of map owned by every player
 	 */
-	public HashMap<String, Double> getPlayerTerPercent() {
+	public HashMap<String, Double> getPlayerOwnedTerPercent() {
 		return playerTerPercent;
 	}
-	
+
 	/**
-	 * set method for card trade
-	 * @param playerOwnedArmyCount hashmap of army count owned by every player
+	 * set method for percentage of map owned by every player
+	 * @param playerTerPercent hashmap for percentage of map owned by every player
 	 */
-	public void setPlayerTerPercent(HashMap<String, Double> playerTerPercent) {
+	public void setPlayerOwnedTerPercent(HashMap<String, Double> playerTerPercent) {
 		this.playerTerPercent = playerTerPercent;
-		notifyPlayerTerPercent();
+		notifyAllObservers();
 	}	
 
 
@@ -296,25 +288,7 @@ public class Subject {
 		for (Observer observer : observers) {
 			observer.attackUpdate();
 		}
-	}
-
-	/**
-	 * notify observers about card trade changes
-	 */
-	public void notifyForTradeIn() {
-		for (Observer observer : observers) {
-			observer.tradeInCardUpdate();
-		}
-	}
-
-	/**
-	 * notifyForBotTradeIn
-	 */
-	public void notifyForBotTradeIn() {
-		for (Observer observer : observers) {
-			observer.botTradeInCardUpdate();
-		}
-	}
+	}	
 
 	/**
 	 * notifyForReinforcement
@@ -324,7 +298,7 @@ public class Subject {
 			observer.reinforcementUpdate();
 		}
 	}
-	
+
 	/**
 	 * notifyForCurrentPlayer
 	 */
@@ -335,24 +309,15 @@ public class Subject {
 	}	
 
 	/**
-	 * notifyForLogUpdate
-	 */
-	public void notifyForLogUpdate() {
-		for (Observer observer : observers) {
-			observer.playerLogUpdate();
-		}
-	}
-	
-	/**
 	 * notifyActionDetails
 	 */
-	
+
 	public void notifyActionDetails() {
 		for (Observer observer : observers) {
 			observer.actionsUpdate();
 		}
 	}
-	
+
 	/**
 	 * notifyArmyCountAfterReinforecement
 	 */
@@ -361,7 +326,7 @@ public class Subject {
 			observer.armyCountUpdate();
 		}
 	}
-	
+
 	/**
 	 * notifyAttackActionUpdate
 	 */
@@ -370,7 +335,7 @@ public class Subject {
 			observer.attackActionUpdate();
 		}		
 	}
-	
+
 	/**
 	 * notifyFortificationAction
 	 */	
@@ -379,7 +344,7 @@ public class Subject {
 			observer.fortificationActionUpdate();
 		}	
 	}
-	
+
 	/**
 	 * notifyTradeArmyCount
 	 */	
@@ -387,30 +352,6 @@ public class Subject {
 		for (Observer observer : observers) {
 			observer.tradeArmyUpdate();
 		}	
-	}	
-	
-	/**
-	 * notifyPlayerOwnedArmyCount
-	 */	
-	public void notifyPlayerOwnedArmyCount() {
-		for (Observer observer : observers) {
-			observer.playerOwnedArmyCountUpdate();
-		}	
-	}
-	/**
-	 * notifyPlayerOwnedContinent
-	 */
-	public void notifyPlayerOwnedContinent() {
-		for (Observer observer : observers) {
-			observer.playerOwnedArmyContinentUpdate();
-		}
-	}
-	/**
-	 * notifyPlayerTerPercent
-	 */
-	public void notifyPlayerTerPercent() {
-		for (Observer observer : observers) {
-			observer.playerTerPercentUpdate();
-		}
-	}
+	}		
+
 }

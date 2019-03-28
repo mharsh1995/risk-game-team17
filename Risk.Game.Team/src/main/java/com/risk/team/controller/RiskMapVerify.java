@@ -94,9 +94,7 @@ public class RiskMapVerify {
 
 	/**
 	 * Method to set HashMap of continents under continents Tag from the file.
-	 * 
-	 * @param HashMap which is orignalContinents
-	 * @return nothing
+	 * @param orignalContinents which is orignalContinents
 	 */
 
 	public void setOrignalContinents(HashMap<String, Continent> orignalContinents) {

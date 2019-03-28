@@ -34,15 +34,15 @@ public class RiskGraphConnected {
 
 	boolean flag = false;
 
+	
+
+	ArrayList<Country> countryPathList;
 	/**
 	 * Constructor initializing visited countries member values to false
 	 * 
 	 * @param countrySet
 	 * Set containing all countries for Game Map
 	 */
-
-	ArrayList<Country> countryPathList;
-
 	public RiskGraphConnected(Set<Country> countrySet)
 	{
 		this.countrySet = countrySet;
@@ -87,7 +87,6 @@ public class RiskGraphConnected {
 	 * 					country to where armies are moved in fortification;
 	 * @param playerowncountries 
 	 * 					set of countries owned by the current player;
-	 * @return nothing
 	 * 						
 	 */
 

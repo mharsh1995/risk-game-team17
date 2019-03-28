@@ -36,10 +36,10 @@ public class Reinforcement {
 
 	public int assignArmies(Player player, Continent continent) {
 		boolean hasPlayerAllContinents = true;
-			
+
 		int playerOwnedArmy = player.getMyCountries().size()/ 3;
 		int noOfArmies = (int) playerOwnedArmy;
-		
+
 		ArrayList<Country> playerOwnedCountries = player.getMyCountries();
 		ArrayList<Country> continentCountryList = continent.getListOfCountries();
 
