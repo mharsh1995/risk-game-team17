@@ -1,7 +1,7 @@
 package com.risk.team.model;
 
 /**
- * Interface which defines the types of CARDS.
+ * Interface which defines the types of cards.
  * 
  * @author yashgolwala
  *

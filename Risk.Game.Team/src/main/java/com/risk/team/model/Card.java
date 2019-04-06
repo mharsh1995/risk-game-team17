@@ -16,7 +16,7 @@ import java.util.Observable;
 /**
  * Card class which represents the card model of the Risk game.
  * It provides methods for performing operations on the cards
- * like exchange cards for armies etc.
+ * like trade cards for armies etc.
  *
  * @author yashgolwala
  * 
@@ -25,7 +25,7 @@ import java.util.Observable;
 public class Card extends Observable implements Serializable {
 
 	/**
-	 * Type of the card
+	 * Kind of the card
 	 */
 	String kindOfCard;
 
@@ -40,7 +40,7 @@ public class Card extends Observable implements Serializable {
 	private Player currentPlayer;
 
 	/**
-	 * List of cards which can be exchanged
+	 * List of cards which can be trade
 	 */
 	private List<Card> cardsToTrade;
 
@@ -64,7 +64,7 @@ public class Card extends Observable implements Serializable {
 	/**
 	 * Method to get current player
 	 * 
-	 * @return currentPlayer
+	 * @return currentPlayer current player
 	 */
 	public Player getCurrentPlayer() {
 		return currentPlayer;
@@ -73,16 +73,16 @@ public class Card extends Observable implements Serializable {
 	/**
 	 * Method to set current player
 	 * 
-	 * @param currentPlayer	 current player
+	 * @param currentPlayer current player
 	 */
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
 
 	/**
-	 * Get card type
+	 * Get kind of card
 	 *
-	 * @return Type of card
+	 * @return KindOfCard kind of card
 	 */
 
 	public String getKindOfCard() {
@@ -92,7 +92,7 @@ public class Card extends Observable implements Serializable {
 	/**
 	 * get Country of the card
 	 *
-	 * @return country of the card
+	 * @return country country of the card
 	 */
 	public Country getCountry() {
 		return country;
@@ -101,7 +101,7 @@ public class Card extends Observable implements Serializable {
 	/**
 	 * Set Country
 	 *
-	 * @param country of the card
+	 * @param country country of the card
 	 */
 
 	public void setCountry(Country country) {
@@ -111,7 +111,7 @@ public class Card extends Observable implements Serializable {
 	/**
 	 * Getter for list of cards for trade.
 	 *
-	 * @return list of cards
+	 * @return cardsToTrade list of cards to trade
 	 */
 
 	public List<Card> getCardsToTrade() {
@@ -121,7 +121,7 @@ public class Card extends Observable implements Serializable {
 	/**
 	 * Set cardsToTrade
 	 *
-	 * @param cardsToTrade cards to exchange
+	 * @param cardsToTrade cards to trade
 	 */
 	public void setCardsToTrade(List<Card> cardsToTrade) {
 		this.cardsToTrade = cardsToTrade;
@@ -129,6 +129,7 @@ public class Card extends Observable implements Serializable {
 
 	/**
 	 * Method to automate card window
+	 * 
 	 * @param player player object
 	 */
 	public void automateCardWindow(Player player){
@@ -143,7 +144,7 @@ public class Card extends Observable implements Serializable {
 	 *
 	 * @param list list
 	 * @param checkboxes checkboxes
-	 * @return List of cards selected by the player
+	 * @return selectedCards List of cards selected by the player
 	 */
 	public List<Card> chooseCards(List<Card> list, CheckBox[] checkboxes) {
 		List<Card> selectedCards = new ArrayList<>();
@@ -157,10 +158,10 @@ public class Card extends Observable implements Serializable {
 
 	/**
 	 * Method is used to verify ,
-	 * if cards can be exchanged for army or not
+	 * if cards can be traded for army or not
 	 *
 	 * @param selectedCards selected cards
-	 * @return true if the exchange is possible; otherwise false
+	 * @return isPossible true if the trade is possible; otherwise false
 	 */
 	public boolean isTradePossible(List<Card> selectedCards) {
 		boolean isPossible = false;
@@ -184,7 +185,7 @@ public class Card extends Observable implements Serializable {
 
 	/**
 	 * Method notifies the observers of the card,
-	 * Also sets the cards which are selected for exchange.
+	 * Also sets the cards which are selected for trade.
 	 *
 	 * @param selectedCards cards which are selected by the user to exchange
 	 */
