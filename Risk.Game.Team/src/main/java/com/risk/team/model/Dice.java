@@ -1,11 +1,14 @@
 package com.risk.team.model;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
 import java.util.Random;
-import com.risk.team.model.*;
+
+import com.risk.team.services.Util.GameWindowUtil;
 
 
 /**
@@ -13,9 +16,10 @@ import com.risk.team.model.*;
  * and the defender can have a maximum of 2 dices. It has methods for
  * simulating the dice rolls for the attack phase
  *
- *
+ * @author Kartika Patil
+ * 
  */
-public class Dice  {
+public class Dice extends Observable {
 
 	/**
 	 * Country which is attacking the defending country,
@@ -29,7 +33,7 @@ public class Dice  {
 	private ArrayList<Integer> attackerDiceList;
 
 	/**
-	 * Country is is under attacked
+	 * Country is under attack
 	 */
 	private Country defendingCountry;
 
@@ -60,7 +64,7 @@ public class Dice  {
 	/**
 	 * Getter for the attacking Country.
 	 *
-	 * @return Attacking country.
+	 * @return attackingCountry Attacking country.
 	 */
 	public Country getAttackingCountry() {
 		return attackingCountry;
@@ -78,7 +82,7 @@ public class Dice  {
 	/**
 	 * Getter for attacking dice values.
 	 *
-	 * @return list of values of the attacking dice.
+	 * @return attackerDiceList list of values of the attacking dice.
 	 */
 	public ArrayList<Integer> getAttackerDiceList() {
 		return attackerDiceList;
@@ -96,7 +100,7 @@ public class Dice  {
 	/**
 	 *  Getter for the defending Country.
 	 *
-	 * @return Country underattack
+	 * @return defendingCountry Country under attack
 	 */
 	public Country getDefendingCountry() {
 		return defendingCountry;
@@ -112,9 +116,9 @@ public class Dice  {
 	}
 
 	/**
-	 * Getter  for defending dice values.
+	 * Getter for defending dice values.
 	 *
-	 * @return list of values of the defending dice.
+	 * @return defenderDiceList list of values of the defending dice.
 	 */
 
 	public ArrayList<Integer> getDefenderDiceList() {
@@ -122,7 +126,7 @@ public class Dice  {
 	}
 
 	/**
-	 * Setter  for defending dice values.
+	 * Setter for defending dice values.
 	 *
 	 * @param defenderDiceList list of values of the defending dice.
 	 */
@@ -134,7 +138,7 @@ public class Dice  {
 	/**
 	 * Getter for count of countries won
 	 *
-	 * @return Number of countries won by the player
+	 * @return countriesWonCount Number of countries won by the player
 	 */
 	public int getCountriesWonCount() {
 		return countriesWonCount;
@@ -153,7 +157,7 @@ public class Dice  {
 	 * Method for comparing the dice values of attacker and defender.
 	 * It compares the value in descending order.
 	 *
-	 * @return List of the results of the dice throw
+	 * @return diceThrowResult List of the results of the dice throw
 	 */
 	public ArrayList<String> getDicePlayResult(){
 		ArrayList<String> diceThrowResult = new ArrayList<>();
@@ -194,8 +198,6 @@ public class Dice  {
 			}
 		}
 
-
-
 		return diceThrowResult;
 	}
 
@@ -209,22 +211,18 @@ public class Dice  {
 	 * @param playResult List of attack results
 	 */
 	public void updateArmiesAfterAttack(Integer defenderValue, Integer attackerValue, ArrayList<String> playResult) {
-		System.out.println(attackerValue.compareTo(defenderValue));
-
-		if (attackerValue.compareTo(defenderValue) > 0) {    	
+		if (attackerValue - defenderValue > 0) {
+			System.out.println("Defender has lost one army.");
 			playResult.add("Defender has lost one army.");
 			if (defendingCountry.getNoOfArmies() > 0) {
 				defendingCountry.setNoOfArmies(defendingCountry.getNoOfArmies() - 1);
 			}
-			System.out.println("Defender has lost one army" +"Now it has : "+defendingCountry.getNoOfArmies());
-		} 
-		else {
-
+		} else {
+			System.out.println("Attacker has lost one army.");
 			playResult.add("Attacker has lost one army.");
 			if (attackingCountry.getNoOfArmies() > 1) {
 				attackingCountry.setNoOfArmies(attackingCountry.getNoOfArmies() - 1);
-			}         
-			System.out.println("Attacker has lost one army."+ "Now it has : "+ attackingCountry.getNoOfArmies());
+			}
 		}
 	}
 
@@ -233,24 +231,12 @@ public class Dice  {
 	 * or cancelled
 	 */
 	public void cancelDiceThrow(){
-
+		setChanged();
+		notifyObservers("rollDiceComplete");
 	}
 
 	/**
-	 * Method for moving all the armies,
-	 * after attacker has won a country.
-	 */
-
-	public void moveAllArmies() {
-		int attackingArmyCount = getAttackingCountry().getNoOfArmies();
-		getAttackingCountry().setNoOfArmies(1);
-		getDefendingCountry().setNoOfArmies(attackingArmyCount - 1);
-		updateCountryList();
-
-	}
-
-	/**
-	 * Method for skipping the army move after attacke has won the attack.
+	 * Method for skipping the army move after attacker has won the attack.
 	 * But at least one army will move from attacking to defending country.
 	 */
 	public void skipMoveArmy() {
@@ -258,7 +244,20 @@ public class Dice  {
 		getAttackingCountry().setNoOfArmies(attackingArmyCount - 1);
 		getDefendingCountry().setNoOfArmies(1);
 		updateCountryList();
+		setChanged();
+		notifyObservers("rollDiceComplete");
+	}
 
+	/**
+	 * Move All Armies
+	 */
+	public void moveAllArmies() {
+		int attackingArmyCount = getAttackingCountry().getNoOfArmies();
+		getAttackingCountry().setNoOfArmies(1);
+		getDefendingCountry().setNoOfArmies(attackingArmyCount - 1);
+		updateCountryList();
+		setChanged();
+		notifyObservers("rollDiceComplete");
 	}
 
 	/**
@@ -277,20 +276,25 @@ public class Dice  {
 	/**
 	 * Method for moving armies from attacker's country to the defending country,
 	 * if attacks won the country.
-	 * @param armiesToMove Number armies to move
-	 * @return true if possible else false
+	 *
+	 *
+	 * @param armiesToMove Number aries to move
+	 * @param message text the label which displays how many armies were moved
+	 * @param moveArmies Button to execute the method.
 	 */
-	public boolean moveArmies(int armiesToMove) {
+	public void moveArmies(int armiesToMove, Label message, Button moveArmies) {
 		int currentArmies = getAttackingCountry().getNoOfArmies();
 		if (currentArmies <= armiesToMove) {
-
-			System.out.println("You can move a maximum of " + (currentArmies - 1) + " armies");
-			return false;
+			message.setVisible(true);
+			message.setText("You can move a maximum of " + (currentArmies - 1) + " armies");
+			return;
 		} else {
 			getAttackingCountry().setNoOfArmies(currentArmies - armiesToMove);
 			getDefendingCountry().setNoOfArmies(armiesToMove);
-			updateCountryList();        
-			return true;
+			updateCountryList();
+			GameWindowUtil.exitWindow(moveArmies);
+			setChanged();
+			notifyObservers("rollDiceComplete");
 		}
 	}
 
@@ -305,7 +309,7 @@ public class Dice  {
 	/**
 	 *  Check if attacker has sufficient number of armies
 	 *
-	 * @return true if attacker can execute the attack; else false.
+	 * @return diceThrowPossible true if attacker can execute the attack; else false.
 	 */
 
 	public boolean checkDiceThrowPossible() {

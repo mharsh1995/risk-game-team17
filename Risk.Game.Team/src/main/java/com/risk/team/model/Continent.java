@@ -1,29 +1,31 @@
 package com.risk.team.model;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.risk.team.model.Country;
-
 /**
- * Continent class provides data regarding the Continents
+ * Continent class which provides information regarding the Continents.
  * 
  * @author Kartika Patil
+ * 
  */
-public class Continent {
+public class Continent implements Serializable {
 
-	/** Name of the continent */
+	/** Name of the continent. */
 	private String name;
-
-	/** List of countries in the continent */
-	private ArrayList<Country> listOfCountries;
 
 	/** Control Value of continent. */
 	private int controlValue;
 
+	/** List of countries in the continent. */
+	private ArrayList<Country> listOfCountries;
+
 	/**
 	 * Continent constructor
 	 * 
-	 * @param name continent name
-	 * @param controlValue control value of that continent
+	 * @param name  name of the continent
+	 * @param controlValue  control value of the continent
+	 * 
 	 */
 	public Continent(String name, int controlValue) {
 		this.name = name;
@@ -32,18 +34,20 @@ public class Continent {
 	}
 
 	/**
-	 * Get method for getting the continent name
+	 * Get the continent name.
 	 * 
 	 * @return name name of the continent
+	 * 
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Set method for setting the continent name
+	 * Set the continent name.
 	 * 
-	 * @param name To set the continent name
+	 * @param name to set the continent name
+	 * 
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -52,7 +56,7 @@ public class Continent {
 	/**
 	 * Get the control value of the continent.
 	 * 
-	 * @return control value of continent
+	 * @return controlValue control value of continent
 	 * 
 	 */
 	public int getControlValue() {
@@ -62,16 +66,17 @@ public class Continent {
 	/**
 	 * Set the control value of the continent.
 	 * 
-	 * @param controlValue control value to set
+	 * @param controlValue set the control value 
+	 * 
 	 */
 	public void setControlValue(int controlValue) {
 		this.controlValue = controlValue;
 	}
 
 	/**
-	 * Method to get the list of countries held by the continent
+	 * Method to get the list of countries by each the continent.
 	 * 
-	 * @return listOfCountries list of countries in that continent 
+	 * @return listOfCountries list of countries
 	 * 
 	 */
 	public ArrayList<Country> getListOfCountries() {
@@ -81,7 +86,8 @@ public class Continent {
 	/**
 	 * Method to add a country to the list of countries in the continent
 	 * 
-	 * @param country name of country to be added
+	 * @param country  country to be added
+	 *           
 	 */
 	public void addCountry(Country country) {
 		listOfCountries.add(country);
@@ -90,23 +96,25 @@ public class Continent {
 	/**
 	 * Set the list of countries.
 	 * 
-	 * @param listOfCountries list of countries to set
+	 * @param listOfCountries set the list of countries
+	 *            
 	 */
 	public void setListOfCountries(ArrayList<Country> listOfCountries) {
 		this.listOfCountries = listOfCountries;
 	}
 
 	/**
-	 * Method to remove any country from list of countries in the continent
+	 * Method to remove country from the list of countires in the continent.
 	 * 
-	 * @param country country name that is to be deleted
+	 * @param country  country to be deleted
+	 *            
 	 */
 	public void deleteCountry(Country country) {
 		listOfCountries.remove(country);
 	}
 
 	/**
-	 * {@inheritDoc} check if names of two continents are same
+	 * {@inheritDoc} Used to check if names of two continents are same.
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -118,10 +126,20 @@ public class Continent {
 	}
 
 	/**
-	 * {@inheritDoc} it returns the hashCode for continent's name.
+	 * {@inheritDoc} returns the hashcode for continent's name.
 	 */
 	@Override
 	public int hashCode() {
 		return getName().toLowerCase().hashCode();
 	}
+
+	/**
+	 * {@inheritDoc} returns name of the continent in string format.
+	 */
+	@Override
+	public String toString() {
+		return this.getName();
+	}
+
+
 }
