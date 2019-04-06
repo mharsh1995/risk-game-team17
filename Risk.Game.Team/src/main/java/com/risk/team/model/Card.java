@@ -1,72 +1,88 @@
 package com.risk.team.model;
 
+import javafx.scene.control.CheckBox;
+
+
+import java.util.*;
+import java.util.stream.Collectors;
+import com.risk.team.controller.GamePhaseController;
+import com.risk.team.controller.RiskCardController;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
-
-import com.risk.team.controller.RiskCardController;
-import com.risk.team.model.BonusCardType;
-
+import java.util.Observable;
 
 /**
- * /**
- * Card class represents the card model.
- * It provides methods for Trade in like operations on the cards during game.
- * 
- * @author yashgolwala
+ * Card class which represents the card model of the Risk game.
+ * It provides methods for performing operations on the cards
+ * like exchange cards for armies etc.
  *
+ * @author yashgolwala
+ * 
  */
 
-public class Card {
+public class Card extends Observable implements Serializable {
 
 	/**
-	 * Kind of card 
+	 * Type of the card
 	 */
 	String kindOfCard;
 
 	/**
-	 * Object of Country class
+	 * Object of country, which is the on the card
 	 */
 	private Country country;
 
 	/**
-	 * Card possessed by Player 
-	 * Object of Player Class
+	 * Current Player who is the card Holder
 	 */
 	private Player currentPlayer;
 
 	/**
-	 *List of card that can be traded
+	 * List of cards which can be exchanged
 	 */
 	private List<Card> cardsToTrade;
 
 	/**
-	 * List of Selected Cards
+	 * Cards constructor
 	 */
-	public List<Card> selectedCards;
 
-	/**
-	 * Card default constructor
-	 */
-	public Card() { 
-
+	public Card() {
 	}
 
 	/**
-	 * Card constructor with parameter
+	 * Cards constructor
 	 *
 	 * @param kindOfCard Type of card
 	 */
 
-	public Card(String kindOfCard) {
-		this.kindOfCard = kindOfCard;
+	public Card(String cardType) {
+		this.kindOfCard = cardType;
 	}
 
 	/**
-	 * Get the card kind
+	 * Method to get current player
+	 * 
+	 * @return currentPlayer
+	 */
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	/**
+	 * Method to set current player
+	 * 
+	 * @param currentPlayer	 current player
+	 */
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+
+	/**
+	 * Get card type
 	 *
-	 * @return kind of card
+	 * @return Type of card
 	 */
 
 	public String getKindOfCard() {
@@ -93,7 +109,7 @@ public class Card {
 	}
 
 	/**
-	 * Getter for list of cards to trade.
+	 * Getter for list of cards for trade.
 	 *
 	 * @return list of cards
 	 */
@@ -103,78 +119,65 @@ public class Card {
 	}
 
 	/**
-	 * Set list of cards to be traded
+	 * Set cardsToTrade
 	 *
-	 * @param cardsToTrade cards to trade
+	 * @param cardsToTrade cards to exchange
 	 */
-
 	public void setCardsToTrade(List<Card> cardsToTrade) {
 		this.cardsToTrade = cardsToTrade;
 	}
 
-	public List<Card> getSelectedCards() {
-		return selectedCards;
-	}
-
 	/**
-	 * Method is used to display
-	 * the cards owned by the player.
-	 *
-	 * @param player Player having the turn
-	 * @param card   card to display for the player
+	 * Method to automate card window
+	 * @param player player object
 	 */
-
-	public void showCardsOfPlayer(Player player, Card card) {
-		this.currentPlayer = player;
-		RiskCardController cardController = new RiskCardController(this.currentPlayer, card);
-
+	public void automateCardWindow(Player player){
+		RiskCardController riskCardController = new RiskCardController(player, this);
+		riskCardController.automaticCardInitialization();
 	}
 
 
 	/**
 	 * Method returns a list of cards which
-	 * are seleted by the current player
+	 * are selected by the current player
 	 *
-	 * @param list list of cards
+	 * @param list list
+	 * @param checkboxes checkboxes
 	 * @return List of cards selected by the player
 	 */
-
-	public List<Card> chooseCards(List<Card> list) {
-		selectedCards = new ArrayList<Card>();
-		Scanner sc = new Scanner(System.in);
-
-		System.out.println("Enter yes to select displayed card");
-		for (int i = 0; i < list.size(); ++i) {
-			System.out.println(" "+list.get(i).kindOfCard);
-
-			if(sc.nextLine().trim().equalsIgnoreCase("Yes")) {
-				selectedCards.add(list.get(i));   
+	public List<Card> chooseCards(List<Card> list, CheckBox[] checkboxes) {
+		List<Card> selectedCards = new ArrayList<>();
+		for (int i = 0; i < checkboxes.length; ++i) {
+			if (checkboxes[i].isSelected()) {
+				selectedCards.add(list.get(i));
 			}
 		}
-
 		return selectedCards;
 	}
 
 	/**
-	 * Method for verifying if cards can be traded for army or not
+	 * Method is used to verify ,
+	 * if cards can be exchanged for army or not
 	 *
 	 * @param selectedCards selected cards
-	 * @return true if the trade is possible; otherwise false
+	 * @return true if the exchange is possible; otherwise false
 	 */
 	public boolean isTradePossible(List<Card> selectedCards) {
 		boolean isPossible = false;
-		int infantry = 0, cavalry = 0, artillery = 0;
-		for (Card card : selectedCards) {
-			if (card.getKindOfCard().equals(BonusCardType.infantry)) {
-				infantry++;
-			} else if (card.getKindOfCard().equals(BonusCardType.cavalry)) {
-				cavalry++;
-			} else if (card.getKindOfCard().equals(BonusCardType.artillery)) {
-				artillery++;
+		if (selectedCards.size() == 3) {
+			int infantry = 0, cavalry = 0, artillery = 0;
+			for (Card card : selectedCards) {
+				if (card.getKindOfCard().equals(BonusCardType.INFANTRY)) {
+					infantry++;
+				} else if (card.getKindOfCard().equals(BonusCardType.CAVALRY)) {
+					cavalry++;
+				} else if (card.getKindOfCard().equals(BonusCardType.ARTILLERY)) {
+					artillery++;
+				}
 			}
-		}
-		if ((infantry == 1 && cavalry == 1 && artillery == 1) || infantry == 3 || cavalry == 3 || artillery == 3) {
-			isPossible = true;
+			if ((infantry == 1 && cavalry == 1 && artillery == 1) || infantry == 3 || cavalry == 3 || artillery == 3) {
+				isPossible = true;
+			}
 		}
 		return isPossible;
 	}
@@ -183,32 +186,37 @@ public class Card {
 	 * Method notifies the observers of the card,
 	 * Also sets the cards which are selected for exchange.
 	 *
-	 * @param selectedCards cards which are selected by the user to trade
+	 * @param selectedCards cards which are selected by the user to exchange
 	 */
-
 	public void cardsToTrade(List<Card> selectedCards) {
 		setCardsToTrade(selectedCards);
+		setChanged();
+		notifyObservers("cardsExchange");
+
 	}
 
-	/** 
-	 * method to assign random card 
-	 * @return cardAllocated kind of card assigned to player
+	/**
+	 * Method to generate valid combination of cards
+	 * 
+	 * @param selectedCards List of selected cards
+	 * @return List of valid combination of cards
 	 */
-	public Card getRandomCard() {
+	public List<Card> generateValidCardCombination(List<Card> selectedCards) {
+		HashMap<String, Integer> cardCountMap = new HashMap<>();
+		for (Card card : selectedCards) {
+			if (cardCountMap.containsKey(card.getKindOfCard())) {
+				cardCountMap.put(card.getKindOfCard(), cardCountMap.get(card.getKindOfCard()) + 1);
+			} else {
+				cardCountMap.put(card.getKindOfCard(), 1);
+			}
 
-		int e = new Random().nextInt(3) + 1;
-
-		Card cardAllocated;
-		if(e==1) { 
-			cardAllocated = new Card("infantry");
-
-		} else if(e==2) {
-			cardAllocated = new Card("cavalry");
 		}
-		else {
-			cardAllocated = new Card("artillery");
+		for (Map.Entry<String, Integer> entry : cardCountMap.entrySet()) {
+			if (entry.getValue() >= 3) {
+				return selectedCards.stream().filter(t -> t.getKindOfCard().equals(entry.getKey()))
+						.collect(Collectors.toList());
+			}
 		}
-		return cardAllocated;
-
+		return null;
 	}
 }

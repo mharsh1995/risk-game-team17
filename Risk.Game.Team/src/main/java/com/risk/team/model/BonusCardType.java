@@ -1,16 +1,14 @@
 package com.risk.team.model;
 
 /**
- * Interface to define the type of Cards
+ * Interface which defines the types of CARDS.
  * 
- * @author yashGolwala
+ * @author yashgolwala
  *
  */
 
 public interface BonusCardType {
-	String infantry = "infantry";
-	String artillery = "artillery";
-	String cavalry ="cavalry";
-
+	String INFANTRY = "infantry";
+	String CAVALRY = "cavalry";
+	String ARTILLERY = "artillery";
 }
-
