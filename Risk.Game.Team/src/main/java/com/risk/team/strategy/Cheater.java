@@ -31,7 +31,7 @@ public class Cheater extends PlayerBehavior {
 	/**
 	 * Object of ObservableList.
 	 */
-	private ObservableList<Country> attackerCountryList = FXCollections.observableArrayList();
+	public ObservableList<Country> attackerCountryList = FXCollections.observableArrayList();
 
 	/**
 	 * Object of GamePlayController, control various activities during the game play.
