@@ -1,137 +1,45 @@
 package com.risk.team.view;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 import com.risk.team.controller.RiskCardController;
 import com.risk.team.model.Card;
 import com.risk.team.model.Player;
 
-/** CardExchangeView class methods for exchanging cards
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+/**
+ * 
+ * This class contains methods for setting up stage to view card.
+ * 
  * @author Kartika Patil
- * @author Jenny
+ * @author yashgolwala
  */
 public class CardExchangeView {
-	
-	/** cardController object for RiskCardController class
-	 */
-	private RiskCardController cardcontroller;
-	
-	/** entryText Message to be displayed on entry of card exchange phase
-	 */
-	private static final String entryText = "*********WELCOME TO THE CARD EXCHANGE VIEW***********";
-	
-	/** exitText Message to be displayed on exit of card exchange phase
-	 */
-	private static final String exitText =  "********EXIT CARD EXCHANGE VIEW**********************";
-	
-	
-	/** Constructor for CardExchangeView with parameter
-	 * @param controller RiskCardController
-	 */
-	public CardExchangeView(RiskCardController controller)
-	{
-		System.out.println(entryText);
-		cardcontroller = controller;
-		process();
-		System.out.println(exitText);
-	}
-	
-	/** Method to start process for card exchange
-	 */
-	private void process() {
-		if(cardcontroller.initializeTrade())
-		{
-		    	    	
-				displayCards();
-				
-				if(cardcontroller.player.getListOfCards().size()>=5)
-				{
-					
-					System.out.println("You must exchange cards");
-					
-					while(true)
-					{
-							boolean flag = cardcontroller.checkTrade();
-							
-								
-							if(flag)
-							{
-								cardTrade();
-								break;
-								
-							}
-					}
-					
-				}
-				else
-				{					
-					boolean condition = true;
 
-					while (condition)
-					{
-					 
-					
-					Scanner scan = new Scanner(System.in);
-					System.out.println("Do you want to Trade Cards? (Select : Yes or No)");
-					
-					boolean flag1 = scan.nextLine().trim().equalsIgnoreCase("Yes");
-					
-							 if(flag1) {
-									
-								boolean flag = cardcontroller.checkTrade();
-								
-									if(flag)
-									{
-										cardTrade();
-										condition=false;
-									}else
-									{   
-										
-										condition = true;
-									}
-								}
-							 else
-							 {
-								 
-								
-								 condition=false;
-							 }
-							 
-					
-					}}
-		}	
-		
-		else
-		{
-			System.out.println("Player does not own any card yet");
+	/**
+	 * This method is used to create a scene at UI end and opens a window for dice.
+	 * 
+	 * @param currentPlayer object of Player having current playing player
+	 * @param card object of Card
+	 */
+	public static void openCardWindow(Player currentPlayer, Card card) {
+		final Stage newCardStage = new Stage();
+		newCardStage.setTitle("Player Card Window");
+		RiskCardController cardController = new RiskCardController(currentPlayer, card);
+		FXMLLoader loader = new FXMLLoader(CardExchangeView.class.getClassLoader().getResource("Cards.fxml"));
+		loader.setController(cardController);
+		Parent root = null;
+		try {
+			root = (Parent) loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		
-		return;
+		Scene scene = new Scene(root);
+		newCardStage.setScene(scene);
+		newCardStage.show();
 	}
-	
-	/** Method for trading cards for armies
-	 */
-	private void cardTrade() {
-					
-		System.out.println(cardcontroller.player.getArmyCount()+" : Army Count Before Card Trade");
-		
-		
-		cardcontroller.player.exchangeCards(cardcontroller.card.getCardsToTrade(), cardcontroller.player.getCardSetCount());
-		
-		System.out.println(cardcontroller.player.getArmyCount()+": Army Count After Card Trade");	
-		
-		
-		
-	}
-	
-	/** Method to display the cards available
-	 */
-	public void displayCards()
-	{
-		cardcontroller.loadCards();
-	}
-	
-	
-	
-	
 }
