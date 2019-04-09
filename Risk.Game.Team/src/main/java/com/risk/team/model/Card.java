@@ -5,6 +5,7 @@ import javafx.scene.control.CheckBox;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 import com.risk.team.controller.GamePhaseController;
 import com.risk.team.controller.RiskCardController;
 
@@ -16,18 +17,17 @@ import java.util.Observable;
 /**
  * Card class which represents the card model of the Risk game.
  * It provides methods for performing operations on the cards
- * like trade cards for armies etc.
+ * like exchange cards for armies etc.
  *
  * @author yashgolwala
- * 
  */
 
 public class Card extends Observable implements Serializable {
 
 	/**
-	 * Kind of the card
+	 * Type of the card
 	 */
-	String kindOfCard;
+	String cardType;
 
 	/**
 	 * Object of country, which is the on the card
@@ -35,12 +35,12 @@ public class Card extends Observable implements Serializable {
 	private Country country;
 
 	/**
-	 * Current Player who is the card Holder
+	 * Player who is the card Holder
 	 */
 	private Player currentPlayer;
 
 	/**
-	 * List of cards which can be trade
+	 * List of cards which can be exchanged
 	 */
 	private List<Card> cardsToTrade;
 
@@ -54,17 +54,17 @@ public class Card extends Observable implements Serializable {
 	/**
 	 * Cards constructor
 	 *
-	 * @param kindOfCard Type of card
+	 * @param cardType Type of card
 	 */
 
 	public Card(String cardType) {
-		this.kindOfCard = cardType;
+		this.cardType = cardType;
 	}
 
 	/**
 	 * Method to get current player
 	 * 
-	 * @return currentPlayer current player
+	 * @return currentPlayer
 	 */
 	public Player getCurrentPlayer() {
 		return currentPlayer;
@@ -73,26 +73,26 @@ public class Card extends Observable implements Serializable {
 	/**
 	 * Method to set current player
 	 * 
-	 * @param currentPlayer current player
+	 * @param currentPlayer cuurent player
 	 */
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
 
 	/**
-	 * Get kind of card
+	 * Get card type
 	 *
-	 * @return KindOfCard kind of card
+	 * @return Type of card
 	 */
 
-	public String getKindOfCard() {
-		return kindOfCard;
+	public String getCardType() {
+		return cardType;
 	}
 
 	/**
 	 * get Country of the card
 	 *
-	 * @return country country of the card
+	 * @return country of the card
 	 */
 	public Country getCountry() {
 		return country;
@@ -101,7 +101,7 @@ public class Card extends Observable implements Serializable {
 	/**
 	 * Set Country
 	 *
-	 * @param country country of the card
+	 * @param country of the card
 	 */
 
 	public void setCountry(Country country) {
@@ -111,7 +111,7 @@ public class Card extends Observable implements Serializable {
 	/**
 	 * Getter for list of cards for trade.
 	 *
-	 * @return cardsToTrade list of cards to trade
+	 * @return cardsToTrade list of cards
 	 */
 
 	public List<Card> getCardsToTrade() {
@@ -129,12 +129,11 @@ public class Card extends Observable implements Serializable {
 
 	/**
 	 * Method to automate card window
-	 * 
 	 * @param player player object
 	 */
 	public void automateCardWindow(Player player){
-		RiskCardController riskCardController = new RiskCardController(player, this);
-		riskCardController.automaticCardInitialization();
+		RiskCardController cardController = new RiskCardController(player, this);
+		cardController.automaticCardInitialization();
 	}
 
 
@@ -158,21 +157,21 @@ public class Card extends Observable implements Serializable {
 
 	/**
 	 * Method is used to verify ,
-	 * if cards can be traded for army or not
+	 * if cards can be exchanged for army or not
 	 *
 	 * @param selectedCards selected cards
-	 * @return isPossible true if the trade is possible; otherwise false
+	 * @return true if the exchange is possible; otherwise false
 	 */
 	public boolean isTradePossible(List<Card> selectedCards) {
 		boolean isPossible = false;
 		if (selectedCards.size() == 3) {
 			int infantry = 0, cavalry = 0, artillery = 0;
 			for (Card card : selectedCards) {
-				if (card.getKindOfCard().equals(BonusCardType.INFANTRY)) {
+				if (card.getCardType().equals(BonusCardType.INFANTRY)) {
 					infantry++;
-				} else if (card.getKindOfCard().equals(BonusCardType.CAVALRY)) {
+				} else if (card.getCardType().equals(BonusCardType.CAVALRY)) {
 					cavalry++;
-				} else if (card.getKindOfCard().equals(BonusCardType.ARTILLERY)) {
+				} else if (card.getCardType().equals(BonusCardType.ARTILLERY)) {
 					artillery++;
 				}
 			}
@@ -185,11 +184,11 @@ public class Card extends Observable implements Serializable {
 
 	/**
 	 * Method notifies the observers of the card,
-	 * Also sets the cards which are selected for trade.
+	 * Also sets the cards which are selected for exchange.
 	 *
 	 * @param selectedCards cards which are selected by the user to exchange
 	 */
-	public void cardsToTrade(List<Card> selectedCards) {
+	public void cardsToBeTraded(List<Card> selectedCards) {
 		setCardsToTrade(selectedCards);
 		setChanged();
 		notifyObservers("cardsExchange");
@@ -205,16 +204,16 @@ public class Card extends Observable implements Serializable {
 	public List<Card> generateValidCardCombination(List<Card> selectedCards) {
 		HashMap<String, Integer> cardCountMap = new HashMap<>();
 		for (Card card : selectedCards) {
-			if (cardCountMap.containsKey(card.getKindOfCard())) {
-				cardCountMap.put(card.getKindOfCard(), cardCountMap.get(card.getKindOfCard()) + 1);
+			if (cardCountMap.containsKey(card.getCardType())) {
+				cardCountMap.put(card.getCardType(), cardCountMap.get(card.getCardType()) + 1);
 			} else {
-				cardCountMap.put(card.getKindOfCard(), 1);
+				cardCountMap.put(card.getCardType(), 1);
 			}
 
 		}
 		for (Map.Entry<String, Integer> entry : cardCountMap.entrySet()) {
 			if (entry.getValue() >= 3) {
-				return selectedCards.stream().filter(t -> t.getKindOfCard().equals(entry.getKey()))
+				return selectedCards.stream().filter(t -> t.getCardType().equals(entry.getKey()))
 						.collect(Collectors.toList());
 			}
 		}

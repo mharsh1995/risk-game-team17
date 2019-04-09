@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Observable;
 import java.util.Random;
 
-import com.risk.team.services.Util.GameWindowUtil;
+import com.risk.team.services.Util.GameUpdateWindow;
 
 
 /**
@@ -17,7 +17,6 @@ import com.risk.team.services.Util.GameWindowUtil;
  * simulating the dice rolls for the attack phase
  *
  * @author Kartika Patil
- * 
  */
 public class Dice extends Observable {
 
@@ -33,7 +32,7 @@ public class Dice extends Observable {
 	private ArrayList<Integer> attackerDiceList;
 
 	/**
-	 * Country is under attack
+	 * Country is is under attack
 	 */
 	private Country defendingCountry;
 
@@ -116,7 +115,7 @@ public class Dice extends Observable {
 	}
 
 	/**
-	 * Getter for defending dice values.
+	 * Getter  for defending dice values.
 	 *
 	 * @return defenderDiceList list of values of the defending dice.
 	 */
@@ -126,7 +125,7 @@ public class Dice extends Observable {
 	}
 
 	/**
-	 * Setter for defending dice values.
+	 * Setter  for defending dice values.
 	 *
 	 * @param defenderDiceList list of values of the defending dice.
 	 */
@@ -265,11 +264,11 @@ public class Dice extends Observable {
 	 * has won at least one country.
 	 */
 	public void updateCountryList() {
-		ArrayList<Country> defenderCountries = defendingCountry.getPlayer().getMyCountries();
+		ArrayList<Country> defenderCountries = defendingCountry.getPlayer().getPlayerCountries();
 		defenderCountries.remove(defendingCountry);
 
 		defendingCountry.setPlayer(attackingCountry.getPlayer());
-		defendingCountry.getPlayer().getMyCountries().add(defendingCountry);
+		defendingCountry.getPlayer().getPlayerCountries().add(defendingCountry);
 
 	}
 
@@ -279,7 +278,7 @@ public class Dice extends Observable {
 	 *
 	 *
 	 * @param armiesToMove Number aries to move
-	 * @param message text the label which displays how many armies were moved
+	 * @param message text fir the label which displays how many armies were moved
 	 * @param moveArmies Button to execute the method.
 	 */
 	public void moveArmies(int armiesToMove, Label message, Button moveArmies) {
@@ -292,7 +291,7 @@ public class Dice extends Observable {
 			getAttackingCountry().setNoOfArmies(currentArmies - armiesToMove);
 			getDefendingCountry().setNoOfArmies(armiesToMove);
 			updateCountryList();
-			GameWindowUtil.exitWindow(moveArmies);
+			GameUpdateWindow.exitWindow(moveArmies);
 			setChanged();
 			notifyObservers("rollDiceComplete");
 		}
@@ -309,7 +308,7 @@ public class Dice extends Observable {
 	/**
 	 *  Check if attacker has sufficient number of armies
 	 *
-	 * @return diceThrowPossible true if attacker can execute the attack; else false.
+	 * @return true if attacker can execute the attack; else false.
 	 */
 
 	public boolean checkDiceThrowPossible() {
