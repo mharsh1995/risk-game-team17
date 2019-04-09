@@ -2,7 +2,7 @@ package com.risk.team.model;
 
 import com.risk.team.controller.GamePhaseController;
 import com.risk.team.services.RiskMapRW;
-import com.risk.team.services.Util.GameWindowUtil;
+import com.risk.team.services.Util.GameUpdateWindow;
 import com.risk.team.strategy.*;
 import com.risk.team.strategy.Random;
 
@@ -13,18 +13,19 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Player class for information regarding the player
+ * Class for the player object for the class
  *
  * @author Kartika Patil
  * @author yashgolwala
- *
+ * @author Dhaval Desai
+ * @author Jenny Pujara
+ * @author Harsh Mehta
  */
 public class Player extends Observable implements Observer, Serializable {
 
 	/**
 	 * Player currently playing.
 	 */
-
 	public static Player currentPlayer;
 
 	/**
@@ -33,41 +34,39 @@ public class Player extends Observable implements Observer, Serializable {
 	private String name;
 
 	/**
-	 * Initialization of army count
+	 * Number of armies
 	 */
-	private int armyCount=0;
+	private int armyCount;
 
 	/**
-	 * List of countries possessed by the Player
+	 * Player countries
 	 */
-	private ArrayList<Country> myCountries;
+	private ArrayList<Country> playerCountries;
 
 	/**
-	 * List of cards that Player holds
+	 * Player's cards
 	 */
-	private ArrayList<Card> listOfCards;
+	private ArrayList<Card> cardList;
 
 	/**
-	 * Type of Player
+	 * PlayerType
 	 */
 	private String playerType;
 
 	/**
-	 * PlayerBehaviour
+	 * PlayerBehavior
 	 */
-	private PlayerBehaviour playerBehaviour;
+	private PlayerBehavior playerBehavior;
 
 	/**
 	 * Number of countries won by the player
 	 */
 	private int CountryWon;
-	
-	public Collection<Country> mapCountries;
-	
-	private int numberOfCardSetExchanged = 0;
+
+	private int numberOfCardSetTraded = 0;
 
 	/**
-	 * Player constructor, initialization of army count
+	 * Player constructor, initializes initial army count
 	 */
 	public Player() {
 		armyCount = 0;
@@ -80,13 +79,13 @@ public class Player extends Observable implements Observer, Serializable {
 	 */
 	public Player(String name) {
 		this.name = name;
-		this.listOfCards = new ArrayList<>();
+		this.cardList = new ArrayList<>();
 	}
 
 	/**
 	 * Player constructor
 	 *
-	 * @param name name
+	 * @param name Name
 	 * @param playerType player type as string
 	 * @param gamePhaseController GamePhaseController object
 	 */
@@ -94,42 +93,41 @@ public class Player extends Observable implements Observer, Serializable {
 		armyCount = 0;
 		this.name = name;
 		this.playerType = playerType;
-		this.myCountries = new ArrayList<>();
-		this.mapCountries = gamePhaseController.map.getMapGraph().getAllCountries().values();
-		this.listOfCards = new ArrayList<>();
-		if (playerType.equals(PlayerMode.AGGRESSIVE))
-			this.playerBehaviour = new Aggressive(gamePhaseController);
-		else if (playerType.equals(PlayerMode.BENEVOLENT))
-			this.playerBehaviour = new Benevolent(gamePhaseController);
-		else if (playerType.equals(PlayerMode.CHEATER))
-			this.playerBehaviour = new Cheater(gamePhaseController);
-		else if (playerType.equals(PlayerMode.HUMAN))
-			this.playerBehaviour = new Human(gamePhaseController);
-		else if (playerType.equals(PlayerMode.RANDOM))
-			this.playerBehaviour = new Random(gamePhaseController);
+		this.playerCountries = new ArrayList<>();
+		this.cardList = new ArrayList<>();
+		if (playerType.equals(IPlayerType.AGGRESSIVE))
+			this.playerBehavior = new Aggressive(gamePhaseController);
+		else if (playerType.equals(IPlayerType.BENEVOLENT))
+			this.playerBehavior = new Benevolent(gamePhaseController);
+		else if (playerType.equals(IPlayerType.CHEATER))
+			this.playerBehavior = new Cheater(gamePhaseController);
+		else if (playerType.equals(IPlayerType.HUMAN))
+			this.playerBehavior = new Human(gamePhaseController);
+		else if (playerType.equals(IPlayerType.RANDOM))
+			this.playerBehavior = new Random(gamePhaseController);
 		this.addObserver(gamePhaseController);
 	}
 
 	/**
 	 * Constructor for player
 	 *
-	 * @param name name
-	 * @param playerType playerType
+	 * @param name Name
+	 * @param playerType PlayerType
 	 */
 	public Player(String name, String playerType) {
 		armyCount = 0;
 		this.name = name;
 		this.playerType = playerType;
-		this.myCountries = new ArrayList<>();
-		this.listOfCards = new ArrayList<>();
-		if (playerType.equals(PlayerMode.AGGRESSIVE))
-			this.playerBehaviour = new Aggressive();
-		else if (playerType.equals(PlayerMode.BENEVOLENT))
-			this.playerBehaviour = new Benevolent();
-		else if (playerType.equals(PlayerMode.CHEATER))
-			this.playerBehaviour = new Cheater();
-		else if (playerType.equals(PlayerMode.RANDOM))
-			this.playerBehaviour = new Random();
+		this.playerCountries = new ArrayList<>();
+		this.cardList = new ArrayList<>();
+		if (playerType.equals(IPlayerType.AGGRESSIVE))
+			this.playerBehavior = new Aggressive();
+		else if (playerType.equals(IPlayerType.BENEVOLENT))
+			this.playerBehavior = new Benevolent();
+		else if (playerType.equals(IPlayerType.CHEATER))
+			this.playerBehavior = new Cheater();
+		else if (playerType.equals(IPlayerType.RANDOM))
+			this.playerBehavior = new Random();
 	}
 
 	/**
@@ -142,9 +140,9 @@ public class Player extends Observable implements Observer, Serializable {
 	}
 
 	/**
-	 * Setter for player's name
+	 * Setter got player's name
 	 *
-	 * @param name name of the player
+	 * @param name Name of the player
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -171,19 +169,19 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Getter for list of player's armies.
 	 *
-	 * @return myCountries List of myCountries
+	 * @return playerCountries List of playerCountries
 	 */
-	public ArrayList<Country> getMyCountries() {
-		return myCountries;
+	public ArrayList<Country> getPlayerCountries() {
+		return playerCountries;
 	}
 
 	/**
 	 * Setter for list of player's armies.
 	 *
-	 * @param playerCountries myCountries set player armies
+	 * @param playerCountries set player armies
 	 */
-	public void setMyCountries(ArrayList<Country> playerCountries) {
-		this.myCountries = playerCountries;
+	public void setPlayerCountries(ArrayList<Country> playerCountries) {
+		this.playerCountries = playerCountries;
 	}
 
 	/**
@@ -192,64 +190,54 @@ public class Player extends Observable implements Observer, Serializable {
 	 * @param country country object
 	 */
 	public void addCountry(Country country) {
-		this.myCountries.add(country);
+		this.playerCountries.add(country);
 	}
 
 	/**
 	 * Method for getting the player's list of card
 	 *
-	 * @return listOfCards listOfCards of player
+	 * @return cardList cardList of player
 	 */
-	public ArrayList<Card> getListOfCards() {
-		return listOfCards;
+	public ArrayList<Card> getCardList() {
+		return cardList;
 	}
 
 	/**
 	 * Method for returning the player's list of card
 	 *
-	 * @param cardList listOfCards of player
+	 * @param cardList of player
 	 */
-	public void setListOfcards(ArrayList<Card> cardList) {
-		this.listOfCards = cardList;
+	public void setCardList(ArrayList<Card> cardList) {
+		this.cardList = cardList;
 	}
 
 	/**
 	 * Method for getting playerType
 	 *
-	 * @return playerType type of player
+	 * @return playerType
 	 */
 	public String getPlayerType() {
 		return playerType;
 	}
 
 	/**
-	 * Method for setting player behaviour
+	 * Method for setting player behavior
 	 *
-	 * @param playerBehaviour behaviour of player
+	 * @param playerBehavior Type of player
 	 */
-	public void setPlayerBehaviour(PlayerBehaviour playerBehaviour) {
-		this.playerBehaviour = playerBehaviour;
+	public void setPlayerBehaviour(PlayerBehavior playerBehavior) {
+		this.playerBehavior = playerBehavior;
 	}
 
 	/**
-	 * Method to get player behaviour
+	 * Method to get player behavior
 	 *
-	 * @return playerBehaviour behaviour of player
+	 * @return playerBehavior
 	 */
-	public PlayerBehaviour getPlayerBehaviour() {
-		return playerBehaviour;
+	public PlayerBehavior getPlayerBehaviour() {
+		return playerBehavior;
 	}
 
-	
-	public int getNumberOfCardSetExchanged() {
-		this.numberOfCardSetExchanged = numberOfCardSetExchanged + 1;
-		return numberOfCardSetExchanged;
-	}
-
-	public void setNumberOfCardSetExchanged(int numberOfCardSetExchanged) {
-		this.numberOfCardSetExchanged = numberOfCardSetExchanged;
-	}
-	
 	/**
 	 * Method for adding armies to a country
 	 *
@@ -258,7 +246,7 @@ public class Player extends Observable implements Observer, Serializable {
 	 */
 	public void addArmiesToCountry(Country country, int numberOfArmies) {
 		if (this.getArmyCount() > 0 && this.getArmyCount() >= numberOfArmies) {
-			if (!this.getMyCountries().contains(country)) {
+			if (!this.getPlayerCountries().contains(country)) {
 				System.out.println("This country is not under your Ownership.");
 			} else {
 				country.setNoOfArmies(country.getNoOfArmies() + numberOfArmies);
@@ -272,7 +260,7 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Getter for current PLayer
 	 *
-	 * @return currentPlayer current Player
+	 * @return current Player
 	 */
 
 	public static Player getPlayerPlaying() {
@@ -284,16 +272,14 @@ public class Player extends Observable implements Observer, Serializable {
 	 * depending upon the total number of players
 	 *
 	 * @param players List of all the players
-	 * @return isSuccessfulAssignment true, is armies are successfully assigned,; otherwise false
+	 * @return true, is armies are successfully assigned,; otherwise false
 	 */
 	public boolean assignArmiesToPlayers(List<Player> players) {
 		boolean isSuccessfulAssignment = false;
 		int armiesPerPlayer = 0;
-
-		if (players.size()== 2) {
+		if(players.size() == 2) {
 			armiesPerPlayer = 40;
-		}
-		else if (players.size() == 3) {
+		} else if (players.size() == 3) {
 			armiesPerPlayer = 35;
 		} else if (players.size() == 4) {
 			armiesPerPlayer = 30;
@@ -337,7 +323,7 @@ public class Player extends Observable implements Observer, Serializable {
 	 * Method for calculating number of reinforcement armies to be allocated to the player
 	 *
 	 * @param currentPlayer Player to which armies are to be allocated
-	 * @return currentPlayer Player, object of the current player
+	 * @return Player object of the current player
 	 */
 	public Player noOfReinforcementArmies(Player currentPlayer) {
 		currentPlayer.setArmyCount(currentPlayer.getArmyCount() + currentPlayer.findNoOfArmies(currentPlayer));
@@ -354,10 +340,10 @@ public class Player extends Observable implements Observer, Serializable {
 	 * @return numberOfArmies
 	 */
 	public int findNoOfArmies(Player player) {
-		int noOfCountries = player.getMyCountries().size();
+		int noOfCountries = player.getPlayerCountries().size();
 		int numberOfArmies = (int) Math.floor(noOfCountries / 3);
 		HashSet<Continent> countryInContinent = new HashSet<>();
-		ArrayList<Country> playerOwnedCountries = player.getMyCountries();
+		ArrayList<Country> playerOwnedCountries = player.getPlayerCountries();
 
 		boolean isPlayerOwnedContinent;
 
@@ -431,13 +417,13 @@ public class Player extends Observable implements Observer, Serializable {
 	 * Method governing the fortification phase
 	 *
 	 * @param selectedCountries selected countries list
-	 * @param adjacentCountries adjacent countries list
-	 * @param listOfPlayer list of players
+	 * @param adjCountries adjacent countries list
+	 * @param playerList list of players
 	 */
-	public void fortificationPhase(ListView<Country> selectedCountries, ListView<Country> adjacentCountries,
-			List<Player> listOfPlayer) {
-		boolean success = currentPlayer.getPlayerBehaviour().fortificationPhase(selectedCountries, adjacentCountries, currentPlayer );
-		if (success && listOfPlayer.size() > 1) {
+	public void fortificationPhase(ListView<Country> selectedCountries, ListView<Country> adjCountries,
+			List<Player> playerList) {
+		boolean success = currentPlayer.getPlayerBehaviour().fortificationPhase(selectedCountries, adjCountries, currentPlayer);
+		if (success && playerList.size() > 1) {
 			System.out.println("Fortification phase ended. \n");
 			setChanged();
 			notifyObservers("Fortification phase ended. \n");
@@ -449,12 +435,12 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Method to check if the fortification move taking place in fortification is valid or not
 	 *
-	 * @param riskMapRW RiskMapRW object
+	 * @param mapObj RiskMapRW object
 	 * @param currentPlayer current player
 	 * @return true if the move is valid; otherwise false
 	 */
-	public boolean isFortificationPhaseValid(RiskMapRW riskMapRW, Player currentPlayer) {
-		boolean flag = currentPlayer.getPlayerBehaviour().isFortificationPhaseValid(riskMapRW, currentPlayer);
+	public boolean isFortificationPhaseValid(RiskMapRW mapObj, Player currentPlayer) {
+		boolean flag = currentPlayer.getPlayerBehaviour().isFortificationPhaseValid(mapObj, currentPlayer);
 		if (flag) {
 			setChanged();
 			notifyObservers("Fortification");
@@ -492,7 +478,7 @@ public class Player extends Observable implements Observer, Serializable {
 			setChanged();
 			notifyObservers("StartUp Phase Completed.\n");
 			setChanged();
-			notifyObservers("FirstAttack");
+			notifyObservers("Reinforcement");
 		} else {
 			setChanged();
 			notifyObservers("placeArmyOnCountry");
@@ -506,8 +492,8 @@ public class Player extends Observable implements Observer, Serializable {
 	 */
 	public void automaticAssignPlayerArmiesToCountry(Player currentPlayer) {
 		if (currentPlayer.getArmyCount() > 0) {
-			Country country = currentPlayer.getMyCountries()
-					.get(new java.util.Random().nextInt(currentPlayer.getMyCountries().size()));
+			Country country = currentPlayer.getPlayerCountries()
+					.get(new java.util.Random().nextInt(currentPlayer.getPlayerCountries().size()));
 			country.setNoOfArmies(country.getNoOfArmies() + 1);
 			currentPlayer.setArmyCount(currentPlayer.getArmyCount() - 1);
 			System.out.println("Player " + currentPlayer.getName() + " , Country " + country.getName() + " has been assigned one army.");
@@ -541,7 +527,7 @@ public class Player extends Observable implements Observer, Serializable {
 	 * Method to check if the player can attack or not.
 	 *
 	 * @param attackingCountries List view of all the countries of the player
-	 * @return canAttack true if the player can attack; other wise false
+	 * @return true if the player can attack; other wise false
 	 */
 	public boolean playerCanAttack(ListView<Country> attackingCountries) {
 		boolean canAttack = currentPlayer.getPlayerBehaviour().playerCanAttack(attackingCountries);
@@ -557,7 +543,7 @@ public class Player extends Observable implements Observer, Serializable {
 	 *
 	 * @param attacking Country attacking
 	 * @param defending Country under attack
-	 * @return isValidAttackMove true if the attack move is valid; other wise false
+	 * @return true if the attack move is valid; other wise false
 	 */
 
 	public boolean isAttackMoveValid(Country attacking, Country defending) {
@@ -566,10 +552,10 @@ public class Player extends Observable implements Observer, Serializable {
 			if (attacking.getNoOfArmies() > 1) {
 				isValidAttackMove = true;
 			} else {
-				GameWindowUtil.popUpWindow("Select a country with more armies.", "Invalid game move", "There should be more than one army on the country which is attacking.");
+				GameUpdateWindow.popUpWindow("Select a country with more armies.", "Invalid game move", "There should be more than one army on the country which is attacking.");
 			}
 		} else {
-			GameWindowUtil.popUpWindow("You have selected your own country", "Invalid game move", "Select another player's country to attack");
+			GameUpdateWindow.popUpWindow("You have selected your own country", "Invalid game move", "Select another player's country to attack");
 		}
 		return isValidAttackMove;
 	}
@@ -578,13 +564,13 @@ public class Player extends Observable implements Observer, Serializable {
 	 * Method to check if any player lost the game after every attack move
 	 *
 	 * @param playersPlaying List containing all the players playing the game
-	 * @return playersLost Player object of the lost player
+	 * @return Player object of the lost player
 	 */
 	public List<Player> checkPlayerLost(List<Player> playersPlaying) {
 		List<Player> playersLost = new ArrayList<>();
 		for (Player player : playersPlaying) {
-			if (player.getMyCountries().isEmpty()) {
-				currentPlayer.getListOfCards().addAll(player.getListOfCards());
+			if (player.getPlayerCountries().isEmpty()) {
+				currentPlayer.getCardList().addAll(player.getCardList());
 				playersLost.add(player);
 			}
 		}
@@ -595,7 +581,7 @@ public class Player extends Observable implements Observer, Serializable {
 	 * Method to check if any player Won the game after every attack move
 	 *
 	 * @param playersPlaying List containing all the players playing the game
-	 * @return playerWon Player object of the winning player
+	 * @return Player object of the winning player
 	 */
 	public Player checkPlayerWon(List<Player> playersPlaying) {
 		Player playerWon = null;
@@ -609,25 +595,15 @@ public class Player extends Observable implements Observer, Serializable {
 	 * Methods for exchanging cards of the player for armies
 	 *
 	 * @param selectedCards List of selected cards by the player
-	 * @param numberOfCardSetExchanged Number of card sets to be exchanged
-	 * @return currentPlayer Player object exchanging the cards
+	 * @param numberOfCardSetTraded Number of card sets to be exchanged
+	 * @return Player object exchanging the cards
 	 */
-	public Player exchangeCards(List<Card> selectedCards, int numberOfCardSetExchanged) {
+	public Player tradeCards(List<Card> selectedCards, int numberOfCardSetTraded) {
 
-		currentPlayer.setArmyCount(currentPlayer.getArmyCount() + (5 * numberOfCardSetExchanged));
-		System.out.println(currentPlayer.getName() + " successfully exchanged 3 cards for " + (5 * numberOfCardSetExchanged) + " armies.\n");
+		currentPlayer.setArmyCount(currentPlayer.getArmyCount() + (5 * numberOfCardSetTraded));
+		System.out.println(currentPlayer.getName() + " successfully exchanged 3 cards for " + (5 * numberOfCardSetTraded) + " armies.\n");
 		setChanged();
-		notifyObservers(currentPlayer.getName() + " successfully exchanged 3 cards for " + (5 * numberOfCardSetExchanged) + " armies.\n");
-
-		for (Card card : selectedCards) {
-			if (currentPlayer.getMyCountries().contains(card.getCountry())) {
-				card.getCountry().setNoOfArmies(card.getCountry().getNoOfArmies() + 2);
-				System.out.println(currentPlayer.getName() + " \" got extra 2 armies on \" " + card.getCountry().getName() + "\n");
-				setChanged();
-				notifyObservers(currentPlayer.getName() + " \" got extra 2 armies on \" " + card.getCountry().getName() + "\n");
-				break;
-			}
-		}
+		notifyObservers(currentPlayer.getName() + " successfully exchanged 3 cards for " + (5 * numberOfCardSetTraded) + " armies.\n");
 		return currentPlayer;
 	}
 
@@ -643,7 +619,7 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Getter for number of countries won by the player
 	 *
-	 * @return CountryWon countryWonCount
+	 * @return countryWonCount
 	 */
 
 	public int getCountryWon() {
@@ -675,5 +651,12 @@ public class Player extends Observable implements Observer, Serializable {
 		notifyObservers(view);
 	}
 
-	
+	public int getNumberOfCardSetTraded() {
+		this.numberOfCardSetTraded = numberOfCardSetTraded + 1;
+		return numberOfCardSetTraded;
+	}
+
+	public void setNumberOfCardSetTraded(int numberOfCardSetTraded) {
+		this.numberOfCardSetTraded = numberOfCardSetTraded;
+	}
 }

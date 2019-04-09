@@ -1,10 +1,10 @@
 package com.risk.team.model;
 
 import com.risk.team.controller.GamePhaseController;
+import com.risk.team.services.RiskLaunchPhase;
 import com.risk.team.services.RiskMapRW;
 import com.risk.team.services.RiskMapVerify;
-import com.risk.team.services.StartUpPhase;
-import com.risk.team.services.Util.GameWindowUtil;
+import com.risk.team.services.Util.GameUpdateWindow;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,14 +18,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * 
- * Tournament Model class having methods related to tournament mode.
- * 
- * @author Kartika Patil
- * 			  
- */
-
 public class TournamentModel {
 
 	/** Static flag to check if tournament is being played*/
@@ -33,7 +25,6 @@ public class TournamentModel {
 
 	/**
 	 * Constructor for TournamentModel
-	 *
 	 */
 	public TournamentModel(){
 		isTournamentMode = true;
@@ -58,14 +49,14 @@ public class TournamentModel {
 
 			String fileName = selectedFile.getAbsolutePath();
 			System.out.println("File location: " + fileName);
-			RiskMapVerify riskMapVerify = new RiskMapVerify();
+			RiskMapVerify mapValidate = new RiskMapVerify();
 
-			if (riskMapVerify.validateMapFile(fileName)) {
-				RiskMapRW readMap = new RiskMapRW(riskMapVerify);
+			if (mapValidate.validateMapFile(fileName)) {
+				RiskMapRW readMap = new RiskMapRW(mapValidate);
 				mapList.add(readMap);
 				return selectedFile;
 			}
-			GameWindowUtil.popUpWindow("Invalid Map", "Problem with map file", "Please selecte another file");
+			GameUpdateWindow.popUpWindow("Invalid Map", "Problem with map file", "Please selecte another file");
 
 		}
 
@@ -79,12 +70,12 @@ public class TournamentModel {
 	 * @param playerList List of players playing
 	 * @param numberOfTurnsToPlay NUmber of turns to be played in each game
 	 * @param gameCount Number of the game being played
-	 * @param riskMapRW Map on which the game would be played
+	 * @param mapObj Map on which the game would be played
 	 * @param textArea Text Area where the game details would be printed
-	 * @return winnerMap HashMAp with the winner name and game number.
+	 * @return HashMAp with the winner name and game number.
 	 */
 
-	public HashMap<Player, Integer> playGame(List<Player> playerList, int numberOfTurnsToPlay, int gameCount, RiskMapRW riskMapRW, TextArea textArea) {
+	public HashMap<Player, Integer> playGame(List<Player> playerList, int numberOfTurnsToPlay, int gameCount, RiskMapRW mapObj, TextArea textArea) {
 
 		Player winner;
 		List<Player> currentGamePlayerList = new ArrayList<>();
@@ -101,27 +92,27 @@ public class TournamentModel {
 		for(Player p: currentGamePlayerList){
 			hashMapForGameController.put(p.getName(), p.getPlayerType());
 		}
-		GamePhaseController gamePhaseController = new GamePhaseController(riskMapRW, hashMapForGameController);
-		gamePhaseController.setGamePlayerList(new ArrayList<Player>());
-		gamePhaseController.getGamePlayerList().clear();
+		GamePhaseController gamePlayController = new GamePhaseController(mapObj, hashMapForGameController);
+		gamePlayController.setGamePlayerList(new ArrayList<Player>());
+		gamePlayController.getGamePlayerList().clear();
 
 		Card card = new Card();
 
 		// Startup phase started
 		System.out.println(" Startup phase started");
-		StartUpPhase startUpPhase =  new StartUpPhase();
-		gamePhaseController.setCardStack(startUpPhase.assignCardToCountry(riskMapRW));
+		RiskLaunchPhase startUpPhase =  new RiskLaunchPhase();
+		gamePlayController.setCardStack(startUpPhase.assignCardToCountry(mapObj));
 
 		// Assign armies to player
 		player.assignArmiesToPlayers(currentGamePlayerList);
 		// Assign country to players
-		startUpPhase.assignCountryToPlayer(riskMapRW, currentGamePlayerList);
+		startUpPhase.assignCountryToPlayer(mapObj, currentGamePlayerList);
 		System.out.println("Armies assigned");
 		for(Player p: currentGamePlayerList){
 			while(p.getArmyCount() > 0) {
 				p.automaticAssignPlayerArmiesToCountry(p);
 			}
-			gamePhaseController.getGamePlayerList().add(p);
+			gamePlayController.getGamePlayerList().add(p);
 		}
 		System.out.println("Assign armies to countries of the players, startup phase complete");
 
@@ -132,23 +123,23 @@ public class TournamentModel {
 				// Setting current player
 				Player.setPlayerPlaying(playerListIterator.next());
 				card.automateCardWindow(Player.currentPlayer);
-				List<Card> playerOwnedCards = Player.currentPlayer.getListOfCards();
+				List<Card> playerOwnedCards = Player.currentPlayer.getCardList();
 
 				// Check, if cards can be exchanged or not
 				if(playerOwnedCards != null){
 					List<Card> cards = card.generateValidCardCombination(playerOwnedCards);
 					if (cards != null && cards.size() >= 3) {
-						card.cardsToTrade(cards);
+						card.cardsToBeTraded(cards);
 						card.setCardsToTrade(playerOwnedCards);
-						gamePhaseController.exchangeCards(card);
+						gamePlayController.tradeCards(card);
 					}
 				}
-				ObservableList<Country> observableListReinforcementPhase = FXCollections.observableArrayList(Player.currentPlayer.getMyCountries());
+				ObservableList<Country> observableListReinforcementPhase = FXCollections.observableArrayList(Player.currentPlayer.getPlayerCountries());
 				player.noOfReinforcementArmies(Player.currentPlayer);
 
 				if(Player.currentPlayer.getArmyCount() > 0){
 					System.out.println(" Reinforcement phase started for player " + Player.currentPlayer.getName());
-					Player.currentPlayer.reinforcementPhase(observableListReinforcementPhase, null, gamePhaseController.getGamePlayerList());
+					Player.currentPlayer.reinforcementPhase(observableListReinforcementPhase, null, gamePlayController.getGamePlayerList());
 					System.out.println(" Reinforcement phase completed for player " + Player.currentPlayer.getName());
 				}
 				// Reinforcement phase ended
@@ -156,14 +147,14 @@ public class TournamentModel {
 				// Attack phase
 				System.out.println("Attack phase started");
 
-				ListView<Country> listViewOfCountries = new ListView<Country>(FXCollections.observableArrayList(Player.currentPlayer.getMyCountries()));
+				ListView<Country> listViewOfCountries = new ListView<Country>(FXCollections.observableArrayList(Player.currentPlayer.getPlayerCountries()));
 				while(Player.currentPlayer.playerCanAttack(listViewOfCountries)){
 					Player.currentPlayer.getPlayerBehaviour().attackPhase(listViewOfCountries, null,  Player.currentPlayer);
 
 					// Allocate cards to player if player won any country
 					if(Player.currentPlayer.getCountryWon() > 0){
-						gamePhaseController.setPlayerPlaying(Player.currentPlayer);
-						gamePhaseController.allocateCardToPlayer();
+						gamePlayController.setPlayerPlaying(Player.currentPlayer);
+						gamePlayController.allocateCardToPlayer();
 					}
 
 					List<Player> lostPlayerList = player.checkPlayerLost(currentGamePlayerList);
@@ -189,9 +180,9 @@ public class TournamentModel {
 				System.out.println("Attack phase ended");
 
 				System.out.println("Fortification started");
-				ListView<Country> listViewOfCountriesForFortification = new ListView<Country>(FXCollections.observableArrayList(Player.currentPlayer.getMyCountries()));
-				if(player.isFortificationPhaseValid(riskMapRW, Player.currentPlayer)){
-					Player.currentPlayer.getPlayerBehaviour().fortificationPhase(listViewOfCountriesForFortification, null, Player.currentPlayer );
+				ListView<Country> listViewOfCountriesForFortification = new ListView<Country>(FXCollections.observableArrayList(Player.currentPlayer.getPlayerCountries()));
+				if(player.isFortificationPhaseValid(mapObj, Player.currentPlayer)){
+					Player.currentPlayer.getPlayerBehaviour().fortificationPhase(listViewOfCountriesForFortification, null, Player.currentPlayer);
 				}
 				else {
 					System.out.println("No fortification move possible");
