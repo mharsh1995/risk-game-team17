@@ -4,7 +4,7 @@ import com.risk.team.model.IPlayerType;
 import com.risk.team.model.Player;
 import com.risk.team.model.TournamentModel;
 import com.risk.team.services.RiskMapRW;
-import com.risk.team.services.Util.GameUpdateWindow;
+import com.risk.team.services.util.GameUpdateWindow;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +21,8 @@ import java.util.regex.Pattern;
  * implements Observer.
  *
  * @author Kartika Patil
+ * 
+ * @version 1.0.0
  */
 public class RiskTournamentController extends Observable implements Initializable {
 
@@ -149,16 +151,14 @@ public class RiskTournamentController extends Observable implements Initializabl
 
 	/**
 	 * Getter method
-	 * 
-	 * @return numberOfTurnsToPlay number of turns to play
+	 * @return number of turns to play
 	 */
 	public int getNumberOfTurnsToPlay() {
 		return numberOfTurnsToPlay;
 	}
 	/**
 	 * Setter method
-	 * 
-	 * @param numberOfTurnsToPlay number of turns to play
+	 * @param numberOfTurnsToPlay		number of turns to play
 	 */
 	public void setNumberOfTurnsToPlay(int numberOfTurnsToPlay) {
 		this.numberOfTurnsToPlay = numberOfTurnsToPlay;
@@ -166,8 +166,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 
 	/**
 	 * getter method
-	 * 
-	 * @return numberOfGamesToPlay number of games to play
+	 * @return number of games to play
 	 */
 	public int getNumberOfGamesToPlay() {
 		return numberOfGamesToPlay;
@@ -175,8 +174,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 
 	/**
 	 * Setter method
-	 * 
-	 * @param numberOfGamesToPlay number of games to play
+	 * @param numberOfGamesToPlay	number of games to play
 	 */
 	public void setNumberOfGamesToPlay(int numberOfGamesToPlay) {
 		this.numberOfGamesToPlay = numberOfGamesToPlay;
@@ -184,8 +182,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 
 	/**
 	 * Getter method
-	 * 
-	 * @return numberOfPlayersPlaying number of players playing
+	 * @return number of players playing
 	 */
 	public int getNumberOfPlayersPlaying() {
 		return numberOfPlayersPlaying;
@@ -193,8 +190,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 
 	/**
 	 * Setter method
-	 * 
-	 * @param numberOfPlayersPlaying number of players playing
+	 * @param numberOfPlayersPlaying 		number of players playing
 	 */
 	public void setNumberOfPlayersPlaying(int numberOfPlayersPlaying) {
 		this.numberOfPlayersPlaying = numberOfPlayersPlaying;
@@ -207,8 +203,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 
 	/**
 	 *  Setter method
-	 *  
-	 * @param numberOfMapsToPlay number of maps to display
+	 * @param numberOfMapsToPlay		number of maps to display
 	 */
 	public void setNumberOfMapsToPlay(int numberOfMapsToPlay) {
 		this.numberOfMapsToPlay = numberOfMapsToPlay;
@@ -222,7 +217,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 		playerList = new ArrayList<>();
 	}
 
-	/**
+	/*
 	 * (non-Javadoc
 	 *
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL,
@@ -238,7 +233,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 	/**
 	 * Method to register number of maps, number of turns and games
 	 *
-	 * @param event Action event
+	 * @param event		Action event
 	 * @throws NumberFormatException NumberFormatException
 	 */
 	@FXML
@@ -301,7 +296,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 	/**
 	 * Method to show player
 	 *
-	 * @param event	Action event
+	 * @param event		Action event
 	 * @throws NumberFormatException NumberFormatException
 	 */
 	@FXML
@@ -348,7 +343,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 	/**
 	 * Method to upload map1
 	 *
-	 * @param event	Action event
+	 * @param event		Action event
 	 */
 	@FXML
 	private void map1(ActionEvent event) {
@@ -365,7 +360,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 	/**
 	 * Method to upload map2
 	 *
-	 * @param event	Action event
+	 * @param event		Action event
 	 */
 	@FXML
 	private void map2(ActionEvent event) {
@@ -382,7 +377,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 	/**
 	 * Method to upload map3
 	 *
-	 * @param event	Action event
+	 * @param event		Action event
 	 */
 	@FXML
 	private void map3(ActionEvent event) {
@@ -399,7 +394,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 	/**
 	 * Method to upload map4
 	 *
-	 * @param event	Action event
+	 * @param event		Action event
 	 */
 	@FXML
 	private void map4(ActionEvent event) {
@@ -416,7 +411,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 	/**
 	 * Method to upload map5
 	 *
-	 * @param event	Action event
+	 * @param event		Action event
 	 */
 	@FXML
 	private void map5(ActionEvent event) {
@@ -445,7 +440,7 @@ public class RiskTournamentController extends Observable implements Initializabl
 	/**
 	 * Method to start tournament
 	 *
-	 * @param event	Action event
+	 * @param event		Action event
 	 */
 	@FXML
 	public void start(ActionEvent event) {

@@ -18,6 +18,8 @@ import com.risk.team.strategy.Benevolent;
  * 
  * @author Dhaval Desai
  * @author Jenny Pujara
+ * 
+ * @version 1.0.0
  *
  */
 public class BenevolentTest {
@@ -94,7 +96,7 @@ public class BenevolentTest {
 
 	/**
 	 * Test to check check and find the weakest country if
-     * no adjacent country to fortify
+	 * no adjacent country to fortify
 	 */
 	@Test
 	public void checkAndFindWeakestIfNoAdjacentCountryToFortifyTest() {

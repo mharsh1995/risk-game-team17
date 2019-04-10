@@ -15,6 +15,8 @@ import com.risk.team.model.Country;
  * 
  * @author Kartika Patil
  * @author Dhaval Desai
+ * 
+ * @version 1.0.0
  */
 public class RiskMapGraph implements Serializable {
 
@@ -31,7 +33,7 @@ public class RiskMapGraph implements Serializable {
 	private int countOfCountries = 0;
 
 	/**
-	 * RiskMapGraph constructor
+	 * MapGraph constructor
 	 */
 	public RiskMapGraph() {
 		this.continents = new HashMap<>();
@@ -51,7 +53,8 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to set a continent
 	 * 
-	 * @param continents Name of the continent
+	 * @param continents
+	 *            Name of the continent
 	 */
 	public void setContinents(HashMap<String, Continent> continents) {
 		this.continents = continents;
@@ -60,7 +63,7 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to get the list of adjacent countries.
 	 * 
-	 * @return adjacentCountries adjacent countries
+	 * @return adjacent countries
 	 */
 	public HashMap<Country, ArrayList<Country>> getAdjacentCountries() {
 		return adjacentCountries;
@@ -69,7 +72,8 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to set the adjacent countries
 	 * 
-	 * @param adjacentCountries countries which are adjacent to eachother
+	 * @param adjacentCountries
+	 *            countries which are adjacent to eachother
 	 */
 	public void setAdjacentCountries(HashMap<Country, ArrayList<Country>> adjacentCountries) {
 		this.adjacentCountries = adjacentCountries;
@@ -78,7 +82,7 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to get the count of the countries.
 	 * 
-	 * @return countOfCountries No of countries
+	 * @return No of countries
 	 */
 	public int getCountOfCountries() {
 		return countOfCountries;
@@ -87,7 +91,8 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to set the count of the countries.
 	 * 
-	 * @param countOfCountries Number of countries        
+	 * @param countOfCountries
+	 *            Number of countries
 	 */
 	public void setCountOfCountries(int countOfCountries) {
 		this.countOfCountries = countOfCountries;
@@ -96,7 +101,7 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to get the countries from a set
 	 * 
-	 * @return allCountries countrySet
+	 * @return countrySet
 	 */
 	public HashMap<String, Country> getAllCountries() {
 		return allCountries;
@@ -105,17 +110,22 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to the set the country in a set.
 	 * 
-	 * @param countrySet Hashset to store country names     
+	 * @param allCountries
+	 *            Hashset to store country names
 	 */
-	public void setCountrySet(HashMap<String, Country> countrySet) {
-		this.allCountries = countrySet;
+	public void setAllCountries(HashMap<String, Country> allCountries) {
+		this.allCountries = allCountries;
 	}
 
 	/**
 	 * Method to add an edge between countries.
 	 * 
-	 * @param source Country
-	 * @param destination Country
+	 * @param source
+	 *            Country
+	 * 
+	 * @param destination
+	 *            Country
+	 * 
 	 */
 	public void addLinkBetweenCountries(Country source, Country destination) {
 		if (adjacentCountries.containsKey(source)) {
@@ -130,8 +140,11 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to delete an edge between countries
 	 * 
-	 * @param source Country
-	 * @param destination Country
+	 * @param source
+	 *            Country
+	 * 
+	 * @param destination
+	 *            Country
 	 */
 	public void deleteLinkBetweenCountries(Country source, Country destination) {
 		if (adjacentCountries.containsKey(source)) {
@@ -146,7 +159,9 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to add a country to the Graph
 	 * 
-	 * @param country Object 
+	 * @param country
+	 *            Object
+	 * 
 	 */
 	public void addCountry(Country country) {
 		continents.get(country.getContinent()).addCountry(country);
@@ -157,7 +172,9 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to remove a country
 	 * 
-	 * @param country Object
+	 * @param country
+	 *            Object
+	 * 
 	 * @return True if country is removed successfully
 	 */
 	public boolean removeCountry(Country country) {
@@ -177,7 +194,9 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to add a continent
 	 * 
-	 * @param continent Object
+	 * @param continent
+	 *            Object
+	 * 
 	 */
 	public void addContinent(Continent continent) {
 		continents.put(continent.getName(), continent);
@@ -186,8 +205,11 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to remove a continent
 	 * 
-	 * @param continent Object
+	 * @param continent
+	 *            Object
+	 * 
 	 * @return True if continent is removed successfully
+	 * 
 	 */
 	public boolean removeContinent(Continent continent) {
 		if (continents.containsKey(continent.getName())) {
@@ -208,8 +230,12 @@ public class RiskMapGraph implements Serializable {
 	/**
 	 * Method to check if there exists an adjace ncy between two countries
 	 * 
-	 * @param country1 Object
-	 * @param country2 Object
+	 * @param country1
+	 *            Object
+	 * 
+	 * @param country2
+	 *            Object
+	 * 
 	 * @return True if exists an adjacency
 	 */
 	public boolean checkAdjacencyOfCountries(Country country1, Country country2) {

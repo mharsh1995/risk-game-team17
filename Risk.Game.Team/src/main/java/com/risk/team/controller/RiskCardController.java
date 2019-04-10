@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 import com.risk.team.model.Card;
 import com.risk.team.model.Player;
-import com.risk.team.services.Util.GameUpdateWindow;
+import com.risk.team.services.util.GameUpdateWindow;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +21,8 @@ import javafx.scene.layout.VBox;
  * Card Controller Class
  *
  * @author yashgolwala
+ * 
+ * @version 2.0.0
  */
 
 public class RiskCardController implements Initializable {
@@ -79,7 +81,7 @@ public class RiskCardController implements Initializable {
 	 * Card Controller constructor class
 	 *
 	 * @param player Current Player
-	 * @param card player card
+	 * @param card   player card
 	 */
 	public RiskCardController(Player player, Card card) {
 		this.player = player;
@@ -106,7 +108,7 @@ public class RiskCardController implements Initializable {
 	}
 
 	/**
-	 * Method to automate card trade
+	 * Method to automate card exchange
 	 */
 	public void automaticCardInitialization() {
 		automaticInitializeComponents();
@@ -114,7 +116,7 @@ public class RiskCardController implements Initializable {
 	}
 
 	/**
-	 * Method to perform card trade
+	 * Method to perform card exchange
 	 */
 	public void performCardTrade() {
 		playerOwnedCards = player.getCardList();

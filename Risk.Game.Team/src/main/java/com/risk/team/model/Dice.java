@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Observable;
 import java.util.Random;
 
-import com.risk.team.services.Util.GameUpdateWindow;
+import com.risk.team.services.util.GameUpdateWindow;
 
 
 /**
@@ -17,6 +17,8 @@ import com.risk.team.services.Util.GameUpdateWindow;
  * simulating the dice rolls for the attack phase
  *
  * @author Kartika Patil
+ * 
+ * @version 1.0.0
  */
 public class Dice extends Observable {
 
@@ -63,7 +65,7 @@ public class Dice extends Observable {
 	/**
 	 * Getter for the attacking Country.
 	 *
-	 * @return attackingCountry Attacking country.
+	 * @return Attacking country.
 	 */
 	public Country getAttackingCountry() {
 		return attackingCountry;
@@ -81,7 +83,7 @@ public class Dice extends Observable {
 	/**
 	 * Getter for attacking dice values.
 	 *
-	 * @return attackerDiceList list of values of the attacking dice.
+	 * @return list of values of the attacking dice.
 	 */
 	public ArrayList<Integer> getAttackerDiceList() {
 		return attackerDiceList;
@@ -99,7 +101,7 @@ public class Dice extends Observable {
 	/**
 	 *  Getter for the defending Country.
 	 *
-	 * @return defendingCountry Country under attack
+	 * @return Country under attack
 	 */
 	public Country getDefendingCountry() {
 		return defendingCountry;
@@ -117,7 +119,7 @@ public class Dice extends Observable {
 	/**
 	 * Getter  for defending dice values.
 	 *
-	 * @return defenderDiceList list of values of the defending dice.
+	 * @return list of values of the defending dice.
 	 */
 
 	public ArrayList<Integer> getDefenderDiceList() {
@@ -137,7 +139,7 @@ public class Dice extends Observable {
 	/**
 	 * Getter for count of countries won
 	 *
-	 * @return countriesWonCount Number of countries won by the player
+	 * @return Number of countries won by the player
 	 */
 	public int getCountriesWonCount() {
 		return countriesWonCount;
@@ -156,7 +158,7 @@ public class Dice extends Observable {
 	 * Method for comparing the dice values of attacker and defender.
 	 * It compares the value in descending order.
 	 *
-	 * @return diceThrowResult List of the results of the dice throw
+	 * @return List of the results of the dice throw
 	 */
 	public ArrayList<String> getDicePlayResult(){
 		ArrayList<String> diceThrowResult = new ArrayList<>();

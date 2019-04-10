@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
  * 
  * @author yashgolwala
  * @author Harsh Mehta
+ * 
+ * @version 1.0.0
  */
 public abstract class PlayerBehavior extends Observable implements Serializable {
 
@@ -29,9 +31,13 @@ public abstract class PlayerBehavior extends Observable implements Serializable 
 	 * Method for reinforcement phase. 
 	 * Start and end of the reinforcement phase. 
 	 * 
-	 * @param countryList List of countries owned by the player.         
-	 * @param country Country to which reinforcement armies are to be assigned.     
-	 * @param currentPlayer Current player.
+	 * @param countryList
+	 *            List of countries owned by the player.
+	 * @param country
+	 *            Country to which reinforcement armies are to be assigned.
+	 * @param currentPlayer
+	 *            Current player.
+	 *            
 	 */
 	abstract public void reinforcementPhase(ObservableList<Country> countryList, Country country, Player currentPlayer);
 
@@ -39,9 +45,13 @@ public abstract class PlayerBehavior extends Observable implements Serializable 
 	 * 
 	 * Method for attack phase.
 	 * 
-	 * @param attackingCountryList List of countries attacking.        
-	 * @param defendingCountryList List of countries defending.          
-	 * @param currentPlayer Current player.          
+	 * @param attackingCountryList
+	 *            List of countries attacking.
+	 * @param defendingCountryList
+	 *            List of countries defending.
+	 * @param currentPlayer
+	 *            Current player.
+	 *            
 	 */ 
 	abstract public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
 			Player currentPlayer);
@@ -51,10 +61,16 @@ public abstract class PlayerBehavior extends Observable implements Serializable 
 	 * Method for fortification phase. 
 	 * Start and end of the fortification phase. 
 	 * 
-	 * @param selectedCountry List of countries selected by the player.       
-	 * @param adjCountry List of adjacent countries.          
-	 * @param playerPlaying Current player.
-	 * @return true If the fortification successful; other wise false.
+	 * @param selectedCountry
+	 *            List of countries selected by the player.
+	 * @param adjCountry
+	 *            List of adjacent countries.
+	 * @param playerPlaying
+	 *            Current player.
+	 * 
+	 * @return true 
+	 * 			  If the fortification successful; other wise false.
+	 * 
 	 */ 
 	abstract public boolean fortificationPhase(ListView<Country> selectedCountry, ListView<Country> adjCountry,
 			Player playerPlaying);
@@ -64,8 +80,12 @@ public abstract class PlayerBehavior extends Observable implements Serializable 
 	 * 
 	 * Method to get list of defending countries. 
 	 * 
-	 * @param attackingCountry Attacking country.
-	 * @return defendingCountries List List of defending countries.
+	 * @param attackingCountry
+	 *            Attacking country.
+	 *
+	 * @return List 
+	 * 			  List of defending countries.
+	 * 
 	 */
 	public List<Country> getDefendingCountryList(Country attackingCountry) {
 		List<Country> defendingCountries = attackingCountry.getAdjacentCountries().stream()
@@ -79,8 +99,12 @@ public abstract class PlayerBehavior extends Observable implements Serializable 
 	 * 
 	 * Method for if player can attack.
 	 * 
-	 * @param countries List of countries owned by the player. 
-	 * @return true If player can attack; other wise false.        
+	 * @param countries
+	 *            List of countries owned by the player.
+	 *   
+	 * @return true 
+	 * 			  If player can attack; other wise false.
+	 *            
 	 */    
 	abstract public boolean playerCanAttack(ListView<Country> countries);
 
@@ -88,9 +112,14 @@ public abstract class PlayerBehavior extends Observable implements Serializable 
 	 * 
 	 * Method for to check if fortification phase is valid.
 	 * 
-	 * @param mapObj RiskMapRW Object.       
-	 * @param playerPlaying Player playing.             
-	 * @return true If fortification phase is valid; other wise false.        
+	 * @param mapObj
+	 *            MapIO Object.
+	 * @param playerPlaying           
+	 *   		  Player playing.
+	 *   
+	 * @return true 
+	 * 			  If fortification phase is valid; other wise false.
+	 *            
 	 */ 
 	public boolean isFortificationPhaseValid(RiskMapRW mapObj, Player playerPlaying) {
 		boolean isFortificationAvailable = false;

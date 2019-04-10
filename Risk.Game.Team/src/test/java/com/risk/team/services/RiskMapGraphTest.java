@@ -22,10 +22,12 @@ import com.risk.team.services.RiskMapVerify;
  * Test Class for Map graph class.
  *
  * @author Dhaval Desai
+ * 
+ * @version 3.0.0
  *
  */
 public class RiskMapGraphTest {
-	
+
 	/**variable for total no of countries */
 	private int totalCountries;
 
@@ -51,10 +53,10 @@ public class RiskMapGraphTest {
 
 	/** List of countries */
 	private ArrayList<Country> countryList;
-	
+
 	/** List of all countries in the graph */
 	private HashMap<String, Country> allCountries;
-	
+
 	/**
 	 * Set up the initial objects for RiskMapGraph
 	 * 
@@ -66,34 +68,34 @@ public class RiskMapGraphTest {
 		continent = new Continent("Asia", 2);
 		continents = new HashMap<>();
 		countrySet = new HashMap<>();
-		
+
 		riskMapGraph = new RiskMapGraph();
 		riskMapVerify = new RiskMapVerify();
-		
+
 		country = new Country("India");
 		country2 = new Country("China");
 		country3 = new Country("Japan");
 		country4 = new Country("Srilanka");
-		
+
 		country.setContinent("Asia");
 		country2.setContinent("Asia");
 		country3.setContinent("Asia");
-		
+
 		countryList = new ArrayList<Country>();
 		countryList.add(country);
 		countryList.add(country2);
-		
+
 		adjacentCountries = new HashMap<Country, ArrayList<Country>>();
 		adjacentCountries.put(country, countryList);
 		adjacentCountries.put(country2,countryList);
-		
+
 		adCountryList = new HashMap<Country, ArrayList<Country>>();
 		adCountryList.put(country, countryList);		
-		
+
 		allCountries = new HashMap<String, Country>();
-		
+
 	}
-	
+
 	/**
 	 * Test method for testing if the two countries are adjacent
 	 * 
@@ -103,7 +105,7 @@ public class RiskMapGraphTest {
 		riskMapGraph.setAdjacentCountries(adjacentCountries);
 		assertTrue(riskMapGraph.checkAdjacencyOfCountries(country, country2));
 	}
-	
+
 	/**
 	 * Test method for testing if the two countries are not adjacent
 	 * 
@@ -113,7 +115,7 @@ public class RiskMapGraphTest {
 		riskMapGraph.setAdjacentCountries(adCountryList);
 		assertFalse(riskMapGraph.checkAdjacencyOfCountries(country, country3));
 	}
-	
+
 	/**
 	 * Test method for setting total no of countries
 	 * 
@@ -147,7 +149,7 @@ public class RiskMapGraphTest {
 		riskMapGraph.setContinents(continents);
 		assertTrue(riskMapGraph.removeContinent(continent));
 	}
-	
+
 	/**
 	 * Test method for removing a continent from the map
 	 *
@@ -156,7 +158,7 @@ public class RiskMapGraphTest {
 	public void removeContinentTest2() {		
 		assertFalse(riskMapGraph.removeContinent(continent));
 	}
-	
+
 	/**
 	 * Test method for adding link between source and destination country
 	 *
@@ -167,7 +169,7 @@ public class RiskMapGraphTest {
 		riskMapGraph.addLinkBetweenCountries(country, country2);
 		assertNotNull(adjacentCountries);
 	}
-	
+
 	/**
 	 * Test method for deleting link between source and destination country
 	 *
@@ -178,7 +180,7 @@ public class RiskMapGraphTest {
 		riskMapGraph.deleteLinkBetweenCountries(country, country2);
 		assertNotNull(adjacentCountries);
 	}
-	
+
 
 	/**
 	 * Test method for testing removal of country from map 
@@ -193,7 +195,7 @@ public class RiskMapGraphTest {
 		riskMapGraph.setContinents(continents);
 		assertEquals(true,riskMapGraph.removeCountry(country));
 	}
-	
+
 	/**
 	 * Test method for testing removal of country from map 
 	 */
@@ -203,7 +205,7 @@ public class RiskMapGraphTest {
 		riskMapGraph.setAdjacentCountries(adjacentCountries);	
 		assertFalse(riskMapGraph.removeCountry(country3));
 	}
-	
+
 	/**
 	 * Test method to add new country in the country list  
 	 */

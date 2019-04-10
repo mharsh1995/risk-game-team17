@@ -8,6 +8,8 @@ import java.util.ArrayList;
  *
  * @author Dhaval Desai
  * @author Jenny Pujara
+ * 
+ * @version 2.0.0
  */
 
 public class Country implements Serializable {
@@ -39,7 +41,8 @@ public class Country implements Serializable {
 	/**
 	 * Country constructor.
 	 * 
-	 * @param name name of the country        
+	 * @param name
+	 *            name of the country
 	 */
 	public Country(String name) {
 		this.name = name;
@@ -49,7 +52,7 @@ public class Country implements Serializable {
 	/**
 	 * Get country name
 	 *
-	 * @return name The country name
+	 * @return The country name
 	 */
 	public String getName() {
 		return name;
@@ -58,7 +61,8 @@ public class Country implements Serializable {
 	/**
 	 * Set country name
 	 *
-	 * @param name The name to set     
+	 * @param name
+	 *            The name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -76,7 +80,8 @@ public class Country implements Serializable {
 	/**
 	 * Set the name of the Player.
 	 * 
-	 * @param player name of the player.        
+	 * @param player
+	 *            name of the player.
 	 */
 	public void setPlayer(Player player) {
 		this.player = player;
@@ -85,7 +90,7 @@ public class Country implements Serializable {
 	/**
 	 * Get the continent name.
 	 * 
-	 * @return continent name of the continent
+	 * @return name of the continent
 	 */
 	public String getContinent() {
 		return continent;
@@ -94,7 +99,8 @@ public class Country implements Serializable {
 	/**
 	 * Set the name of the continent
 	 * 
-	 * @param continent name of the continent          
+	 * @param continent
+	 *            name of the continent
 	 */
 	public void setContinent(String continent) {
 		this.continent = continent;
@@ -112,7 +118,8 @@ public class Country implements Serializable {
 	/**
 	 * Set the value of X coordinate
 	 * 
-	 * @param xValue X cooridnate value        
+	 * @param xValue
+	 *            X cooridnate value
 	 */
 	public void setxValue(String xValue) {
 		this.xValue = xValue;
@@ -121,7 +128,7 @@ public class Country implements Serializable {
 	/**
 	 * get the value of Y coordinate of the map
 	 * 
-	 * @return yValue Y coordinate value
+	 * @return Y coordinate value
 	 */
 	public String getyValue() {
 		return yValue;
@@ -130,7 +137,8 @@ public class Country implements Serializable {
 	/**
 	 * Set the value of Y coordinate
 	 * 
-	 * @param yValue Y cooridnate value      
+	 * @param yValue
+	 *            Y cooridnate value
 	 */
 	public void setyValue(String yValue) {
 		this.yValue = yValue;
@@ -139,7 +147,7 @@ public class Country implements Serializable {
 	/**
 	 * Method to get the initial number of armies in a country
 	 * 
-	 * @return noOfArmies Integer value of number of armies
+	 * @return Integer value of number of armies
 	 */
 	public int getNoOfArmies() {
 		return noOfArmies;
@@ -148,7 +156,8 @@ public class Country implements Serializable {
 	/**
 	 * Method to set the initial number of armies in a country
 	 * 
-	 * @param noOfArmies Integer value of number of armies       
+	 * @param noOfArmies
+	 *            Integer value of number of armies
 	 */
 	public void setNoOfArmies(int noOfArmies) {
 		this.noOfArmies = noOfArmies;
@@ -157,7 +166,7 @@ public class Country implements Serializable {
 	/**
 	 * Method to get the list of Adjacent countries.
 	 * 
-	 * @return adjacentCountries list of adjacent countries
+	 * @return list of adjacent countries
 	 */
 	public ArrayList<Country> getAdjacentCountries() {
 		return adjacentCountries;
@@ -166,7 +175,8 @@ public class Country implements Serializable {
 	/**
 	 * Method to set the adjacent countries.
 	 * 
-	 * @param adjacentCountries List of adjacent countries      
+	 * @param adjacentCountries
+	 *            List of adjacent countries
 	 */
 	public void setAdjacentCountries(ArrayList<Country> adjacentCountries) {
 		this.adjacentCountries = adjacentCountries;
@@ -175,7 +185,7 @@ public class Country implements Serializable {
 	/**
 	 * Method to check whether the country is part of the continent
 	 * 
-	 * @return partOfContinent continent name
+	 * @return continent name
 	 */
 	public Continent getPartOfContinent() {
 		return partOfContinent;
@@ -184,7 +194,8 @@ public class Country implements Serializable {
 	/**
 	 * Method to set the country as part of this continent
 	 * 
-	 * @param partOfContinent Continent name   
+	 * @param partOfContinent
+	 *            Continent name
 	 */
 	public void setPartOfContinent(Continent partOfContinent) {
 		this.partOfContinent = partOfContinent;

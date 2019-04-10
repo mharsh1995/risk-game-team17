@@ -2,7 +2,7 @@ package com.risk.team.model;
 
 import com.risk.team.controller.GamePhaseController;
 import com.risk.team.services.RiskMapRW;
-import com.risk.team.services.Util.GameUpdateWindow;
+import com.risk.team.services.util.GameUpdateWindow;
 import com.risk.team.strategy.*;
 import com.risk.team.strategy.Random;
 
@@ -20,12 +20,15 @@ import java.util.*;
  * @author Dhaval Desai
  * @author Jenny Pujara
  * @author Harsh Mehta
+ * 
+ * @version 3.0.0
  */
 public class Player extends Observable implements Observer, Serializable {
 
 	/**
 	 * Player currently playing.
 	 */
+
 	public static Player currentPlayer;
 
 	/**
@@ -85,9 +88,9 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Player constructor
 	 *
-	 * @param name Name
-	 * @param playerType player type as string
-	 * @param gamePhaseController GamePhaseController object
+	 * @param name               name
+	 * @param playerType         player type as string
+	 * @param gamePhaseController GamePlayController object
 	 */
 	public Player(String name, String playerType, GamePhaseController gamePhaseController) {
 		armyCount = 0;
@@ -111,8 +114,8 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Constructor for player
 	 *
-	 * @param name Name
-	 * @param playerType PlayerType
+	 * @param name       name
+	 * @param playerType playerType
 	 */
 	public Player(String name, String playerType) {
 		armyCount = 0;
@@ -133,7 +136,7 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Method to get name of the player
 	 *
-	 * @return name player's name
+	 * @return player's name
 	 */
 	public String getName() {
 		return name;
@@ -142,7 +145,7 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Setter got player's name
 	 *
-	 * @param name Name of the player
+	 * @param name of the player
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -151,7 +154,7 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Getter for player armies
 	 *
-	 * @return armyCount armyCount of the player
+	 * @return armyCount of the player
 	 */
 	public int getArmyCount() {
 		return armyCount;
@@ -169,7 +172,7 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Getter for list of player's armies.
 	 *
-	 * @return playerCountries List of playerCountries
+	 * @return List of playerCountries
 	 */
 	public ArrayList<Country> getPlayerCountries() {
 		return playerCountries;
@@ -196,7 +199,7 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Method for getting the player's list of card
 	 *
-	 * @return cardList cardList of player
+	 * @return cardList of player
 	 */
 	public ArrayList<Card> getCardList() {
 		return cardList;
@@ -241,7 +244,7 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Method for adding armies to a country
 	 *
-	 * @param country Country to which armies are to be assigned
+	 * @param country        Country to which armies are to be assigned
 	 * @param numberOfArmies number for armies to be assigned
 	 */
 	public void addArmiesToCountry(Country country, int numberOfArmies) {
@@ -303,9 +306,9 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Method for generating players according to the data entered by the user
 	 *
-	 * @param hm Map of all the player details
+	 * @param hm                 Map of all the player details
 	 * @param gamePhaseController GamePlayController object as observer
-	 * @return listPlayer List of player objects
+	 * @return List of player objects
 	 */
 	public ArrayList<Player> generatePlayer(HashMap<String, String> hm, GamePhaseController gamePhaseController) {
 
@@ -323,7 +326,7 @@ public class Player extends Observable implements Observer, Serializable {
 	 * Method for calculating number of reinforcement armies to be allocated to the player
 	 *
 	 * @param currentPlayer Player to which armies are to be allocated
-	 * @return Player object of the current player
+	 * @return Player, object of the current player
 	 */
 	public Player noOfReinforcementArmies(Player currentPlayer) {
 		currentPlayer.setArmyCount(currentPlayer.getArmyCount() + currentPlayer.findNoOfArmies(currentPlayer));
@@ -377,8 +380,8 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Method governing the reinforcement phase.
 	 *
-	 * @param countries countries Observable List
-	 * @param country country to which reinforcement armies are to be assigned
+	 * @param countries  countries Observable List
+	 * @param country    country to which reinforcement armies are to be assigned
 	 * @param playerList list of players
 	 */
 	public void reinforcementPhase(ObservableList<Country> countries, Country country, List<Player> playerList) {
@@ -397,7 +400,7 @@ public class Player extends Observable implements Observer, Serializable {
 	 *
 	 * @param attackingCountries attacking country list
 	 * @param defendingCountries defending country list
-	 * @param playerList list of players
+	 * @param playerList         list of players
 	 */
 	public void attackPhase(ListView<Country> attackingCountries, ListView<Country> defendingCountries,
 			List<Player> playerList) {
@@ -417,8 +420,8 @@ public class Player extends Observable implements Observer, Serializable {
 	 * Method governing the fortification phase
 	 *
 	 * @param selectedCountries selected countries list
-	 * @param adjCountries adjacent countries list
-	 * @param playerList list of players
+	 * @param adjCountries      adjacent countries list
+	 * @param playerList        list of players
 	 */
 	public void fortificationPhase(ListView<Country> selectedCountries, ListView<Country> adjCountries,
 			List<Player> playerList) {
@@ -435,7 +438,7 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Method to check if the fortification move taking place in fortification is valid or not
 	 *
-	 * @param mapObj RiskMapRW object
+	 * @param mapObj         MapIO object
 	 * @param currentPlayer current player
 	 * @return true if the move is valid; otherwise false
 	 */
@@ -455,7 +458,7 @@ public class Player extends Observable implements Observer, Serializable {
 	 * Method for placing armies on the countries during the startup phase.
 	 *
 	 * @param selectedCountryList List view for the countries of the current player.
-	 * @param gamePlayerList List of all the players of playing the game.
+	 * @param gamePlayerList      List of all the players of playing the game.
 	 */
 	public void placeArmyOnCountry(ListView<Country> selectedCountryList, List<Player> gamePlayerList) {
 		if (this.getPlayerBehaviour() instanceof Human) {
@@ -594,7 +597,7 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * Methods for exchanging cards of the player for armies
 	 *
-	 * @param selectedCards List of selected cards by the player
+	 * @param selectedCards            List of selected cards by the player
 	 * @param numberOfCardSetTraded Number of card sets to be exchanged
 	 * @return Player object exchanging the cards
 	 */
@@ -638,7 +641,7 @@ public class Player extends Observable implements Observer, Serializable {
 	/**
 	 * update method for PLayer object
 	 *
-	 * @param o Observable
+	 * @param o   Observable
 	 * @param arg String which is passed t the player object
 	 */
 	public void update(Observable o, Object arg) {

@@ -15,18 +15,21 @@ import com.risk.team.services.*;
 import com.risk.team.services.saveload.ResourceManagerTest;
 import com.risk.team.strategy.AggressiveTest;
 import com.risk.team.strategy.BenevolentTest;
+import com.risk.team.strategy.CheaterTest;
 import com.risk.team.strategy.HumanTest;
 
 /**
  * TestSuite Class to test all test cases
  * 
  * @author Dhaval Desai
+ * 
+ * @version 3.0.0
  *
  */
 
 @RunWith(Suite.class)
 @SuiteClasses({RiskMapEditTest.class,RiskMapGraphTest.class,RiskMapVerifyTest.class,ResourceManagerTest.class,PlayerWorldDominationTest.class,
-	AggressiveTest.class,BenevolentTest.class,HumanTest.class,TournamentModelTest.class,RiskConnectedGraphTest.class,CardTest.class,DiceTest.class,ContinentTest.class,CountryTest.class,TournamentModelTest.class,PlayerTest.class,RiskLaunchPhaseTest.class})
+	AggressiveTest.class,BenevolentTest.class,HumanTest.class,TournamentModelTest.class,RiskConnectedGraphTest.class,CardTest.class,DiceTest.class,ContinentTest.class,CountryTest.class,TournamentModelTest.class,PlayerTest.class,RiskLaunchPhaseTest.class,CheaterTest.class})
 
 /**
  * Method to execute all the test cases mentioned in suite classes.

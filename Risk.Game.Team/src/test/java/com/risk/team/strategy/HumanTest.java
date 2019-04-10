@@ -13,51 +13,53 @@ import com.risk.team.strategy.Human;
  * Test class for Human class.
  * 
  * @author yashgolwala
+ * 
+ * @version 3.0.0
  *
  */
 public class HumanTest {
 
 	/** Object for Country class */
 	private Country attacking;
-	
+
 	/** Object for Country class */
 	private Country defending;
-	
+
 	/** Object for Player class */
 	private Player player1;
-	
+
 	/** Object for Player class */
 	private Player player2;
-	
+
 	/** Object for Human class */
 	private Human human;
-	
+
 	/** Object for GamePlayController class */
 	private GamePhaseController gamePhaseController;
-	
+
 	/**
 	 * Set up the initial objects for Human class
 	 * 
 	 */
 	@Before
 	public void initialize() {
-		
+
 		attacking = new Country("India");
 		player1 = new Player();
 		attacking.setPlayer(player1);
-		
-		
+
+
 		defending = new Country("China");
 		player2 = new Player();
 		defending.setPlayer(player2);
-		
+
 		gamePhaseController = new GamePhaseController();
 		human = new Human(gamePhaseController);
-		
+
 	}
 	/**
-	* Test to check valid attack move.
-	*/
+	 * Test to check valid attack move.
+	 */
 	@Test
 	public void isAttackMoveValidTest() {
 		attacking.setNoOfArmies(3);

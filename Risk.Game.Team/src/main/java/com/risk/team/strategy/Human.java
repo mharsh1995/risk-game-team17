@@ -4,7 +4,7 @@ import com.risk.team.controller.GamePhaseController;
 import com.risk.team.model.Country;
 import com.risk.team.model.Dice;
 import com.risk.team.model.Player;
-import com.risk.team.services.Util.GameUpdateWindow;
+import com.risk.team.services.util.GameUpdateWindow;
 import com.risk.team.view.DiceView;
 
 import javafx.collections.ObservableList;
@@ -18,6 +18,8 @@ import javafx.scene.control.ListView;
  *
  * @author yashgolwala
  * @author Harsh Mehta
+ * 
+ * @version 1.0.0
  */
 public class Human extends PlayerBehavior {
 
@@ -45,8 +47,8 @@ public class Human extends PlayerBehavior {
 	 * Method for Human class for reinforcement phase.
 	 * Start and end of the reinforcement phase.
 	 *
-	 * @param countryList List of countries owned by the player.
-	 * @param country Country to which reinforcement armies are to be assigned.
+	 * @param countryList   List of countries owned by the player.
+	 * @param country       Country to which reinforcement armies are to be assigned.
 	 * @param currentPlayer Current player.
 	 */
 	@Override
@@ -82,7 +84,7 @@ public class Human extends PlayerBehavior {
 	 *
 	 * @param attackingCountryList List of countries attacking.
 	 * @param defendingCountryList List of countries defending.
-	 * @param currentPlayer Current player.
+	 * @param currentPlayer        Current player.
 	 */
 	@Override
 	public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
@@ -111,9 +113,10 @@ public class Human extends PlayerBehavior {
 	 * Start and end of the fortification phase.
 	 *
 	 * @param selectedCountryList List of countries selected by the player.
-	 * @param adjCountryList List of adjacent countries.
-	 * @param playerPlaying Current player.
-	 * @return true If the fortification successful; other wise false.
+	 * @param adjCountryList      List of adjacent countries.
+	 * @param playerPlaying       Current player.
+	 * @return true
+	 * If the fortification successful; other wise false.
 	 */
 	@Override
 	public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountryList,
@@ -163,7 +166,8 @@ public class Human extends PlayerBehavior {
 	 *
 	 * @param attacking Country attacking.
 	 * @param defending Country under attack.
-	 * @return true If the attack move is valid; other wise false.
+	 * @return true
+	 * If the attack move is valid; other wise false.
 	 */
 	public boolean isAttackMoveValid(Country attacking, Country defending) {
 		boolean isValidAttackMove = false;
@@ -183,7 +187,8 @@ public class Human extends PlayerBehavior {
 	 * Method to check if the player can attack or not.
 	 *
 	 * @param countries List view of all the countries of the player.
-	 * @return true If the player can attack; other wise false.
+	 * @return true
+	 * If the player can attack; other wise false.
 	 */
 	@Override
 	public boolean playerCanAttack(ListView<Country> countries) {

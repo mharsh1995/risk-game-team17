@@ -2,7 +2,7 @@ package com.risk.team.controller;
 
 import com.risk.team.model.IPlayerType;
 import com.risk.team.services.RiskMapRW;
-import com.risk.team.services.Util.GameUpdateWindow;
+import com.risk.team.services.util.GameUpdateWindow;
 import com.risk.team.view.GamePhaseView;
 
 import javafx.beans.value.ChangeListener;
@@ -32,13 +32,15 @@ import java.util.ResourceBundle;
  * @author Kartika Patil
  * @author yashgolwala
  * @author Harsh Mehta
+ * 
+ * @version 1.0.0
  */
 public class PlayerDetailsController implements Initializable {
 
 	static int numberOfPlayers;
 
 	/**
-	 * mapObj Object
+	 * Map Object
 	 */
 	private RiskMapRW mapObj;
 
@@ -70,7 +72,7 @@ public class PlayerDetailsController implements Initializable {
 	/**
 	 * Player Details Constructor
 	 *
-	 * @param mapObj RiskMapRW Object
+	 * @param mapObj Map Object
 	 */
 	public PlayerDetailsController(RiskMapRW mapObj) {
 		this.mapObj = mapObj;
@@ -80,7 +82,7 @@ public class PlayerDetailsController implements Initializable {
 	 * This method is called to initialize the player detail controller.
 	 *
 	 * @param location  Location
-	 * @param resources Resources
+	 * @param resources resources
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -133,8 +135,7 @@ public class PlayerDetailsController implements Initializable {
 
 	/**
 	 * Method to get plater details
-	 * 
-	 * @return hBox player details
+	 * @return hBox		player details
 	 */
 	public HBox getPlayersDetailsBox() {
 		PlayerDetailsController.numberOfPlayers++;
@@ -153,8 +154,7 @@ public class PlayerDetailsController implements Initializable {
 
 	/**
 	 * Method to get player types
-	 * 
-	 * @return hBox players types
+	 * @return hBox		players types
 	 */
 	public HBox getPlayerTypesBox(){
 		String playerTypes[] = {IPlayerType.HUMAN, IPlayerType.AGGRESSIVE, IPlayerType.BENEVOLENT, IPlayerType.RANDOM,
@@ -172,7 +172,7 @@ public class PlayerDetailsController implements Initializable {
 	 * Choice Box to select the number of players
 	 *
 	 * @param playerCount number of players
-	 * @return playerCount player count
+	 * @return player count
 	 */
 	public static ChoiceBox<Integer> initializePlayerCountValues(ChoiceBox<Integer> playerCount) {
 		playerCount.getItems().removeAll(playerCount.getItems());
@@ -225,7 +225,7 @@ public class PlayerDetailsController implements Initializable {
 	/**
 	 * Method to validate details of player
 	 * 
-	 * @param hBoxList hBoxList
+	 * @param hBoxList		hBoxList
 	 * @return true or false
 	 */
 	public boolean validatePlayerDetails(ObservableList<Node> hBoxList) {

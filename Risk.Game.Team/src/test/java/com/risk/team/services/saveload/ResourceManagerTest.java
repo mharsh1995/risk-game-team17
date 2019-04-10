@@ -15,10 +15,12 @@ import java.io.*;
  * 
  * @author Dhaval Desai
  * @author Jenny Pujara
+ * 
+ * @version 1.0.0
  *
  */
 public class ResourceManagerTest {
-	
+
 	/** object for ResourceManager Class */
 	ResourceManager resourceManager;
 

@@ -23,8 +23,9 @@ import java.util.*;
  *
  * @author yashgolwala
  * @author Harsh Mehta
+ * 
+ * @version 1.0.0
  */
-
 public class Aggressive extends PlayerBehavior {
 
 	/**
@@ -40,7 +41,7 @@ public class Aggressive extends PlayerBehavior {
 
 
 	/**
-	 * Object of GamePhaseController, control various activities during the game play.
+	 * Object of GamePlayController, control various activities during the game play.
 	 */
 	private GamePhaseController gamePhaseController;
 
@@ -58,8 +59,8 @@ public class Aggressive extends PlayerBehavior {
 	 * Method for Aggressive class for reinforcement phase.
 	 * Start and end of the reinforcement phase.
 	 *
-	 * @param countryList List of countries owned by the player.
-	 * @param country Country to which reinforcement armies are to be assigned.
+	 * @param countryList   List of countries owned by the player.
+	 * @param country       Country to which reinforcement armies are to be assigned.
 	 * @param currentPlayer Current player.
 	 */
 	@Override
@@ -97,7 +98,8 @@ public class Aggressive extends PlayerBehavior {
 	 * Method for Aggressive class for if player can attack.
 	 *
 	 * @param countries List of countries owned by the player.
-	 * @return true If player can attack other wise false.
+	 * @return true
+	 * If player can attack; other wise false.
 	 */
 	@Override
 	public boolean playerCanAttack(ListView<Country> countries) {
@@ -120,9 +122,10 @@ public class Aggressive extends PlayerBehavior {
 	 * Start and end of the fortification phase.
 	 *
 	 * @param selectedCountryList List of countries selected by the player.
-	 * @param adjCountryList List of adjacent countries.
-	 * @param currentPlayer Current player.
-	 * @return true If the fortification successful; other wise false.
+	 * @param adjCountryList      List of adjacent countries.
+	 * @param currentPlayer       Current player.
+	 * @return true
+	 * If the fortification successful; other wise false.
 	 */
 	@Override
 	public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountryList,
@@ -175,7 +178,7 @@ public class Aggressive extends PlayerBehavior {
 	 *
 	 * @param attacking Country attacking.
 	 * @param defending Country defending.
-	 * @param player Current player.
+	 * @param player    Current player.
 	 */
 	private void attack(Country attacking, Country defending, Player player) {
 		Dice dice = new Dice(attacking, defending);
@@ -197,7 +200,7 @@ public class Aggressive extends PlayerBehavior {
 	 *
 	 * @param attackingCountryList List of countries attacking.
 	 * @param defendingCountryList List of countries defending.
-	 * @param currentPlayer Current player.
+	 * @param currentPlayer        Current player.
 	 */
 	@Override
 	public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
@@ -228,7 +231,8 @@ public class Aggressive extends PlayerBehavior {
 	 * no adjacent country to attack.
 	 *
 	 * @param list List of countries.
-	 * @return Country Strongest country.
+	 * @return Country
+	 * Strongest country.
 	 */
 	public Country checkAndFindStrongestIfNoAdjacentCountryToAttack(List<Country> list) {
 		if (!list.isEmpty()) {
@@ -245,7 +249,8 @@ public class Aggressive extends PlayerBehavior {
 	 * Method to find the strongest country for reinforcement.
 	 *
 	 * @param list List of countries.
-	 * @return Country Strongest country.
+	 * @return Country
+	 * Strongest country.
 	 */
 	public Country findStrongestCountryForReinforcement(List<Country> list) {
 		if (!list.isEmpty()) {
@@ -262,7 +267,8 @@ public class Aggressive extends PlayerBehavior {
 	 * Method to sort country list by army count.
 	 *
 	 * @param list List of countries.
-	 * @return List List of countries which have been sorted.
+	 * @return List
+	 * List of countries which have been sorted.
 	 */
 	public List<Country> sortCountryListByArmyCount(List<Country> list) {
 		Collections.sort(list, Comparator.comparing(obj -> Integer.valueOf(obj.getNoOfArmies()), Comparator.reverseOrder()));

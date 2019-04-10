@@ -4,7 +4,7 @@ import com.risk.team.controller.GamePhaseController;
 import com.risk.team.services.RiskLaunchPhase;
 import com.risk.team.services.RiskMapRW;
 import com.risk.team.services.RiskMapVerify;
-import com.risk.team.services.Util.GameUpdateWindow;
+import com.risk.team.services.util.GameUpdateWindow;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +18,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * 
+ * This class contains the methods related to tournament mode.
+ * @author Kartika Patil
+ * @author yashgolwala
+ * 
+ * @version 1.0.0
+ */
 public class TournamentModel {
 
 	/** Static flag to check if tournament is being played*/
@@ -25,6 +33,7 @@ public class TournamentModel {
 
 	/**
 	 * Constructor for TournamentModel
+	 *
 	 */
 	public TournamentModel(){
 		isTournamentMode = true;

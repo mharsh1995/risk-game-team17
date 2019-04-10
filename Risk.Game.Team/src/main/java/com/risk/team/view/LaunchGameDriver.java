@@ -23,6 +23,8 @@ import com.risk.team.services.RiskMapVerify;
  *
  * @author yashgolwala
  * @author Harsh Mehta
+ * 
+ * @version 3.0.0
  */
 public class LaunchGameDriver extends Application {
 	/**
@@ -88,7 +90,7 @@ public class LaunchGameDriver extends Application {
 		createMapButton.setOnAction(e -> {
 			createMapButton.getScene().getWindow().hide();
 			RiskMapEdit mapEditor = new RiskMapEdit();
-			mapEditor.createNewMap();
+			mapEditor.createEditMap(true);
 		});
 		createMapButton.setMaxWidth(200);
 		return createMapButton;
@@ -114,7 +116,7 @@ public class LaunchGameDriver extends Application {
 				RiskMapVerify mapValidate = new RiskMapVerify();
 				if (mapValidate.validateMapFile(fileName)) {
 					RiskMapRW readMap = new RiskMapRW(mapValidate);
-					new RiskMapEdit(readMap.readFile()).editExistingMap();
+					new RiskMapEdit(readMap.readFile()).createEditMap(false);
 				}
 			}
 		});

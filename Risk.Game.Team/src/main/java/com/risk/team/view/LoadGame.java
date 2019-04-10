@@ -15,12 +15,15 @@ import com.risk.team.controller.GamePhaseController;
  * 
  * @author yashgolwala
  * @author Harsh Mehta
+ * 
+ * @version 2.0.0
  */
 public class LoadGame {
 
 	/**
-     * This method is is used to load the game.
-     */
+	 * This method is is used to load the game.
+	 * 
+	 */
 	public static void openLoadGame() {
 
 		GamePhaseController controller = new GamePhaseController().loadGame();

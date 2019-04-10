@@ -19,10 +19,12 @@ import java.util.HashMap;
  * @author Kartika Patil
  * @author yashgolwala
  * @author Harsh Mehta
+ * 
+ * @version 2.0.0
  */
 public class GamePhaseView implements EventHandler<ActionEvent> {
 
-	/** Object for RiskMapRW Class */
+	/** Object for MapIO Class */
 	private RiskMapRW mapObj;
 
 	/** HashMap to store names and type of players */
@@ -31,7 +33,7 @@ public class GamePhaseView implements EventHandler<ActionEvent> {
 	/**
 	 * Constructor for GamePlayView
 	 * 
-	 * @param mapObj RiskMapRW object 
+	 * @param mapObj	 MapIO object 
 	 * @param hm hashmap containing player names and type
 	 */
 	public GamePhaseView(RiskMapRW mapObj, HashMap<String,String> hm) {

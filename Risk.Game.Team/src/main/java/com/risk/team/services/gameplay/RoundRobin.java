@@ -10,6 +10,8 @@ import com.risk.team.model.Player;
  * RoundRobin approach to iterate the Player turns.
  *
  * @author Jenny Pujara
+ * 
+ * @version 1.0.0
  */
 public class RoundRobin implements Serializable {
 
@@ -44,7 +46,7 @@ public class RoundRobin implements Serializable {
 	/**
 	 * Method to update after player loses turn.
 	 * 
-	 * @param player player object
+	 * @param player	player object
 	 */
 	public void updateAfterPlayerLost(Player player){
 		this.listOfPlayers.remove(player);

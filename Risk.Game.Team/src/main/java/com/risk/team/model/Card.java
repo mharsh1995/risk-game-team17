@@ -20,6 +20,8 @@ import java.util.Observable;
  * like exchange cards for armies etc.
  *
  * @author yashgolwala
+ * 
+ * @version 2.0.0
  */
 
 public class Card extends Observable implements Serializable {
@@ -73,7 +75,7 @@ public class Card extends Observable implements Serializable {
 	/**
 	 * Method to set current player
 	 * 
-	 * @param currentPlayer cuurent player
+	 * @param currentPlayer		cuurent player
 	 */
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
@@ -109,9 +111,9 @@ public class Card extends Observable implements Serializable {
 	}
 
 	/**
-	 * Getter for list of cards for trade.
+	 * Getter for list of cards for exchange.
 	 *
-	 * @return cardsToTrade list of cards
+	 * @return list of cards
 	 */
 
 	public List<Card> getCardsToTrade() {
@@ -121,7 +123,7 @@ public class Card extends Observable implements Serializable {
 	/**
 	 * Set cardsToTrade
 	 *
-	 * @param cardsToTrade cards to trade
+	 * @param cardsToTrade cards to exchange
 	 */
 	public void setCardsToTrade(List<Card> cardsToTrade) {
 		this.cardsToTrade = cardsToTrade;
@@ -143,7 +145,7 @@ public class Card extends Observable implements Serializable {
 	 *
 	 * @param list list
 	 * @param checkboxes checkboxes
-	 * @return selectedCards List of cards selected by the player
+	 * @return List of cards selected by the player
 	 */
 	public List<Card> chooseCards(List<Card> list, CheckBox[] checkboxes) {
 		List<Card> selectedCards = new ArrayList<>();

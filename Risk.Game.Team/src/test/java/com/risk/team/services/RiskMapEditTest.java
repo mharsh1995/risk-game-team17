@@ -21,6 +21,7 @@ import com.risk.team.services.RiskMapVerify;
  *
  * @author Jenny Pujara
  *
+ * @version 3.0.0
  */
 public class RiskMapEditTest {
 
@@ -44,7 +45,7 @@ public class RiskMapEditTest {
 
 	/** HashSet to store unique Countries */
 	private HashSet<Country> countries;
-	
+
 	/** HashMap to store all continents */
 	HashMap<String, Continent> continents;
 
@@ -75,7 +76,7 @@ public class RiskMapEditTest {
 		listOfCountries.add(country1);
 		listOfCountries.add(country2);
 		listOfCountries.add(country3);
-		
+
 		listOfCountries2.add(country1);		
 
 		continent.setListOfCountries(listOfCountries);
@@ -100,9 +101,9 @@ public class RiskMapEditTest {
 		riskMapRW.getMapGraph().setAdjacentCountries(adjacentCountries);		
 
 		riskMapEdit = new RiskMapEdit(riskMapRW);
-		
+
 		new RiskMapEdit();
-		
+
 		mapObj = riskMapEdit.getMapObj();	
 
 	}
@@ -117,7 +118,7 @@ public class RiskMapEditTest {
 		assertTrue(riskMapEdit.countCountriesInContinent());
 
 	}
-	
+
 	/**
 	 * Test method for checking minimum number of countries in a continent.
 	 * 
@@ -140,5 +141,5 @@ public class RiskMapEditTest {
 		assertTrue(riskMapEdit.checkAdjacency());
 
 	}
-	
+
 }

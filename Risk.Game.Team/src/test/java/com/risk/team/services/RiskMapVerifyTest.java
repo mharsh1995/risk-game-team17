@@ -12,6 +12,8 @@ import com.risk.team.services.RiskMapVerify;
  * Test Class for MapValidation
  *
  * @author Jenny Pujara
+ * 
+ * @version 3.0.0
  *
  */
 public class RiskMapVerifyTest {
@@ -63,7 +65,7 @@ public class RiskMapVerifyTest {
 
 		assertTrue(mapValidation.validateMapFile(validMapFile));
 	}
-	
+
 	/**
 	 * Test method for testing invalid file 
 	 */
@@ -81,7 +83,7 @@ public class RiskMapVerifyTest {
 
 		assertFalse(mapValidation.validateMapFile(invalidContinentConfigFile));
 	}
-	
+
 	/**
 	 * Test method to check valid adjacent country
 	 */

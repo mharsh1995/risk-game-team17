@@ -12,29 +12,30 @@ import com.risk.team.model.Country;
  * 
  * @author Jenny Pujara
  *
+ *@version 3.0.0
  */
 
 public class CountryTest {
-	
+
 	/** Name of country. */
 	private String countryName;
-	
+
 	/** Objects for Country Class */
 	private Country country;
-	
+
 	/** X dimension */
 	private String xValue;
-	
-	 @Before
-	    public void initialize(){
-		 
-		 country = new Country("India");
-		 countryName = "China";
-		 
-		 country.setxValue("X-Dimesnion");
-		 country.setyValue("Y-Dimesnion");
-	 }
-	 
+
+	@Before
+	public void initialize(){
+
+		country = new Country("India");
+		countryName = "China";
+
+		country.setxValue("X-Dimesnion");
+		country.setyValue("Y-Dimesnion");
+	}
+
 	/**test method to set country name 
 	 */
 	@Test
@@ -42,23 +43,23 @@ public class CountryTest {
 		country.setName(countryName);
 		assertNotSame("India",country.getName());
 	}
-	
+
 	/**test method to get the x dimension
 	 */
 	@Test
 	public void checkxValueTest() {
 		assertNotNull(country.getxValue());
 	}
-	
+
 	/**test method to get the y dimension
 	 */
 	@Test
 	public void checkyValueTest() {
 		assertNotNull(country.getyValue());
 	}
-	
+
 	/** test method to check if object is not of type Continent.
-     */
+	 */
 	@Test
 	public void checkIfNotCountriesTypeTest() {		
 		assertFalse(country.equals("Asia"));

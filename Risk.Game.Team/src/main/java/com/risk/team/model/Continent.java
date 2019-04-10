@@ -7,6 +7,8 @@ import java.util.ArrayList;
  * Continent class which provides information regarding the Continents.
  * 
  * @author Kartika Patil
+ * 
+ * @version 1.0.0
  */
 public class Continent implements Serializable {
 
@@ -22,8 +24,10 @@ public class Continent implements Serializable {
 	/**
 	 * Continent constructor
 	 * 
-	 * @param name name of the continent       
-	 * @param controlValue control value of the continent      
+	 * @param name
+	 *            name of the continent
+	 * @param controlValue
+	 *            control value of the continent
 	 */
 	public Continent(String name, int controlValue) {
 		this.name = name;
@@ -43,7 +47,8 @@ public class Continent implements Serializable {
 	/**
 	 * Set the continent name.
 	 * 
-	 * @param name To set the continent name           
+	 * @param name
+	 *            To set the continent name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -52,7 +57,8 @@ public class Continent implements Serializable {
 	/**
 	 * Get the control value of the continent.
 	 * 
-	 * @return controlValue control value of continent
+	 * @return control value of continent
+	 * 
 	 */
 	public int getControlValue() {
 		return controlValue;
@@ -61,7 +67,8 @@ public class Continent implements Serializable {
 	/**
 	 * Set the control value of the continent.
 	 * 
-	 * @param controlValue the control value to set 
+	 * @param controlValue
+	 *            the control value to set
 	 */
 	public void setControlValue(int controlValue) {
 		this.controlValue = controlValue;
@@ -70,7 +77,8 @@ public class Continent implements Serializable {
 	/**
 	 * Method to get the list of countries held by the continent.
 	 * 
-	 * @return listOfCountries list of countries
+	 * @return list of countries
+	 * 
 	 */
 	public ArrayList<Country> getListOfCountries() {
 		return listOfCountries;
@@ -79,7 +87,8 @@ public class Continent implements Serializable {
 	/**
 	 * Method to add a country to the list of countries in the continent
 	 * 
-	 * @param country country to be added       
+	 * @param country
+	 *            country to be added
 	 */
 	public void addCountry(Country country) {
 		listOfCountries.add(country);
@@ -88,7 +97,8 @@ public class Continent implements Serializable {
 	/**
 	 * Set the list of countries.
 	 * 
-	 * @param listOfCountries list of countries to set         
+	 * @param listOfCountries
+	 *            list of countries to set
 	 */
 	public void setListOfCountries(ArrayList<Country> listOfCountries) {
 		this.listOfCountries = listOfCountries;
@@ -97,7 +107,8 @@ public class Continent implements Serializable {
 	/**
 	 * Method to remove country from the list of countires in the continent.
 	 * 
-	 * @param country country to be deleted     
+	 * @param country
+	 *            country to be deleted
 	 */
 	public void deleteCountry(Country country) {
 		listOfCountries.remove(country);

@@ -18,6 +18,8 @@ import java.util.Observable;
  * 
  * @author Kartika Patil
  * @author Jenny Pujara
+ * 
+ * @version 2.0.0
  */
 public class PlayerWorldDomination extends Observable implements Serializable {
 
@@ -25,8 +27,11 @@ public class PlayerWorldDomination extends Observable implements Serializable {
 	 * 
 	 * Method for PlayerWorldDomination class to generate world domination data.
 	 * 
-	 * @param map RiskMapRW object.
-	 * @return playerTerPercent Percentage of the map controlled by every player.	  
+	 * @param map
+	 * 			  MAPIO object.
+	 * 
+	 * @return playerTerPercent
+	 * 			  Percentage of the map controlled by every player.		  
 	 */
 	public HashMap<Player, Double> generateWorldDominationData(RiskMapRW map) {
 

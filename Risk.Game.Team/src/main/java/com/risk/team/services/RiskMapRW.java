@@ -11,8 +11,10 @@ import com.risk.team.model.Country;
  * Map Input Output to read the contents from an existing map or to create a new
  * Map for the game.
  * 
- * @author yashgolwala
+ * @author Kartika Patil
  * @author Dhaval Desai
+ * 
+ * @version 1.0.0
  */
 public class RiskMapRW implements Serializable {
 
@@ -46,7 +48,8 @@ public class RiskMapRW implements Serializable {
 	/**
 	 * Constructor to load the contents of an Existing Map.
 	 * 
-	 * @param map Object of RiskMapVerify          
+	 * @param map
+	 *            Object of MapValidate
 	 */
 	public RiskMapRW(RiskMapVerify map) {
 		this.mapGraph = new RiskMapGraph();
@@ -54,7 +57,7 @@ public class RiskMapRW implements Serializable {
 		this.mapGraph.setAdjacentCountries(map.getAdjacentCountries());
 		this.fileName = map.getFileName();
 		this.mapTagData = map.getMapTagData();
-		this.mapGraph.setCountrySet(map.getCountrySet());
+		this.mapGraph.setAllCountries(map.getCountrySet());
 
 	}
 
@@ -70,7 +73,8 @@ public class RiskMapRW implements Serializable {
 	/**
 	 * Method to set the FileName
 	 * 
-	 * @param fileName String          
+	 * @param fileName
+	 *            String
 	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
@@ -79,16 +83,19 @@ public class RiskMapRW implements Serializable {
 	/**
 	 * Method to set the new FileName
 	 * 
-	 * @param newFileName String        
+	 * @param newFileName
+	 *            String
 	 */
 	public void setNewFileName(String newFileName) {
 		this.newFileName = newFileName;
 	}
 
 	/**
-	 * RiskMapRW write contents to .map file
+	 * MapIO write contents to .map file
 	 * 
-	 * @param isNewFile boolean
+	 * @param isNewFile
+	 *            boolean
+	 * 
 	 * @return true if file is written correctly
 	 */
 	public boolean writeMapFile(boolean isNewFile) {

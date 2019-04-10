@@ -2,7 +2,7 @@ package com.risk.team.controller;
 
 import com.risk.team.model.Country;
 import com.risk.team.model.Dice;
-import com.risk.team.services.Util.GameUpdateWindow;
+import com.risk.team.services.util.GameUpdateWindow;
 import com.risk.team.strategy.Human;
 import com.risk.team.strategy.PlayerBehavior;
 
@@ -25,6 +25,8 @@ import java.util.ResourceBundle;
  * and start dice roll.
  *
  * @author Kartika Patil
+ * 
+ * @version 2.0.0
  */
 public class RiskDiceController extends Observable implements Initializable,Serializable {
 
@@ -161,9 +163,9 @@ public class RiskDiceController extends Observable implements Initializable,Seri
 	/**
 	 * RiskDiceController Constructor
 	 *
-	 * @param dice Dice object
-	 * @param playerBehavior PlayerBehavior Object
-	 * @param gamePhaseController GamePhaseController object
+	 * @param dice               Dice object
+	 * @param playerBehavior    PlayerBehavior Object
+	 * @param gamePhaseController GamePlayController object
 	 */
 	public RiskDiceController(Dice dice, PlayerBehavior playerBehavior, GamePhaseController gamePhaseController) {
 		this.dice = dice;
@@ -174,7 +176,7 @@ public class RiskDiceController extends Observable implements Initializable,Seri
 	/**
 	 * RiskDiceController Constructor
 	 *
-	 * @param dice Dice object
+	 * @param dice            Dice object
 	 * @param playerBehavior PlayerBehavior object
 	 */
 	public RiskDiceController(Dice dice, PlayerBehavior playerBehavior) {

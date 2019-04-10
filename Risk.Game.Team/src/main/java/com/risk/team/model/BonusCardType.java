@@ -5,6 +5,7 @@ package com.risk.team.model;
  * 
  * @author yashgolwala
  *
+ *@version 1.0.0
  */
 
 public interface BonusCardType {

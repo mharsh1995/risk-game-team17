@@ -17,14 +17,16 @@ import java.io.IOException;
  * 
  * @author Kartika Patil
  * @author yashgolwala
+ * 
+ * @version 2.0.0
  */
 public class CardExchangeView {
 
 	/**
 	 * This method is used to create a scene at UI end and opens a window for dice.
 	 * 
-	 * @param currentPlayer object of Player having current playing player
-	 * @param card object of Card
+	 * @param currentPlayer			object of Player having current playing player
+	 * @param card					object of Card
 	 */
 	public static void openCardWindow(Player currentPlayer, Card card) {
 		final Stage newCardStage = new Stage();

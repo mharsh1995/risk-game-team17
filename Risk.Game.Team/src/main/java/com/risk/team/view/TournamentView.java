@@ -1,6 +1,7 @@
 package com.risk.team.view;
 
 import javafx.event.ActionEvent;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +17,8 @@ import com.risk.team.controller.RiskTournamentController;
  * 
  * @author Jenny Pujara
  * @author Dhaval Desai
+ * 
+ * @version 1.0.0
  */
 public class TournamentView  implements EventHandler<ActionEvent> {
 

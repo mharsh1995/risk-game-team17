@@ -18,16 +18,18 @@ import com.risk.team.services.RiskGraphConnected;
  * Test Class for MapValidation
  *
  * @author Jenny Pujara
+ * 
+ * @version 3.0.0
  *
  */
 public class RiskConnectedGraphTest {
-	
+
 	/**Objects for Player Class */
 	private Player player;
 
 	/** Object for RiskGraphConnected Class */
 	private RiskGraphConnected riskGraphConnected;
-	
+
 	/** Object for RiskGraphConnected Class */
 	private RiskGraphConnected connectedGraph1, connectedGraph2;
 
@@ -42,7 +44,7 @@ public class RiskConnectedGraphTest {
 	private ArrayList<Country> adjacentCountries1;
 	private ArrayList<Country> adjacentCountries2;
 	private ArrayList<Country> adjacentCountries3;
-	
+
 	/**ArrayList for countries owned by player */
 	private ArrayList<Country> playerOwnedCountries;
 
@@ -77,12 +79,12 @@ public class RiskConnectedGraphTest {
 		countrySet2.add(country0);
 		countrySet2.add(country4);
 		countrySet2.add(country5);		
-		
+
 		adjacentCountries0 = new ArrayList<>();
 		adjacentCountries1 = new ArrayList<>();
 		adjacentCountries2 = new ArrayList<>();
 		adjacentCountries3 = new ArrayList<>();
-		
+
 		player= new Player();
 		playerOwnedCountries = new ArrayList<Country>();
 
@@ -103,13 +105,13 @@ public class RiskConnectedGraphTest {
 		country1.setAdjacentCountries(adjacentCountries1);
 		country2.setAdjacentCountries(adjacentCountries2);
 		country3.setAdjacentCountries(adjacentCountries3);
-		
+
 		country0.setAdjacentCountries(adjacentCountries0);
 		country4.setAdjacentCountries(adjacentCountries0);
 		country5.setAdjacentCountries(adjacentCountries0);
-		
+
 		connectedGraph1 = new RiskGraphConnected(countrySet1);
-		
+
 		playerOwnedCountries.add(country0);
 		playerOwnedCountries.add(country4);
 		playerOwnedCountries.add(country5);
@@ -126,7 +128,7 @@ public class RiskConnectedGraphTest {
 		assertTrue(riskGraphConnected.isConnected());
 
 	}
-	
+
 	/**
 	 * Test method to check if a path exists between countries in fortification phase
 	 */
@@ -136,7 +138,7 @@ public class RiskConnectedGraphTest {
 		connectedGraph2 = new RiskGraphConnected(countrySet2);	
 		assertTrue(connectedGraph2.ifPathExists(country0,country5,playerOwnedCountriesSet));
 	}
-	
+
 	/**
 	 * Test method to check if a path does not exist between countries in fortification phase
 	 */
@@ -148,9 +150,9 @@ public class RiskConnectedGraphTest {
 		playerOwnedCountriesSet = new HashSet<Country>(playerOwnedCountries);	
 		assertFalse(connectedGraph2.ifPathExists(country0,country6,playerOwnedCountriesSet));
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Test method to check connectivity of subGraph
 	 */

@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
  *
  * @author yashgolwala
  * @author Harsh Mehta
+ * 
+ * @version 1.0.0
  */
 public class Random extends PlayerBehavior {
 
@@ -50,8 +52,8 @@ public class Random extends PlayerBehavior {
 	 * Method for Random class for reinforcement phase.
 	 * Start and end of the reinforcement phase.
 	 *
-	 * @param countryList List of countries owned by the player.
-	 * @param country Country to which reinforcement armies are to be assigned.
+	 * @param countryList   List of countries owned by the player.
+	 * @param country       Country to which reinforcement armies are to be assigned.
 	 * @param currentPlayer Current player.
 	 */
 	@Override
@@ -79,7 +81,7 @@ public class Random extends PlayerBehavior {
 	 *
 	 * @param attackingCountryList List of countries attacking.
 	 * @param defendingCountryList List of countries defending.
-	 * @param currentPlayer Current player.
+	 * @param currentPlayer        Current player.
 	 */
 	@Override
 	public void attackPhase(ListView<Country> attackingCountryList, ListView<Country> defendingCountryList,
@@ -120,9 +122,10 @@ public class Random extends PlayerBehavior {
 	 * Start and end of the fortification phase.
 	 *
 	 * @param selectedCountryList List of countries selected by the player.
-	 * @param adjCountryList List of adjacent countries.
-	 * @param currentPlayer Current player.
-	 * @return true If the fortification successful; other wise false.
+	 * @param adjCountryList      List of adjacent countries.
+	 * @param currentPlayer       Current player.
+	 * @return true
+	 * If the fortification successful; other wise false.
 	 */
 	@Override
 	public boolean fortificationPhase(ListView<Country> selectedCountryList, ListView<Country> adjCountryList,
@@ -161,7 +164,8 @@ public class Random extends PlayerBehavior {
 	 * Method for Random class for if player can attack.
 	 *
 	 * @param countries List of countries owned by the player.
-	 * @return true If player can attack; other wise false.
+	 * @return true
+	 * If player can attack; other wise false.
 	 */
 	@Override
 	public boolean playerCanAttack(ListView<Country> countries) {
@@ -186,8 +190,8 @@ public class Random extends PlayerBehavior {
 	/**
 	 * Method for Random class for attack.
 	 *
-	 * @param attacking Country attacking.
-	 * @param defending Country defending.
+	 * @param attacking     Country attacking.
+	 * @param defending     Country defending.
 	 * @param currentPlayer Current player.
 	 */
 	private void attack(Country attacking, Country defending, Player currentPlayer) {
@@ -210,7 +214,8 @@ public class Random extends PlayerBehavior {
 	 * Method to get list of adjacent countries owned.
 	 *
 	 * @param attackingCountry List of countries attacking.
-	 * @return adjacentOwnedCountries List of adjacent countries owned.
+	 * @return List
+	 * List of adjacent countries owned.
 	 */
 	public List<Country> getAdjacentOwnedCountryList(Country attackingCountry) {
 		List<Country> adjacentOwnedCountries = attackingCountry.getAdjacentCountries().stream()

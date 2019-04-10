@@ -12,7 +12,9 @@ import com.risk.team.model.Country;
  * not
  *
  * @author Kartika Patil
- * @author yashgolwala
+ * @author jenny
+ * 
+ * @version 1.0.0
  */
 
 public class RiskGraphConnected implements Serializable {
@@ -27,15 +29,14 @@ public class RiskGraphConnected implements Serializable {
 	 */
 	private Set<Country> countrySet;
 
+	boolean flag = false;
+
 	/**
 	 * Constructor for ConnectedGraph class, which sets initial data for the
 	 * class. Moreover, it sets a the countries visited value as false.
 	 *
 	 * @param countrySet Set containing all the countries.
 	 */
-
-	boolean flag = false;
-
 	public RiskGraphConnected(Set<Country> countrySet) {
 		this.countrySet = countrySet;
 		this.visitedcountries = new HashMap<>();
@@ -100,7 +101,7 @@ public class RiskGraphConnected implements Serializable {
 	/**
 	 * Method to traverse subGraph in depth first pattern.
 	 * 
-	 * @param startCountry starting country
+	 * @param startCountry	starting country
 	 */
 	private void depthFirstTraversalSubGraph(Country startCountry) {
 		visitedcountries.put(startCountry, true);
