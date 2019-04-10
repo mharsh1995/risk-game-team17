@@ -36,3 +36,9 @@ Features delivered in release 2 / Version 2.0 (build 2) :
  - Card Trade and card exchange view in Reinforcement phase. (increment of 5 per every trade taking place)
  - Attack Phase integrated with Dice roll feature and All out mode. (Max dice allowed at any time: Attacker-3 and Defender-2)
  - Update in allocating armies count in startup phase. ( using floor value of total countries / 3 ).
+ 
+ Features delivered in release 3 / Version 3.0 (build 3) :
+
+ - In this build, Implement different player behaviors using strategy pattern and based on player behavior, Implement      -      different versions of reinforcement, attack and fortification.
+ - Implementation of single game mode, in which game proceeds until the one player has conquered the whole map without any        further interaction of user.
+ - In tournament mode, tournament should proceeds without any user interaction and show the results at the end of the            tournament.
